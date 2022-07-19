@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "__MSG_extensionName__",
+    "version": "0.0.1",
+    "version_name": "0.0.1 alpha",
+
+    "default_locale":"en",
+
+    "author":"Omega77073",
+    "short_name":"OBS Music",
+    "description": "Display your music on your stream",
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "permissions": ["storage","tabs"],
+
+    "action": {
+        "default_popup": "/interface/popup/popup.html",
+        "default_title":"OBS Music Display"
+    },
+
+    "options_ui": {
+        "page": "/interface/options/options.html",
+        "open_in_tab": true
+    },
+
+    "content_scripts": [
+        {
+          "matches": ["https://*.youtube.com/watch*"],
+          "js": ["/scanners/youtube.js"]
+        }
+      ]
+}

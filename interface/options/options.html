@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+    #title {
+      color:aliceblue;
+      font-size: 80px;
+    }
+
+    h3,h1,h4,h2,h5,label {
+      color:aliceblue;
+    }
+
+    .box {
+      border:5px solid rgb(28, 9, 116);
+      width: fit-content;
+      padding: 5px;
+      background-color: rgb(22, 18, 43)
+
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .button {
+      position: relative;
+      display: block;
+      width: 170px;
+      height: 30px;
+      border-radius: 18px;
+      background-color: #1c89ff;
+      border: solid 1px transparent;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all .1s ease-in-out;
+    }
+
+    .button:hover {
+        background-color: transparent;
+        border-color: #fff;
+        transition: all .1s ease-in-out;
+    }
+
+  </style>
+  </head>
+  <body style="background-color: rgb(35, 41, 51);">
+    <h1 class="localized" id="title">__MSG_settingsTitle__</h1>
+
+    <h1  class="localized">Information</h1> <br>
+    <div class="container" id="information">
+      <div class="box">
+        <label class="localized" style="color:aliceblue;">Token</label> <br>
+        <input id="token" readonly style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <br>
+        <br>
+        <label class="localized" style="color:aliceblue;">Overlay Link</label> <br>
+        <input id="link" readonly style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <br>
+        <br>
+        <button class="button" id="create">Create instance</button>
+      </div>
+
+      <div class="box">
+        <label><b>Load settings from instance</b></label><br><br>
+        <label class="localized" style="color:aliceblue;">Token</label> <br>
+        <input id="newToken" style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <br>
+        <br>
+        <button class="button" id="load">Load Settings</button>
+      </div>
+
+    </div>
+    <br>
+    <br>
+    
+
+    <h1  class="localized">Extension behaviour</h1> <br>
+    <button class="button" id="save">Save Settings</button>
+    <br>
+    <h2>Youtube Settings</h2>
+    <div class="container" id="Youtube">
+    <div class="box">
+      <label><b>Pause behavior</b></label><br><br>
+      <input type="checkbox" id="YTpauseDetection">
+      <label class="localized" style="color:aliceblue;">Detect video pause</label> <br>
+      <br>
+      <input type="checkbox" id="YTdisplayPause">
+      <label class="localized" style="color:aliceblue;">Display pause</label> <br>
+      <br>
+      <label>Pause text</label><br>
+      <textarea type="text" id="YTpauseText"></textarea>
+    </div>
+
+    <div class="box">
+      <label><b>Displayed information</b></label><br><br>
+      <input type="checkbox" id="YTdisplayTitle">
+      <label class="localized" style="color:aliceblue;">Display the video title</label> <br>
+      <br>
+      <input type="checkbox" id="YTdisplayChapter">
+      <label class="localized" style="color:aliceblue;">Display the video chapter</label> <br>
+    </div>
+
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
