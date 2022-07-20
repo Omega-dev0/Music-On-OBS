@@ -118,6 +118,7 @@ function update(data) {
 
 async function processMsg(msg,sender){
   if (msg.text.split("__JSON__")[0] == "TABID_REQUEST") {
+    console.log("TAB ID REQUEST")
     let scanners = (await chrome.storage.local.get("scanners")).scanners;
     scanners.push({ tabId: sender.tab.id, url: sender.tab.url, title: sender.tab.title });
     chrome.storage.local.set({scanners : scanners})

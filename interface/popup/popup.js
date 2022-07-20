@@ -28,6 +28,7 @@ document.getElementById("force").addEventListener("click", async ()=>{
 async function updateTabs(){
 
     let scanners = (await chrome.storage.local.get("scanners")).scanners;
+    console.log("scanners", scanners)
     let ids = []
     for(var i = 0; i < scanners.length; i++) {
         var opt = scanners[i];
@@ -71,6 +72,10 @@ async function loop(){
     updateTabs()
 
     updateStatus()
+
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs)=>{
+        console.log("TAB",tabs[0].id)
+    });
 }
 
 loop()

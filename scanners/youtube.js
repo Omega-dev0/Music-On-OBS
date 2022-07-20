@@ -1,4 +1,4 @@
-const manifest = chrome.runtime.getManifest();
+manifest = chrome.runtime.getManifest();
 
 console.log("Youtube scanner injected");
 const server_data = {};
@@ -8,6 +8,7 @@ function update(data) {
   
 }
 
+ur2 = false
 //LOOP WIDE DATA
 timestamps = false;
 
@@ -99,14 +100,23 @@ function partialLoop(interation, fc, arg) {
 //LOOPS
 chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
   console.log("My tab", tab);
-  
+  console.log(tab)
   //DATA LOOP
   async function dataLoop() {
 
+    let url = window.location.href;
+    let domain = new URL(url);
+    domain = domain.hostname.replace("www.", "");
+    if (!domain == "youtube.com") {
+      return;
+    }
+
+
     let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
-    console.log(parseInt(activeScanner) != tab.tab.id, tab.tab.id, activeScanner)
+    console.log(parseInt(activeScanner) == tab.tab.id, tab.tab.id, activeScanner)
     if (parseInt(activeScanner) != tab.tab.id) {
       enabled = false
+      ur2 = true
       return;
     } else {
       enabled = true;
@@ -151,8 +161,17 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
   //UPDATES LOOP
   async function updates() {
     if(enabled == false){return}
+
+    let url = window.location.href;
+    let domain = new URL(url);
+    domain = domain.hostname.replace("www.", "");
+    if (!domain == "youtube.com") {
+      return;
+    }
+
     ur = (await chrome.storage.local.get("updateRequired")).updateRequired
-    if (compareData(server_data, data) || ur == true) {
+    if (compareData(server_data, data) || ur == true || ur2 == true) {
+      ur2 = false
       chrome.storage.local.set({ updateRequired: false });
       //State change that matters --> Update the server
 
@@ -177,7 +196,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
         setTimeout(()=>{
           updating = false
-        }, 1000)
+        }, 300)
       }
     }
   }
