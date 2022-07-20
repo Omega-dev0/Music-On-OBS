@@ -45,8 +45,8 @@ chrome.runtime.onInstalled.addListener(async () => {
         serverLink: server_url,
         youtube: {
           detectPause: true,
-          displayPause: true,
-          pausedText: "This video is paused",
+          displayPause: false,
+          pausedText: "The music is currently paused",
 
           displayTitle: true,
           displayChapter: true,
