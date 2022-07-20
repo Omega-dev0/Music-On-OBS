@@ -13,6 +13,18 @@ document.getElementById("update").addEventListener("click", async ()=>{
     chrome.storage.local.set({ updateRequired: true });
 });
 
+document.getElementById("force").addEventListener("click", async ()=>{
+    var query = { active: true, currentWindow: true };
+    function callback(tabs) {
+        var currentTab = tabs[0]; 
+        console.log(currentTab); 
+        json = JSON.stringify({tabId: currentTab.id})
+        chrome.runtime.sendMessage({ text: "FORCEINJECT__JSON__"+json })
+    }
+    chrome.tabs.query(query, callback);
+});
+
+
 async function updateTabs(){
 
     let scanners = (await chrome.storage.local.get("scanners")).scanners;

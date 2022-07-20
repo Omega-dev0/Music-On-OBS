@@ -14,7 +14,10 @@
         "service_worker": "background.js"
     },
 
-    "permissions": ["storage","tabs"],
+    "permissions": ["storage","tabs","scripting"],
+    "host_permissions": [
+        "https://*.youtube.com/*"
+      ],
 
     "action": {
         "default_popup": "/interface/popup/popup.html",
