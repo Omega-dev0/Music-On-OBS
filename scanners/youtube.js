@@ -143,13 +143,16 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     data.ytplayer = document.getElementsByClassName("video-stream")[0];
     data.timestamp = data.ytplayer.currentTime;
 
+    let config = (await chrome.storage.local.get("settings")).settings;
+    detectPause = config.youtube.detectPause
+
     if (pauseState.lastTimestamp == data.timestamp) {
       pauseState.stallCounter = pauseState.stallCounter + 1;
     } else {
       pauseState.stallCounter = 0;
     }
 
-    if (pauseState.stallCounter >= 5) {
+    if (pauseState.stallCounter >= 5 && detectPause == true) {
       data.paused = true;
     } else {
       data.paused = false;
