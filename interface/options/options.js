@@ -231,5 +231,11 @@ function create() {
 }
 
 document.getElementById("load").addEventListener("click", loadFromInstance);
-document.getElementById("save").addEventListener("click", save);
 document.getElementById("create").addEventListener("click", create);
+
+document.getElementById("YTpauseDetection").addEventListener("click", save);
+document.getElementById("YTdisplayPause").addEventListener("click", save);
+document.getElementById("YTdisplayTitle").addEventListener("click", save);
+document.getElementById("YTdisplayChapter").addEventListener("click", save);
+document.getElementById("YTpauseText").addEventListener("input", save);
+document.getElementById("save").addEventListener("click", save);
