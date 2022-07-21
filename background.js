@@ -1,10 +1,10 @@
 const manifest = chrome.runtime.getManifest();
 
-chrome.storage.local.set({ scanners: [] });
-chrome.storage.local.set({ activeScanner: "0" });
-
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed");
+
+  chrome.storage.local.set({ scanners: [] });
+  chrome.storage.local.set({ activeScanner: "0" });
 
   const server_url = "http://129.151.84.152:3000";
 
@@ -158,6 +158,23 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   processMsg(msg, sender).then(sendResponse);
   return true; // keep the messaging channel open for sendResponse
 });
+
+async function updateTabs(){
+  new_scanners = []
+  let scanners = (await chrome.storage.local.get("scanners")).scanners;
+  for(var i = 0; i < scanners.length; i++) {
+    opt = scanners[i];
+    tab = await chrome.tabs.get(opt.tabId);
+    console.log(tab)
+    if(tab){
+      new_scanners.push({ tabId: tab.id, url: tab.url, title: tab.title })
+    }
+  }
+
+  chrome.storage.local.set({scanners: new_scanners})
+}
+
+setInterval(updateTabs,1000)
 
 
 

@@ -13,17 +13,6 @@ document.getElementById("update").addEventListener("click", async ()=>{
     chrome.storage.local.set({ updateRequired: true });
 });
 
-document.getElementById("force").addEventListener("click", async ()=>{
-    var query = { active: true, currentWindow: true };
-    function callback(tabs) {
-        var currentTab = tabs[0]; 
-        console.log(currentTab); 
-        json = JSON.stringify({tabId: currentTab.id})
-        chrome.runtime.sendMessage({ text: "FORCEINJECT__JSON__"+json })
-    }
-    chrome.tabs.query(query, callback);
-});
-
 
 async function updateTabs(){
 
@@ -32,13 +21,16 @@ async function updateTabs(){
     let ids = []
     for(var i = 0; i < scanners.length; i++) {
         var opt = scanners[i];
-        if(!document.getElementById("TABS_"+opt.tabId)){
+        opte = document.getElementById("TABS_"+opt.tabId)
+        if(!opte){
         var el = document.createElement("option");
         el.textContent = opt.title.substring(0,15)+"...";
         el.value = opt.tabId;
         el.id = "TABS_"+opt.tabId
         document.getElementById("tabSelector").appendChild(el);
        
+        }else if(opte.textContent != opt.title.substring(0,15)+"..."){
+            opte.textContent = opt.title.substring(0,15)+"..."
         }
         ids.push("TABS_"+opt.tabId)
     }
