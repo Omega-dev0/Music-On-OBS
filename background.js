@@ -17,8 +17,8 @@ chrome.runtime.onInstalled.addListener(async () => {
         token: "",
       },
     });
-  }else{
-    per = (await chrome.storage.local.get("persistent")).persistent
+  } else {
+    per = (await chrome.storage.local.get("persistent")).persistent;
     chrome.storage.local.set({
       persistent: {
         serverLink: server_url,
@@ -58,14 +58,14 @@ chrome.runtime.onInstalled.addListener(async () => {
 
 //Sending tabid to scanners
 
-
-chrome.tabs.onRemoved.addListener(async (tabId,removeInfo)=>{
-  console.log("Tab closed:", tabId)
+chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
+  console.log("Tab closed:", tabId);
   let scanners = (await chrome.storage.local.get("scanners")).scanners;
-  filteredArray = scanners.filter(function(e) { return e.tabId !== tabId })
-  chrome.storage.local.set({scanners : filteredArray})
-})
-
+  filteredArray = scanners.filter(function (e) {
+    return e.tabId !== tabId;
+  });
+  chrome.storage.local.set({ scanners: filteredArray });
+});
 
 function update(data) {
   return new Promise(async function (resolve, reject) {
@@ -103,53 +103,52 @@ function update(data) {
           resolve(json);
         } else {
           updating = false;
-          console.log("ERROR",rawResponse);
+          console.log("ERROR", rawResponse);
           reject(rawResponse.status);
         }
       })
       .catch((err) => {
         updating = false;
-        console.log("ERROR",err);
-        reject(err)
+        console.log("ERROR", err);
+        reject(err);
       });
   });
 }
 
-
-async function processMsg(msg,sender){
+async function processMsg(msg, sender) {
   if (msg.text.split("__JSON__")[0] == "TABID_REQUEST") {
-    console.log("TAB ID REQUEST")
+    console.log("TAB ID REQUEST");
     let scanners = (await chrome.storage.local.get("scanners")).scanners;
     scanners.push({ tabId: sender.tab.id, url: sender.tab.url, title: sender.tab.title });
-    chrome.storage.local.set({scanners : scanners})
-    return ({ tab: sender.tab });
-  }else if(msg.text.split("__JSON__")[0] == "SERVER_UPDATE"){
-    data = JSON.parse(msg.text.split("__JSON__")[1])
+    chrome.storage.local.set({ scanners: scanners });
+    return { tab: sender.tab };
+  } else if (msg.text.split("__JSON__")[0] == "SERVER_UPDATE") {
+    data = JSON.parse(msg.text.split("__JSON__")[1]);
     update(data)
-    .then((newdata) => {
-      console.log("Updated data", newdata);
-      json = {
-        status: true,
-        data: newdata,
-        tabId: sender.tab.id
-      }
-      return ({done:true,data:newdata})
-    })
+      .then((newdata) => {
+        console.log("Updated data", newdata);
+        json = {
+          status: true,
+          data: newdata,
+          tabId: sender.tab.id,
+        };
+        return { done: true, data: newdata };
+      })
 
-    .catch((status) => {
-      json = {
-        status: false,
-        data: status,
-        tabId: (sender.tab) ? sender.tab.id : false
-      }
+      .catch((status) => {
+        json = {
+          status: false,
+          data: status,
+          tabId: sender.tab ? sender.tab.id : false,
+        };
 
-      return ({done:false,data:status})
-    });
-  }else if(msg.text.split("__JSON__")[0] == "FORCEINJECT"){
-    data = JSON.parse(msg.text.split("__JSON__")[1])
+        return { done: false, data: status };
+      });
+  } else if (msg.text.split("__JSON__")[0] == "FORCEINJECT") {
+    data = JSON.parse(msg.text.split("__JSON__")[1]);
     chrome.scripting.executeScript({
       target: { tabId: data.tabId },
-      files: ['/scanners/youtube.js']
+      files: ["/scanners/youtube.js"],
     });
   }
 }
@@ -159,26 +158,59 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   return true; // keep the messaging channel open for sendResponse
 });
 
-async function updateTabs(){
-  new_scanners = []
+async function updateTabs() {
+  new_scanners = [];
   let scanners = (await chrome.storage.local.get("scanners")).scanners;
-  for(var i = 0; i < scanners.length; i++) {
+  for (var i = 0; i < scanners.length; i++) {
     opt = scanners[i];
     try {
-    tab = await chrome.tabs.get(opt.tabId);
-    if(tab){
-      title = (tab.title) ? tab.title.replace(/^\(\d+\)\ /,'') : `Tab ${tab.id}`
-      new_scanners.push({ tabId: tab.id, url: tab.url, title: title })
-    }
-    } catch(error) {
-      console.log(error)
+      tab = await chrome.tabs.get(opt.tabId);
+      if (tab) {
+        title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
+        new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  chrome.storage.local.set({scanners: new_scanners})
+  chrome.storage.local.set({ scanners: new_scanners });
 }
 
-setInterval(updateTabs,1000)
+lastPausedState = ""
+lastActiveScanner = 0
 
+async function loop() {
+  let state = (await chrome.storage.local.get("state")).state;
+  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
+  if(state.paused != lastPausedState || lastActiveScanner != activeScanner){
+    if (activeScanner == 0) {
+      chrome.action.setIcon({path:{
+        "16": "/images/stopped/stopped16.png",
+        "32": "/images/stopped/stopped32.png",
+        "48": "/images/stopped/stopped48.png",
+        "128": "/images/stopped/stopped128.png"
+      }})
+    } else if (state.paused == true) {
+      chrome.action.setIcon({path:{
+        "16": "/images/paused/paused16.png",
+        "32": "/images/paused/paused32.png",
+        "48": "/images/paused/paused48.png",
+        "128": "/images/paused/paused128.png"
+      }})
+    } else {
+      chrome.action.setIcon({path:{
+        "16": "/images/playing/playing16.png",
+        "32": "/images/playing/playing32.png",
+        "48": "/images/playing/playing48.png",
+        "128": "/images/playing/playing128.png"
+      }})
+    }
+    lastActiveScanner = activeScanner
+    lastPausedState = state.paused
+  }
+  
+  updateTabs();
+}
 
-
+setInterval(loop, 1000);

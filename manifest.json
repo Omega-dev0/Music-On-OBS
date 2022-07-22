@@ -1,38 +1,49 @@
 {
-    "manifest_version": 3,
-    "name": "__MSG_extensionName__",
-    "version": "0.0.1",
-    "version_name": "0.0.1 alpha",
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "version": "0.0.1",
+  "version_name": "0.0.1 alpha",
 
-    "default_locale":"en",
+  "default_locale": "en",
 
-    "author":"Omega77073",
-    "short_name":"OBS Music",
-    "description": "Display your music on your stream",
+  "author": "Omega77073",
+  "short_name": "OBS Music",
+  "description": "Display your music on your stream",
 
-    "background": {
-        "service_worker": "background.js"
-    },
+  "background": {
+    "service_worker": "background.js"
+  },
 
-    "permissions": ["storage","tabs","scripting"],
-    "host_permissions": [
-        "https://*.youtube.com/*"
-      ],
+  "permissions": ["storage", "tabs", "scripting"],
+  "host_permissions": ["https://*.youtube.com/*"],
 
-    "action": {
-        "default_popup": "/interface/popup/popup.html",
-        "default_title":"OBS Music Display"
-    },
+  "action": {
+    "default_popup": "/interface/popup/popup.html",
+    "default_title": "OBS Music Display",
+    "default_icon": {
+      "16": "/images/default/default16.png",
+      "32": "/images/default/default32.png",
+      "48": "/images/default/default48.png",
+      "128": "/images/default/default128.png"
+    }
+  },
 
-    "options_ui": {
-        "page": "/interface/options/options.html",
-        "open_in_tab": true
-    },
+  "options_ui": {
+    "page": "/interface/options/options.html",
+    "open_in_tab": true
+  },
 
-    "content_scripts": [
-        {
-          "matches": ["https://*.youtube.com/*"],
-          "js": ["/scanners/youtube.js"]
-        }
-      ]
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["/scanners/youtube.js"]
+    }
+  ],
+
+  "icons": {
+    "16": "/images/default/default16.png",
+    "32": "/images/default/default32.png",
+    "48": "/images/default/default48.png",
+    "128": "/images/default/default128.png"
+  }
 }
