@@ -144,12 +144,6 @@ async function processMsg(msg, sender) {
 
         return { done: false, data: status };
       });
-  } else if (msg.text.split("__JSON__")[0] == "FORCEINJECT") {
-    data = JSON.parse(msg.text.split("__JSON__")[1]);
-    chrome.scripting.executeScript({
-      target: { tabId: data.tabId },
-      files: ["/scanners/youtube.js"],
-    });
   }
 }
 
