@@ -140,7 +140,7 @@ async function processMsg(msg,sender){
       json = {
         status: false,
         data: status,
-        tabId: sender.tab.id
+        tabId: (sender.tab) ? sender.tab.id : false
       }
 
       return ({done:false,data:status})
@@ -166,7 +166,6 @@ async function updateTabs(){
     opt = scanners[i];
     try {
     tab = await chrome.tabs.get(opt.tabId);
-    console.log(tab)
     if(tab){
       title = (tab.title) ? tab.title.replace(/^\(\d+\)\ /,'') : `Tab ${tab.id}`
       new_scanners.push({ tabId: tab.id, url: tab.url, title: title })

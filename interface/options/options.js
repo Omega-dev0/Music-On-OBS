@@ -237,5 +237,4 @@ document.getElementById("YTpauseDetection").addEventListener("click", save);
 document.getElementById("YTdisplayPause").addEventListener("click", save);
 document.getElementById("YTdisplayTitle").addEventListener("click", save);
 document.getElementById("YTdisplayChapter").addEventListener("click", save);
-document.getElementById("YTpauseText").addEventListener("input", save);
 document.getElementById("save").addEventListener("click", save);

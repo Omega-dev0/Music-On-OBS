@@ -1,3 +1,5 @@
+const manifest = chrome.runtime.getManifest();
+
 document.getElementById("start").addEventListener("click", async ()=>{
     tabID = document.getElementById("tabSelector").value
     if(tabID != "" && tabID){
@@ -7,6 +9,18 @@ document.getElementById("start").addEventListener("click", async ()=>{
 
 document.getElementById("stop").addEventListener("click", async ()=>{
     chrome.storage.local.set({ activeScanner: "0" });
+
+    preJson = {
+        type: "full",
+        title: "",
+        chapter: "",
+        url: "",
+        version: manifest.version,
+        paused: true,
+        source: "STOPPED"
+      }
+      json = JSON.stringify(preJson)
+      chrome.runtime.sendMessage({ text: "SERVER_UPDATE__JSON__"+json })
 });
 
 document.getElementById("update").addEventListener("click", async ()=>{
@@ -17,7 +31,6 @@ document.getElementById("update").addEventListener("click", async ()=>{
 async function updateTabs(){
 
     let scanners = (await chrome.storage.local.get("scanners")).scanners;
-    console.log("scanners", scanners)
     let ids = []
     for(var i = 0; i < scanners.length; i++) {
         var opt = scanners[i];
@@ -62,14 +75,18 @@ async function updateStatus(){
 
 async function loop(){
     updateTabs()
-
     updateStatus()
-
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs)=>{
-        console.log("TAB",tabs[0].id)
-    });
 }
 
-loop()
+async function onOpen(){
+    let activeScanner =  (await chrome.storage.local.get("activeScanner")).activeScanner
+    if(activeScanner.toString() != "0"){
+    document.getElementById("tabSelector").value = activeScanner
+    }
+}
+
+
 
 setInterval(loop,1000)
+loop()
+onOpen()
