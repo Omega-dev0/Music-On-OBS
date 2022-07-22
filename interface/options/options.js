@@ -222,6 +222,7 @@ function create() {
       document.getElementById("create").innerHTML = messages.created;
       contactServer("POST", "update", { type: "settings", config: (await chrome.storage.local.get("settings")).settings }, data.config.token).then((data) => {
         console.log("Settings saved to new instance");
+        chrome.storage.local.set({ updateRequired: true });
         debounce.create = false;
       })
       .catch(err=>{

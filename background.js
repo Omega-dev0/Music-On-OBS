@@ -155,6 +155,7 @@ async function processMsg(msg, sender) {
 }
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  console.log("New message:", msg.text)
   processMsg(msg, sender).then(sendResponse);
   return true; // keep the messaging channel open for sendResponse
 });

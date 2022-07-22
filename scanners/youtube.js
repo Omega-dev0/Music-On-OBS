@@ -1,6 +1,4 @@
 manifest = chrome.runtime.getManifest();
-
-console.log("Youtube scanner injected");
 const server_data = {};
 //UTILITY
 
@@ -98,6 +96,7 @@ function partialLoop(interation, fc, arg) {
 }
 
 //LOOPS
+console.log("Youtube scanner injected");
 chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
   console.log("My tab", tab);
   console.log(tab)

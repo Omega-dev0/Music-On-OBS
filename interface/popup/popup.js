@@ -12,7 +12,7 @@ document.getElementById("stop").addEventListener("click", async ()=>{
 
     preJson = {
         type: "full",
-        title: "",
+        title: "The extension is stopped",
         chapter: "",
         url: "",
         version: manifest.version,
