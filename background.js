@@ -223,4 +223,4 @@ async function loop() {
   updateTabs();
 }
 
-setInterval(loop, 5000);
+setInterval(loop, 1000);
