@@ -168,7 +168,8 @@ async function updateTabs(){
     tab = await chrome.tabs.get(opt.tabId);
     console.log(tab)
     if(tab){
-      new_scanners.push({ tabId: tab.id, url: tab.url, title: tab.title })
+      title = (tab.title) ? tab.title.replace(/^\(\d+\)\ /,'') : `Tab ${tab.id}`
+      new_scanners.push({ tabId: tab.id, url: tab.url, title: title })
     }
     } catch(error) {
       console.log(error)
