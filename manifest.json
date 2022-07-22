@@ -14,7 +14,7 @@
     "service_worker": "background.js"
   },
 
-  "permissions": ["storage", "tabs", "scripting"],
+  "permissions": ["storage", "scripting"],
   "host_permissions": ["https://*.youtube.com/*"],
 
   "action": {

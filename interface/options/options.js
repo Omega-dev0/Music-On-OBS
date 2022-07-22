@@ -5,6 +5,12 @@ debounce = {
 };
 
 
+
+//Customization personalization:
+//-Espace titre/chapitre
+//-Couleur text
+//-Couleur background
+
 const messages = {
   contacting: chrome.i18n.getMessage("OPTIONScontactingServer") || "Contacting server...",
   saved: chrome.i18n.getMessage("OPTIONSsaved") || "Settings saved !",
