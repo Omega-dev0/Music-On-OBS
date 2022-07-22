@@ -41,7 +41,6 @@ async function updateTabs(){
         el.value = opt.tabId;
         el.id = "TABS_"+opt.tabId
         document.getElementById("tabSelector").appendChild(el);
-       
         }else if(opte.textContent != opt.title.substring(0,15)+"..."){
             opte.textContent = opt.title.substring(0,15)+"..."
         }

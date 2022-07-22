@@ -3,8 +3,14 @@ const manifest = chrome.runtime.getManifest();
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed");
 
-  chrome.storage.local.set({ scanners: [] });
-  chrome.storage.local.set({ activeScanner: "0" });
+  let scanners = (await chrome.storage.local.get("scanners")).scanners;
+  if (!scanners) {
+    chrome.storage.local.set({ scanners: [] });
+  }
+  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
+  if (!activeScanner) {
+    chrome.storage.local.set({ activeScanner: "0" });
+  }
 
   const server_url = "http://129.151.84.152:3000";
 
@@ -26,17 +32,18 @@ chrome.runtime.onInstalled.addListener(async () => {
       },
     });
   }
+  if (!(await chrome.storage.local.get("state")).state) {
+    chrome.storage.local.set({
+      state: {
+        title: "",
+        chapter: "",
+        paused: false,
+        url: "",
 
-  chrome.storage.local.set({
-    state: {
-      title: "",
-      chapter: "",
-      paused: false,
-      url: "",
-
-      source: "",
-    },
-  });
+        source: "",
+      },
+    });
+  }
 
   if (!(await chrome.storage.local.get("settings")).settings) {
     chrome.storage.local.set({
@@ -154,57 +161,66 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
 async function updateTabs() {
   new_scanners = [];
-  let scanners = (await chrome.storage.local.get("scanners")).scanners;
-  for (var i = 0; i < scanners.length; i++) {
-    opt = scanners[i];
-    try {
-      tab = await chrome.tabs.get(opt.tabId);
-      if (tab) {
-        title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
-        new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  chrome.tabs.query({}, function(tabs) {
+  for (var i = 0; i < tabs.length; i++) {
+      tab = tabs[i]
+      if (tab && tab.url) {
 
+        let domain = new URL(tab.url);
+        domain = domain.hostname.replace("www.", "");
+        if (domain == "youtube.com") {
+          title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
+        new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
+        }
+        
+      }
+  }
   chrome.storage.local.set({ scanners: new_scanners });
+  });
+
+  //console.log("Scanners:", new_scanners)
 }
 
-lastPausedState = ""
-lastActiveScanner = 0
+lastPausedState = "";
+lastActiveScanner = 0;
 
 async function loop() {
   let state = (await chrome.storage.local.get("state")).state;
   let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
-  if(state.paused != lastPausedState || lastActiveScanner != activeScanner){
+  if (state.paused != lastPausedState || lastActiveScanner != activeScanner) {
     if (activeScanner == 0) {
-      chrome.action.setIcon({path:{
-        "16": "/images/stopped/stopped16.png",
-        "32": "/images/stopped/stopped32.png",
-        "48": "/images/stopped/stopped48.png",
-        "128": "/images/stopped/stopped128.png"
-      }})
+      chrome.action.setIcon({
+        path: {
+          16: "/images/stopped/stopped16.png",
+          32: "/images/stopped/stopped32.png",
+          48: "/images/stopped/stopped48.png",
+          128: "/images/stopped/stopped128.png",
+        },
+      });
     } else if (state.paused == true) {
-      chrome.action.setIcon({path:{
-        "16": "/images/paused/paused16.png",
-        "32": "/images/paused/paused32.png",
-        "48": "/images/paused/paused48.png",
-        "128": "/images/paused/paused128.png"
-      }})
+      chrome.action.setIcon({
+        path: {
+          16: "/images/paused/paused16.png",
+          32: "/images/paused/paused32.png",
+          48: "/images/paused/paused48.png",
+          128: "/images/paused/paused128.png",
+        },
+      });
     } else {
-      chrome.action.setIcon({path:{
-        "16": "/images/playing/playing16.png",
-        "32": "/images/playing/playing32.png",
-        "48": "/images/playing/playing48.png",
-        "128": "/images/playing/playing128.png"
-      }})
+      chrome.action.setIcon({
+        path: {
+          16: "/images/playing/playing16.png",
+          32: "/images/playing/playing32.png",
+          48: "/images/playing/playing48.png",
+          128: "/images/playing/playing128.png",
+        },
+      });
     }
-    lastActiveScanner = activeScanner
-    lastPausedState = state.paused
+    lastActiveScanner = activeScanner;
+    lastPausedState = state.paused;
   }
-  
+
   updateTabs();
 }
 
-setInterval(loop, 1000);
+setInterval(loop, 5000);
