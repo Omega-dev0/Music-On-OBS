@@ -164,10 +164,14 @@ async function updateTabs(){
   let scanners = (await chrome.storage.local.get("scanners")).scanners;
   for(var i = 0; i < scanners.length; i++) {
     opt = scanners[i];
+    try {
     tab = await chrome.tabs.get(opt.tabId);
     console.log(tab)
     if(tab){
       new_scanners.push({ tabId: tab.id, url: tab.url, title: tab.title })
+    }
+    } catch(error) {
+      console.log(error)
     }
   }
 
