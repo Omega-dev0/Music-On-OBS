@@ -16,7 +16,7 @@ document.getElementById("stop").addEventListener("click", async ()=>{
         chapter: "",
         url: "",
         version: manifest.version,
-        paused: true,
+        paused: false,
         source: "STOPPED"
       }
       json = JSON.stringify(preJson)
@@ -63,12 +63,15 @@ async function updateStatus(){
     if(activeScanner == 0){
         document.getElementById("status").innerHTML = "Not running"
         document.getElementById("status").style = "color: red"
+        document.getElementById("pauseWarning").hidden =true
     }else if(state.paused == true){
         document.getElementById("status").innerHTML = "Paused"
         document.getElementById("status").style = "color: rgb(235, 141, 18)"
+        document.getElementById("pauseWarning").hidden =false
     }else{
         document.getElementById("status").innerHTML = "Running on tab: " + activeScanner
         document.getElementById("status").style = "color: green"
+        document.getElementById("pauseWarning").hidden =true
     }
 }
 

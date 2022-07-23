@@ -7,6 +7,10 @@
         color: #FFFFFF;
         background-color:rgba(2, 3, 20, 0.25)
       }
+
+      .warning {
+        border-radius: 15px; background-color: rgba(148, 111, 10, 0.836); color: aliceblue; font-size:10px
+      }
     </style>
   </head>
   <body style="background-color: rgb(35, 41, 51);">
@@ -35,6 +39,8 @@
         <i id="display_chapter"></i>
       </p>
     </div>
+
+    <label class="warning" id="pauseWarning" hidden>If this is a wrongfull pause detection, please reload the youtube video one or more times (up to 3) to unblock the youtube API.</label>
     <script src="popup.js"></script>
   </body>
 </html>

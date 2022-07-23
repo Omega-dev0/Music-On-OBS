@@ -112,7 +112,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
 
     let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
-    console.log(parseInt(activeScanner) == tab.tab.id, tab.tab.id, activeScanner)
+    //console.log(parseInt(activeScanner) == tab.tab.id, tab.tab.id, activeScanner)
     if (parseInt(activeScanner) != tab.tab.id) {
       enabled = false
       ur2 = true
@@ -144,7 +144,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     let config = (await chrome.storage.local.get("settings")).settings;
     detectPause = config.youtube.detectPause
-
+    console.log("Timestamp",data.timestamp)
     if (pauseState.lastTimestamp == data.timestamp) {
       pauseState.stallCounter = pauseState.stallCounter + 1;
     } else {

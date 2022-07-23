@@ -102,7 +102,7 @@ function makeCommand(){
   let command  = `$(eval 
     const error_message = "${document.getElementById("nightbotErrorMessage").value}";
     const message = "${document.getElementById("nightbotMessage").value}";
-    const api = $(urlfetch json http://129.151.84.152:3000/get?token=${document.getElementById("token").value}&format=json); if(api.error || api.url == "" || api.url == "undefined"){error_message}else{if(api.paused == false){\`\${message} \${api.url.split("https://www.")[1]}\`}else{api.config.youtube.pausedText}};)`
+    const api = $(urlfetch json http://129.151.84.152:3000/get?token=${document.getElementById("token").value}&format=json); if(api.error || api.url == "undefined"){error_message}else{if(api.paused == false){\`\${(api.url == "") ? "" : message} \${(api.url == "") ? "${document.getElementById("nightbotStoppedMessage").value}" : api.url.split("https://www.")[1]}\`}else{api.config.youtube.pausedText}};)`
   
     document.getElementById("nightbotCommand").value = command
 }
@@ -257,6 +257,7 @@ document.getElementById("save").addEventListener("click", save);
 
 document.getElementById("nightbotMessage").addEventListener("input", makeCommand);
 document.getElementById("nightbotErrorMessage").addEventListener("input", makeCommand);
+document.getElementById("nightbotStoppedMessage").addEventListener("input", makeCommand);
 document.getElementById("token").addEventListener("changed", makeCommand);
 
 setTimeout(makeCommand,100)

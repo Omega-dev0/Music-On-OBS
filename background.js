@@ -224,4 +224,8 @@ async function loop() {
   updateTabs();
 }
 
+chrome.runtime.onStartup.addListener(async () => {
+  console.log("Startup")
+  chrome.storage.local.set({ activeScanner: "0" });
+})
 setInterval(loop, 1000);
