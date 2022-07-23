@@ -49,6 +49,10 @@
         transition: all .1s ease-in-out;
     }
 
+    input {
+      background-color:#070c1b; color:aliceblue; border-radius:7px;
+    }
+
   </style>
   </head>
   <body style="background-color: rgb(35, 41, 51);">
@@ -58,11 +62,11 @@
     <div class="container" id="information">
       <div class="box">
         <label class="localized" style="color:aliceblue;">Token</label> <br>
-        <input id="token" readonly style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <input id="token" readonly ></input>
         <br>
         <br>
         <label class="localized" style="color:aliceblue;">Overlay Link</label> <br>
-        <input id="link" readonly style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <input id="link" readonly></input>
         <br>
         <br>
         <button class="button" id="create">Create instance</button>
@@ -71,10 +75,21 @@
       <div class="box">
         <label><b>Load settings from instance</b></label><br><br>
         <label class="localized" style="color:aliceblue;">Token</label> <br>
-        <input id="newToken" style="background-color:#070c1b; color:aliceblue; border-radius:7px;"></input>
+        <input id="newToken" ></input>
         <br>
         <br>
         <button class="button" id="load">Load Settings</button>
+      </div>
+
+      <div class="box">
+        <label><b>Integration - Nightbot custom command</b></label><br><br>
+        <label class="localized" style="color:aliceblue;">Message --> Message <i>link</i></label> <br>
+        <input id="nightbotMessage"  style="width: auto;" value="Current Playlist:"></input><br>
+        <br>
+        <label class="localized" style="color:aliceblue;">Error message</label> <br>
+        <input id="nightbotErrorMessage" style="width: auto;" value="Could not fetch current playlist !"></input><br>
+        <br>
+        <textarea id="nightbotCommand"  readonly></textarea>
       </div>
 
     </div>
