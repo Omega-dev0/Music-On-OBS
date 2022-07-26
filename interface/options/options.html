@@ -1,132 +1,393 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <style>
-    #title {
-      color:aliceblue;
-      font-size: 80px;
-    }
+    <style>
+      #title {
+        color: aliceblue;
+        font-size: 80px;
+      }
 
-    h3,h1,h4,h2,h5,label {
-      color:aliceblue;
-    }
+      h3,
+      h1,
+      h4,
+      h2,
+      h5,
+      label {
+        color: aliceblue;
+      }
 
-    .box {
-      border:5px solid rgb(28, 9, 116);
-      width: fit-content;
-      padding: 5px;
-      background-color: rgb(22, 18, 43)
+      .box {
+        border: 5px solid rgb(28, 9, 116);
+        width: fit-content;
+        padding: 5px;
+        background-color: rgb(22, 18, 43)
+      }
 
-    }
+      .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 10px;
+      }
 
-    .container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: flex-start;
-      gap: 10px;
-    }
+      .button {
+        position: relative;
+        display: block;
+        width: 170px;
+        height: 30px;
+        border-radius: 18px;
+        background-color: #1c89ff;
+        border: solid 1px transparent;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 300;
+        cursor: pointer;
+        transition: all .1s ease-in-out;
+      }
 
-    .button {
-      position: relative;
-      display: block;
-      width: 170px;
-      height: 30px;
-      border-radius: 18px;
-      background-color: #1c89ff;
-      border: solid 1px transparent;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 300;
-      cursor: pointer;
-      transition: all .1s ease-in-out;
-    }
-
-    .button:hover {
+      .button:hover {
         background-color: transparent;
         border-color: #fff;
         transition: all .1s ease-in-out;
-    }
+      }
 
-    input {
-      background-color:#070c1b; color:aliceblue; border-radius:7px;
-    }
+      input {
+        background-color: #070c1b;
+        color: aliceblue;
+        border-radius: 7px;
+      }
 
-  </style>
+      .collapsible {
+        background-color: #4b535c;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: fit-content;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        border-radius: 15px;
+      }
+
+      .active,
+      .collapsible:hover {
+        background-color: #555;
+      }
+
+      .content {
+        padding: 0 18px;
+        background-color: rgb(23, 29, 41);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        width: fit-content;
+        border-radius: 5px;
+      }
+
+      .icon {
+        height: auto;
+        width: 25px;
+      }
+    </style>
   </head>
-  <body style="background-color: rgb(35, 41, 51);">
+  <body style="background-color: rgb(35, 41, 51); height: 2000px;">
     <h1 class="localized" id="title">__MSG_settingsTitle__</h1>
-
-    <h1  class="localized">Information</h1> <br>
+    <h1 class="localized">Information</h1>
+    <br>
     <div class="container" id="information">
       <div class="box">
-        <label class="localized" style="color:aliceblue;">Token</label> <br>
-        <input id="token" readonly ></input>
+        <label class="localized" style="color:aliceblue;">Token</label>
+        <br>
+        <input id="token" readonly></input>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;">Overlay Link</label> <br>
+        <label class="localized" style="color:aliceblue;">Overlay Link</label>
+        <br>
         <input id="link" readonly></input>
         <br>
         <br>
         <button class="button" id="create">Create instance</button>
       </div>
-
       <div class="box">
-        <label><b>Load settings from instance</b></label><br><br>
-        <label class="localized" style="color:aliceblue;">Token</label> <br>
-        <input id="newToken" ></input>
+        <label>
+          <b>Load settings from instance</b>
+        </label>
+        <br>
+        <br>
+        <label class="localized" style="color:aliceblue;">Token</label>
+        <br>
+        <input id="newToken"></input>
         <br>
         <br>
         <button class="button" id="load">Load Settings</button>
       </div>
-
       <div class="box">
-        <label><b>Integration - Nightbot custom command</b></label><br><br>
-        <label class="localized" style="color:aliceblue;">Message --> Message <i>link</i></label> <br>
-        <input id="nightbotMessage"  style="width: auto;" value="Current Playlist:"></input><br>
+        <label>
+          <b>Integration - Nightbot custom command</b>
+        </label>
         <br>
-        <label class="localized" style="color:aliceblue;">Stopped Message</label> <br>
-        <input id="nightbotStoppedMessage" style="width: auto;" value="The extension is currently stopped"></input><br>
+        <br><label class="localized" style="color:aliceblue;">Message --> Message <i>link</i>
+        </label>
         <br>
-        <label class="localized" style="color:aliceblue;">Error message</label> <br>
-        <input id="nightbotErrorMessage" style="width: auto;" value="Could not fetch current playlist !"></input><br>
+        <input id="nightbotMessage" style="width: auto;" value="Current Playlist:"></input>
         <br>
-        <textarea id="nightbotCommand"  readonly></textarea>
+        <br>
+        <label class="localized" style="color:aliceblue;">Stopped Message</label>
+        <br>
+        <input id="nightbotStoppedMessage" style="width: auto;" value="The extension is currently stopped"></input>
+        <br>
+        <br>
+        <label class="localized" style="color:aliceblue;">Error message</label>
+        <br>
+        <input id="nightbotErrorMessage" style="width: auto;" value="Could not fetch current playlist !"></input>
+        <br>
+        <br>
+        <br>
+        <label class="localized" style="color:aliceblue;"><b>Nightbot command</b></label><br>
+        <textarea id="nightbotCommand" readonly></textarea>
       </div>
-
     </div>
     <br>
     <br>
-    
-
-    <h1  class="localized">Extension behaviour</h1> <br>
+    <h1 class="localized">Extension behaviour</h1>
+    <br>
     <button class="button" id="save">Save Settings</button>
     <br>
-    <h2>Youtube Settings</h2>
-    <div class="container" id="Youtube">
-    <div class="box">
-      <label><b>Pause behavior</b></label><br><br>
-      <input type="checkbox" id="YTpauseDetection">
-      <label class="localized" style="color:aliceblue;">Detect video pause</label> <br>
-      <br>
-      <input type="checkbox" id="YTdisplayPause">
-      <label class="localized" style="color:aliceblue;">Display pause</label> <br>
-      <br>
-      <label>Pause text</label><br>
-      <textarea type="text" id="YTpauseText"></textarea>
+    <br>
+    <br>
+    <button type="button" class="collapsible">> Youtube Settings</button>
+    <div class="content">
+      <div class="container" id="Youtube" style="margin: 10px;">
+        <img src="./imgs/youtube.webp" class="icon">
+        <div class="box">
+          <label>
+            <b>Pause behavior</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTpauseDetection">
+          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTdisplayPause">
+          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <br>
+          <br>
+          <label>Pause text</label>
+          <br>
+          <textarea type="text" id="YTpauseText"></textarea>
+        </div>
+        <div class="box">
+          <label>
+            <b>Displayed information</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTdisplayTitle">
+          <label class="localized" style="color:aliceblue;">Display the video title</label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTdisplayChapter">
+          <label class="localized" style="color:aliceblue;">Display the video chapter</label>
+          <br>
+        </div>
+      </div>
     </div>
+    <br>
+    <button type="button" class="collapsible">> Spotify Settings</button>
+    <div class="content">
+      <div class="container" id="Spotify" style="margin: 10px;">
+        <img src="./imgs/spotify.webp" class="icon">
+        <div class="box">
+          <label>
+            <b>Pause behavior</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="SPpauseDetection">
+          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <br>
+          <br>
+          <input type="checkbox" id="SPdisplayPause">
+          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <br>
+          <br>
+          <label>Pause text</label>
+          <br>
+          <textarea type="text" id="SPpauseText"></textarea>
+        </div>
+        <div class="box">
+          <label>
+            <b>Displayed information</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="SPdisplayTitle">
+          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <br>
+          <br>
+          <input type="checkbox" id="SPdisplayChapter">
+          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <br>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button type="button" class="collapsible">> Soundcloud Settings</button>
+    <div class="content">
+      <div class="container" id="SoundCloud" style="margin: 10px;">
+        <img src="./imgs/soundcloud.webp" class="icon">
+        <div class="box">
+          <label>
+            <b>Pause behavior</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="SCpauseDetection">
+          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <br>
+          <br>
+          <input type="checkbox" id="SCdisplayPause">
+          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <br>
+          <br>
+          <label>Pause text</label>
+          <br>
+          <textarea type="text" id="SCpauseText"></textarea>
+        </div>
+        <div class="box">
+          <label>
+            <b>Displayed information</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="SCdisplayTitle">
+          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <br>
+          <br>
+          <input type="checkbox" id="SCdisplayChapter">
+          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <br>
+        </div>
+      </div>
+    </div>
+    <br>
+    <button type="button" class="collapsible">> Pretzel Settings</button>
+    <div class="content">
+      <div class="container" id="Pretzel" style="margin: 10px;">
+        <img src="./imgs/pretzel.webp" class="icon">
+        <div class="box">
+          <label>
+            <b>Pause behavior</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="PZpauseDetection">
+          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <br>
+          <br>
+          <input type="checkbox" id="PZdisplayPause">
+          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <br>
+          <br>
+          <label>Pause text</label>
+          <br>
+          <textarea type="text" id="PZpauseText"></textarea>
+        </div>
+        <div class="box">
+          <label>
+            <b>Displayed information</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="PZdisplayTitle">
+          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <br>
+          <br>
+          <input type="checkbox" id="PZdisplayChapter">
+          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <br>
+        </div>
+      </div>
+    </div>
+    <br>
+      <button type="button" class="collapsible">> Youtube Music Settings</button>
+    <div class="content">
+      <div class="container" id="YTMusic" style="margin: 10px;">
+        <img src="./imgs/ytmusic.png" class="icon">
+        <div class="box">
+          <label>
+            <b>Pause behavior</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTMpauseDetection">
+          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTMdisplayPause">
+          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <br>
+          <br>
+          <label>Pause text</label>
+          <br>
+          <textarea type="text" id="YTMpauseText"></textarea>
+        </div>
+        <div class="box">
+          <label>
+            <b>Displayed information</b>
+          </label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTMdisplayTitle">
+          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <br>
+          <br>
+          <input type="checkbox" id="YTMdisplayChapter">
+          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <br>
+        </div>
+      </div>
+      </div>  
+      <h1 class="localized">Theme editor</h1>
+      <div class="box" style="flex-direction:row; display:flex">
+        <div id="Settings" style="border: #1c89ff 5px solid;">
+          <div id="generalSettings">
+            <h3>Container</h3>
+            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="containerBackgroundColor"> <br>
+            <label class="localized" style="color:aliceblue;">Background Transparency:</label> <input type="number" id="containerTransparency" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="containerPadding" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="containerBorderRadius" style="width: 3em;"> <br>
+          </div>
+          <div id="titleSettings">
+            <h3>Title</h3>
+            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="titleBackgroundColor"> <br>
+            <label class="localized" style="color:aliceblue;">Background Transparency:</label> <input type="number" id="titleTransparency" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="titlePadding" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="titleBorderRadius" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="titleColor"> <br>
+            <label class="localized" style="color:aliceblue;">Text Transparency:</label> <input type="number" id="titleTextTransparency" style="width: 3em;"> <br>
 
-    <div class="box">
-      <label><b>Displayed information</b></label><br><br>
-      <input type="checkbox" id="YTdisplayTitle">
-      <label class="localized" style="color:aliceblue;">Display the video title</label> <br>
-      <br>
-      <input type="checkbox" id="YTdisplayChapter">
-      <label class="localized" style="color:aliceblue;">Display the video chapter</label> <br>
-    </div>
-
-    </div>
-    <script src="options.js"></script>
+          </div>
+          <div id="subtitleSettings">
+            <h3>Subtitles</h3>
+          </div>
+        </div>
+        <div id="preview" style="margin-left: 20px; flex-direction: row;">
+          <h3>Preview</h3>
+          <div>
+          <label class="localized" style="color:aliceblue;">Preview size in pixels: </label> <input type="number" value="900" id="psizex" style="width: 5em;"> <label style="color:aliceblue;">x</label> <input type="number" value="400" id="psizey" style="width: 5em;"> <button style="border-radius: 15px; color:aliceblue; background-color: #070c1b; border: #4b535c 2px solid;" id="confirmPreviewSize">Confirm</button>
+          </div>
+          <br>
+          <div>
+          <iframe srcdoc="" width="900" height="400" style="border:none; background-color: aliceblue;" id="previewIframe">
+          </div>
+          </iframe>
+        </div>
+      </div>
+      <script src="options.js"></script>
   </body>
 </html>

@@ -1,3 +1,6 @@
+
+
+
 manifest = chrome.runtime.getManifest();
 const server_data = {};
 //UTILITY
@@ -39,64 +42,10 @@ function compareData(d1, d2) {
     return false;
   }
 }
-function getChapters(data) {
-  let tracks = {};
-  let elements = data.descHTML.querySelectorAll("span, a");
-  let index = 0;
-  elements.forEach((element) => {
-    if (element.tagName.toLowerCase() == "a") {
-      let timestamp = element.innerHTML;
-      if (timestamp.replace(/[:0123456789]+/g, "") == "") {
-        let formatType = timestamp.split(":").length - 1;
-        if (formatType == 1) {
-          timestamp = "00:" + timestamp;
-        }
-        let a = timestamp.split(":");
-        timestamp = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
-        elementString = elements[index + 1].innerHTML.substring(1).replace("\n", "");
-        while ([" ", "-", "#"].includes(elementString.charAt(0))) elementString = elementString.substring(1);
-        tracks[timestamp] = elementString;
-      }
-    }
-    index = index + 1;
-  });
-  return tracks;
-}
 
-function getChapter(data) {
-  let timestamp = data.ytplayer.currentTime;
-  let i = 0;
-  let tracks = getChapters(data);
-  let chapterName;
-  Object.entries(tracks).forEach((entry) => {
-    if (timestamp >= entry[0]) {
-      if (!Object.entries(timestamps)[i + 1]) {
-        chapterName = entry[1];
-      } else {
-        if (Object.entries(timestamps)[i + 1][0] > timestamp) {
-          chapterName = entry[1];
-        }
-      }
-    }
-    i = i + 1;
-  });
-  if (chapterName) {
-    return chapterName;
-  } else {
-    return "";
-  }
-}
-
-function partialLoop(interation, fc, arg) {
-  if (iterations / interation == parseInt(iterations / interation)) {
-    return fc(arg);
-  } else {
-    return undefined;
-  }
-}
 
 //LOOPS
-console.log("Youtube scanner injected");
+console.log("Spotify scanner injected");
 chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
   console.log("My tab", tab);
   //DATA LOOP
@@ -105,7 +54,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     let url = window.location.href;
     let domain = new URL(url);
     domain = domain.hostname.replace("www.", "");
-    if (!domain == "youtube.com") {
+    if (!domain == "open.spotify.com") {
       return;
     }
 
@@ -122,27 +71,22 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     //console.log(data)
     iterations = iterations + 1;
-    let title = document.querySelector(".title.ytd-video-primary-info-renderer > yt-formatted-string.style-scope.ytd-video-primary-info-renderer");
-    let chapter = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls > div.ytp-chapter-container > button > div.ytp-chapter-title-content");
-    if (!data.chapters && data.descHTML) {
-      data.chapters = getChapters(data);
-    }
-    partialLoop(5, getChapters, data);
-    if (data.chapters && chapter.innerHTML == "") {
-      chapter2 = getChapter(data);
-    } else {
-      chapter2 = "";
-    }
+    let title = document.querySelector(`a[data-testid="context-item-link"]`).innerHTML
+    let chapter = (document.querySelector(`a[data-testid="context-item-info-artist"]`) ||  document.querySelector(`a[data-testid="context-item-info-show"]`))
+    data.title = title
+    data.chapterName = chapter.innerHTML
 
-    data.title = title ? title.innerHTML : false;
-    data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
-    data.descHTML = document.querySelector(".content.style-scope.ytd-video-secondary-info-renderer");
-    data.url = window.location.href;
-    data.ytplayer = document.getElementsByClassName("video-stream")[0];
-    data.timestamp = data.ytplayer.currentTime;
+    data.url = document.querySelector(`a[data-testid="context-item-link"]`).href
+    a = document.querySelector(`div[data-testid="playback-position"]`).innerHTML.split(":")
+    if(a.length  >2){
+      data.timestamp = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+    }else{
+      data.timestamp = (+a[0]) * 60 + (+a[1]);
+    } 
 
     let config = (await chrome.storage.local.get("settings")).settings;
-    detectPause = config.youtube.detectPause
+    detectPause = config.spotify.detectPause
+
     if (pauseState.lastTimestamp == data.timestamp) {
       pauseState.stallCounter = pauseState.stallCounter + 1;
     } else {
@@ -165,7 +109,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     let url = window.location.href;
     let domain = new URL(url);
     domain = domain.hostname.replace("www.", "");
-    if (!domain == "youtube.com") {
+    if (!domain == "open.spotify.com") {
       return;
     }
 
@@ -183,7 +127,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           url: data.url,
           version: manifest.version,
           paused: data.paused,
-          source: "Youtube"
+          source: "Spotify"
         }
         json = JSON.stringify(preJson)
         updating = true

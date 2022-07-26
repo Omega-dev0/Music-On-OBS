@@ -1,5 +1,7 @@
 const manifest = chrome.runtime.getManifest();
 
+const domains = ["youtube.com", "open.spotify.com","soundcloud.com","play.pretzel.rocks","music.youtube.com"];
+
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed");
 
@@ -44,8 +46,8 @@ chrome.runtime.onInstalled.addListener(async () => {
       },
     });
   }
-
-  if (!(await chrome.storage.local.get("settings")).settings) {
+  settings = (await chrome.storage.local.get("settings")).settings;
+  if (!settings) {
     chrome.storage.local.set({
       settings: {
         token: "",
@@ -55,6 +57,49 @@ chrome.runtime.onInstalled.addListener(async () => {
           displayPause: false,
           pausedText: "The music is currently paused",
 
+          displayTitle: true,
+          displayChapter: true,
+        },
+      },
+    });
+  } else {
+    chrome.storage.local.set({
+      settings: {
+        token: settings.token,
+        serverLink: server_url,
+        theme: "default",
+        youtube: settings.youtube ? settings.youtube : {
+            detectPause: true,
+            displayPause: false,
+            pausedText: "The music is currently paused",
+            displayTitle: true,
+            displayChapter: true,
+        },
+        spotify: settings.spotify ? settings.spotify : {
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
+        soundcloud: settings.soundcloud ? settings.soundcloud : {
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
+        pretzel: settings.pretzel ? settings.pretzel : {
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
+        ytmusic: settings.ytmusic ? settings.ytmusic : {
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
           displayTitle: true,
           displayChapter: true,
         },
@@ -155,28 +200,27 @@ async function processMsg(msg, sender) {
 }
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  console.log("New message:", msg.text)
+  console.log("New message:", msg.text);
   processMsg(msg, sender).then(sendResponse);
   return true; // keep the messaging channel open for sendResponse
 });
 
 async function updateTabs() {
   new_scanners = [];
-  chrome.tabs.query({}, function(tabs) {
-  for (var i = 0; i < tabs.length; i++) {
-      tab = tabs[i]
+  chrome.tabs.query({}, function (tabs) {
+    for (var i = 0; i < tabs.length; i++) {
+      tab = tabs[i];
       if (tab && tab.url) {
-
         let domain = new URL(tab.url);
         domain = domain.hostname.replace("www.", "");
-        if (domain == "youtube.com") {
+        if (domains.includes(domain)) {
+          console.log(tab.title)
           title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
-        new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
+          new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
         }
-        
       }
-  }
-  chrome.storage.local.set({ scanners: new_scanners });
+    }
+    chrome.storage.local.set({ scanners: new_scanners });
   });
 
   //console.log("Scanners:", new_scanners)
@@ -225,7 +269,7 @@ async function loop() {
 }
 
 chrome.runtime.onStartup.addListener(async () => {
-  console.log("Startup")
+  console.log("Startup");
   chrome.storage.local.set({ activeScanner: "0" });
-})
+});
 setInterval(loop, 1000);

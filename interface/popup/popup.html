@@ -1,41 +1,118 @@
 <!DOCTYPE html>
 <html>
   <head>
-   
     <style>
-      option,select {
-        color: #FFFFFF;
-        background-color:rgba(2, 3, 20, 0.25)
+      option,
+      select {
+        color: #ffffff;
+        background-color: rgba(2, 3, 20, 0.25);
       }
 
       .warning {
-        border-radius: 15px; background-color: rgba(148, 111, 10, 0.836); color: aliceblue; font-size:10px
+        border-radius: 15px;
+        background-color: rgba(148, 111, 10, 0.836);
+        color: aliceblue;
+        font-size: 10px;
+      }
+
+      .icon-youtube {
+        background-image: url("/icons/youtube.webp");
+        width: 25px;
+        height: 10px;
       }
     </style>
   </head>
-  <body style="background-color: rgb(35, 41, 51);">
-    <br>
+  <body style="background-color: rgb(35, 41, 51)">
+    <br />
     <h3 style="color: aliceblue">Music on Stream</h3>
-    <br>
-    <label class="localized" style="color: aliceblue" ><b>Selected tab</b></label>
+    <br />
+    <label class="localized" style="color: aliceblue"><b>Selected tab</b></label>
     <div>
-    <select name="themes" id="tabSelector" style="border: none;">
-    
-    </select>
+      <select name="themes" id="tabSelector" style="border: none"></select>
     </div>
-    <br>
-    <br>
-    <button class="localized" id="start" style='background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%); border-radius: 8px; border-style: none; box-sizing: border-box; color: #FFFFFF; cursor: pointer; flex-shrink: 0; font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif; font-size: 12px; font-weight: 500; height: 35px; padding: 0 1.6rem; text-align: center; text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px; transition: all .5s; width: 80px;'>Start</button>
-    <button class="localized" id="stop" style='background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%); border-radius: 8px; border-style: none; box-sizing: border-box; color: #FFFFFF; cursor: pointer; flex-shrink: 0; font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif; font-size: 12px; font-weight: 500; height: 35px; padding: 0 1.6rem; text-align: center; text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px; transition: all .5s; width: 80px; '>Stop</button>
-    <button class="localized" id="update" style='background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%); border-radius: 8px; border-style: none; box-sizing: border-box; color: #FFFFFF; cursor: pointer; flex-shrink: 0; font-family: "Inter UI","SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif; font-size: 12px; font-weight: 500; height: 25px; padding: 0 1.6rem; text-align: center; text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px; transition: all .5s; width: 165px; margin-top: 5px;'>Update</button>
-    <br>
-    <br>
+    <br />
+    <br />
+    <button
+      class="localized"
+      id="start"
+      style="
+        background-image: linear-gradient(92.88deg, #455eb5 9.16%, #5643cc 43.89%, #673fd7 64.72%);
+        border-radius: 8px;
+        border-style: none;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        flex-shrink: 0;
+        font-family: 'Inter UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        height: 35px;
+        padding: 0 1.6rem;
+        text-align: center;
+        text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+        transition: all 0.5s;
+        width: 80px;
+      "
+    >
+      Start
+    </button>
+    <button
+      class="localized"
+      id="stop"
+      style="
+        background-image: linear-gradient(92.88deg, #455eb5 9.16%, #5643cc 43.89%, #673fd7 64.72%);
+        border-radius: 8px;
+        border-style: none;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        flex-shrink: 0;
+        font-family: 'Inter UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        height: 35px;
+        padding: 0 1.6rem;
+        text-align: center;
+        text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+        transition: all 0.5s;
+        width: 80px;
+      "
+    >
+      Stop
+    </button>
+    <button
+      class="localized"
+      id="update"
+      style="
+        background-image: linear-gradient(92.88deg, #455eb5 9.16%, #5643cc 43.89%, #673fd7 64.72%);
+        border-radius: 8px;
+        border-style: none;
+        box-sizing: border-box;
+        color: #ffffff;
+        cursor: pointer;
+        flex-shrink: 0;
+        font-family: 'Inter UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        height: 25px;
+        padding: 0 1.6rem;
+        text-align: center;
+        text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+        transition: all 0.5s;
+        width: 165px;
+        margin-top: 5px;
+      "
+    >
+      Update
+    </button>
+    <br />
+    <br />
     <h5 class="localized" id="status" style="color: red">Not running</h5>
-    
-    <div id="display" style="background-color: rgb(19, 23, 29); border-radius: 10px;">
-      <p style="color: rgb(216, 208, 252); padding: 3px;">
+
+    <div id="display" style="background-color: rgb(19, 23, 29); border-radius: 10px">
+      <p style="color: rgb(216, 208, 252); padding: 3px">
         <b id="display_title"></b>
-        <br>
+        <br />
         <i id="display_chapter"></i>
       </p>
     </div>
