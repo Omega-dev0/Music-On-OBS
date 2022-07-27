@@ -493,5 +493,5 @@ document.getElementById("savePreset").addEventListener("click", async ()=>{
   chrome.storage.local.set({
     presets: presets
   })
-  chrome.storage.local.set({ updateRequired: true });
+  setTimeout(100,chrome.storage.local.set({ updateRequired: true }));
 })
