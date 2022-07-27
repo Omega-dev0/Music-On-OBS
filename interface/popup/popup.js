@@ -9,12 +9,14 @@ document.getElementById("start").addEventListener("click", async () => {
 
 document.getElementById("stop").addEventListener("click", async () => {
   chrome.storage.local.set({ activeScanner: "0" });
-
+  let presets = (await chrome.storage.local.get("presets")).presets
+  let preset = (await chrome.storage.local.get("usedPreset")).usedPreset
   preJson = {
     type: "full",
     title: "The extension is stopped",
     chapter: "",
     url: "",
+    theme: presets[preset] || presets["default"],
     version: manifest.version,
     paused: false,
     source: "STOPPED",
@@ -83,6 +85,10 @@ async function onOpen() {
     document.getElementById("tabSelector").value = activeScanner;
   }
 }
+document.getElementById("selectedPreset").addEventListener("change",()=>{
+  chrome.storage.local.set({ usedPreset:document.getElementById("selectedPreset").value });
+  chrome.storage.local.set({ updateRequired: true });
+})
 
 setInterval(loop, 1000);
 loop();

@@ -1,10 +1,52 @@
 const manifest = chrome.runtime.getManifest();
 
-const domains = ["youtube.com", "open.spotify.com","soundcloud.com","play.pretzel.rocks","music.youtube.com"];
+const domains = ["youtube.com", "open.spotify.com", "soundcloud.com", "play.pretzel.rocks", "music.youtube.com"];
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed");
-
+  let defaultPreset = {
+    spacing: 35,
+    containerBackgroundColor: {
+      R: 0,
+      G: 0,
+      B: 0,
+      A: "0",
+    },
+    containerPadding: "0",
+    containerBorderRadius: "0",
+    titleBackgroundColor: {
+      R: 0,
+      G: 0,
+      B: 0,
+      A: "0.7",
+    },
+    titlePadding: "10",
+    titleBorderRadius: "15",
+    titleColor: {
+      R: 255,
+      G: 255,
+      B: 255,
+      A: "1",
+    },
+    titleSize: "60",
+    titleFont: "Arial, Helvetica, sans-serif",
+    subtitleBackgroundColor: {
+      R: 0,
+      G: 0,
+      B: 0,
+      A: "0.7",
+    },
+    subtitlePadding: "10",
+    subtitleBorderRadius: "15",
+    subtitleColor: {
+      R: 255,
+      G: 255,
+      B: 255,
+      A: "1",
+    },
+    subtitleSize: "40",
+    subtitleFont: "Arial, Helvetica, sans-serif",
+  }
   let scanners = (await chrome.storage.local.get("scanners")).scanners;
   if (!scanners) {
     chrome.storage.local.set({ scanners: [] });
@@ -14,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     chrome.storage.local.set({ activeScanner: "0" });
   }
 
-  const server_url = "http://129.151.84.152:3000";
+  const server_url = "https://OBS-Music-Display.omega77073.repl.co";
 
   chrome.storage.local.set({ server_url: server_url });
 
@@ -67,44 +109,77 @@ chrome.runtime.onInstalled.addListener(async () => {
       settings: {
         token: settings.token,
         serverLink: server_url,
-        theme: "default",
-        youtube: settings.youtube ? settings.youtube : {
-            detectPause: true,
-            displayPause: false,
-            pausedText: "The music is currently paused",
-            displayTitle: true,
-            displayChapter: true,
-        },
-        spotify: settings.spotify ? settings.spotify : {
-          detectPause: true,
-          displayPause: false,
-          pausedText: "The music is currently paused",
-          displayTitle: true,
-          displayChapter: true,
-        },
-        soundcloud: settings.soundcloud ? settings.soundcloud : {
-          detectPause: true,
-          displayPause: false,
-          pausedText: "The music is currently paused",
-          displayTitle: true,
-          displayChapter: true,
-        },
-        pretzel: settings.pretzel ? settings.pretzel : {
-          detectPause: true,
-          displayPause: false,
-          pausedText: "The music is currently paused",
-          displayTitle: true,
-          displayChapter: true,
-        },
-        ytmusic: settings.ytmusic ? settings.ytmusic : {
-          detectPause: true,
-          displayPause: false,
-          pausedText: "The music is currently paused",
-          displayTitle: true,
-          displayChapter: true,
-        },
+        youtube: settings.youtube
+          ? settings.youtube
+          : {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        spotify: settings.spotify
+          ? settings.spotify
+          : {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        soundcloud: settings.soundcloud
+          ? settings.soundcloud
+          : {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        pretzel: settings.pretzel
+          ? settings.pretzel
+          : {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        ytmusic: settings.ytmusic
+          ? settings.ytmusic
+          : {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
       },
     });
+  }
+
+  presets = (await chrome.storage.local.get("presets")).presets;
+  if (!presets) {
+    chrome.storage.local.set({
+      presets: {
+        default: defaultPreset,
+        preset1: defaultPreset,
+        preset2: defaultPreset,
+        preset3: defaultPreset,
+        preset4: defaultPreset,
+        preset5: defaultPreset,
+        preset6: defaultPreset,
+        preset7: defaultPreset,
+        preset8: defaultPreset,
+        preset9: defaultPreset,
+        preset10: defaultPreset,
+      },
+    });
+  }
+
+  usedPreset = (await chrome.storage.local.get("usedPreset")).usedPreset;
+  if (!usedPreset) {
+    chrome.storage.local.set({ usedPreset: "default" });
   }
 });
 
@@ -214,7 +289,7 @@ async function updateTabs() {
         let domain = new URL(tab.url);
         domain = domain.hostname.replace("www.", "");
         if (domains.includes(domain)) {
-          console.log(tab.title)
+          console.log(tab.title);
           title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
           new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
         }

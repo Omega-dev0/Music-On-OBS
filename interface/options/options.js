@@ -4,6 +4,8 @@ debounce = {
   create: false,
 };
 
+
+
 //Customization personalization:
 //-Espace titre/chapitre
 //-Couleur text
@@ -330,47 +332,114 @@ function onLoad() {
   }
 }
 
-function hexToRGBA(color,transparency){
+function hexToRGBA(colorEID,transparencyEID){
+  color = document.getElementById(colorEID).value
+  transparency = document.getElementById(transparencyEID).value
   const r = parseInt(color.substr(1,2), 16)
   const g = parseInt(color.substr(3,2), 16)
   const b = parseInt(color.substr(5,2), 16)
-  return (`${r}, ${g}, ${b}, ${transparency}`)
+  return {R:r,G:g,B:b,A:transparency}
+}
+
+function RGBAtoHex(RGBA){
+  r = parseInt(RGBA.R).toString(16)
+  g = parseInt(RGBA.G).toString(16)
+  b = parseInt(RGBA.B).toString(16)
+
+  if (r.length == 1)
+    r = "0" + r;
+  if (g.length == 1)
+    g = "0" + g;
+  if (b.length == 1)
+    b = "0" + b;
+
+  return `#`+r+g+b
 }
 
 
+function getPreviewSettings(){
+  data = {
+    containerBackgroundColor: hexToRGBA("containerBackgroundColor", "containerTransparency"),
+    containerPadding: document.getElementById("containerPadding").value,
+    containerBorderRadius: document.getElementById("containerBorderRadius").value,
+    spacing: document.getElementById("spacing").value,
+
+    titleBackgroundColor: hexToRGBA("titleBackgroundColor", "titleTransparency"),
+    titlePadding: document.getElementById("titlePadding").value,
+    titleBorderRadius: document.getElementById("titleBorderRadius").value,
+    titleColor: hexToRGBA("titleColor","titleTextTransparency"),
+    titleSize: document.getElementById("titleSize").value,
+    titleFont: document.getElementById("titleFont").value,
+    
+    subtitleBackgroundColor: hexToRGBA("subtitleBackgroundColor", "subtitleTransparency"),
+    subtitlePadding: document.getElementById("subtitlePadding").value,
+    subtitleBorderRadius: document.getElementById("subtitleBorderRadius").value,
+    subtitleColor: hexToRGBA("subtitleColor","subtitleTextTransparency"),
+    subtitleSize: document.getElementById("subtitleSize").value,
+    subtitleFont: document.getElementById("subtitleFont").value,
+  }
+  return data
+}
+
+function loadPreviewData(data){
+  document.getElementById("containerBackgroundColor").value = RGBAtoHex(data.containerBackgroundColor)
+  document.getElementById("containerTransparency").value = data.containerBackgroundColor.A
+  document.getElementById("containerPadding").value = data.containerPadding
+  document.getElementById("containerBorderRadius").value = data.containerBorderRadius
+  document.getElementById("spacing").value = data.spacing
+
+  document.getElementById("titleBackgroundColor").value = RGBAtoHex(data.titleBackgroundColor)
+  document.getElementById("titleTransparency").value = data.titleBackgroundColor.A
+  document.getElementById("titlePadding").value = data.titlePadding
+  document.getElementById("titleBorderRadius").value = data.titleBorderRadius
+  document.getElementById("titleColor").value = RGBAtoHex(data.titleColor)
+  document.getElementById("titleTextTransparency").value = data.titleColor.A
+  document.getElementById("titleSize").value = data.titleSize
+  document.getElementById("titleFont").value = data.titleFont
+
+  document.getElementById("subtitleBackgroundColor").value = RGBAtoHex(data.subtitleBackgroundColor)
+  document.getElementById("subtitleTransparency").value = data.subtitleBackgroundColor.A
+  document.getElementById("subtitlePadding").value = data.subtitlePadding
+  document.getElementById("subtitleBorderRadius").value = data.subtitleBorderRadius
+  document.getElementById("subtitleColor").value = RGBAtoHex(data.subtitleColor)
+  document.getElementById("subtitleTextTransparency").value = data.subtitleColor.A
+  document.getElementById("subtitleSize").value = data.subtitleSize
+  document.getElementById("subtitleFont").value = data.subtitleFont
+
+  previewUpdate()
+}
+
 function previewUpdate() {
+  data = getPreviewSettings()
   let html = `
   <html>
   <head>
   <style>
   h1 {
-    color: rgba(247, 251, 255, 0.9); 
-    font-size:60px; 
-    background-color: rgba(0, 0, 0, 0.8);  
-    border-radius: 20px;  
-    text-align: left; 
-    padding-left: 35px; 
-    width: fit-content; 
-    padding-right: 35px; 
-    padding-top: 10px; 
-    padding-bottom: 10px;
+    color: rgba(${data.titleColor.R}, ${data.titleColor.G}, ${data.titleColor.B}, ${data.titleColor.A}); 
+    font-size:${data.titleSize}px; 
+    background-color: rgba(${data.titleBackgroundColor.R}, ${data.titleBackgroundColor.G}, ${data.titleBackgroundColor.B}, ${data.titleBackgroundColor.A});   
+    border-radius: ${data.titleBorderRadius}px;  
+    padding: ${data.titlePadding}px;
+    font-family: ${data.titleFont};
+    width: fit-content;
+    margin-bottom: 0px;
   }
   h2 {
-    color: rgba(247, 251, 255, 0.9); 
-    font-size:60px; 
-    background-color: rgba(0, 0, 0, 0.8);  
-    border-radius: 20px;  
-    text-align: left; 
-    padding-left: 35px; 
-    width: fit-content; 
-    padding-right: 35px; 
-    padding-top: 10px; 
-    padding-bottom: 10px;
+    color: rgba(${data.subtitleColor.R}, ${data.subtitleColor.G}, ${data.subtitleColor.B}, ${data.subtitleColor.A}); 
+    font-size:${data.subtitleSize}px; 
+    background-color: rgba(${data.subtitleBackgroundColor.R}, ${data.subtitleBackgroundColor.G}, ${data.subtitleBackgroundColor.B}, ${data.subtitleBackgroundColor.A});   
+    border-radius: ${data.subtitleBorderRadius}px;  
+    padding: ${data.subtitlePadding}px;
+    font-family: ${data.subtitleFont};
+    width: fit-content;
+    margin-top: ${data.spacing}px; 
   }
   .container {
-    background-color: rgba(1,100,200, 0);
+    background-color: rgba(${data.containerBackgroundColor.R}, ${data.containerBackgroundColor.G}, ${data.containerBackgroundColor.B}, ${data.containerBackgroundColor.A});
 	  width: fit-content;
-	  padding: 15px;
+	  padding: ${data.containerPadding}px;
+    border-radius: ${data.containerBorderRadius}px;
   }
   </style>
   </head>
@@ -384,12 +453,45 @@ function previewUpdate() {
   `;
   document.getElementById("previewIframe").srcdoc = html;
 }
-previewUpdate();
+
+onLoad();
+setTimeout(makeCommand, 100);
+
+previewInputs = document.getElementsByClassName("previewInput")
+for (var i = 0; i < previewInputs.length; i++) {
+  input = previewInputs[i]
+  if(input.nodeName.toLowerCase() == "button"){
+    input.onclick = previewUpdate
+  }else{
+    input.onchange = previewUpdate
+  }
+}
 
 document.getElementById("confirmPreviewSize").addEventListener("click",()=>{
   document.getElementById("previewIframe").width = document.getElementById("psizex").value
   document.getElementById("previewIframe").height = document.getElementById("psizey").value
+  previewUpdate()
 })
 
-onLoad();
-setTimeout(makeCommand, 100);
+async function loadPreviewSettings(preset){
+  let presets = (await chrome.storage.local.get("presets")).presets
+  loadPreviewData(presets[preset])
+}
+
+
+loadPreviewSettings("preset1")
+
+document.getElementById("selectedPreset").addEventListener("change",()=>{
+  console.log("changing preset")
+  loadPreviewSettings(document.getElementById("selectedPreset").value)
+})
+
+document.getElementById("savePreset").addEventListener("click", async ()=>{
+  let settings = getPreviewSettings()
+  let presets = (await chrome.storage.local.get("presets")).presets
+  presets[document.getElementById("selectedPreset").value] = settings
+  chrome.storage.local.set({
+    presets: presets
+  })
+  chrome.storage.local.set({ updateRequired: true });
+})

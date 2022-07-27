@@ -121,6 +121,9 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
       //State change that matters --> Update the server
 
       if (updating == false) {
+        let presets = (await chrome.storage.local.get("presets")).presets
+        let preset = (await chrome.storage.local.get("usedPreset")).usedPreset
+
         preJson = {
           type: "full",
           title: data.title,
@@ -128,6 +131,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           url: data.url,
           version: manifest.version,
           paused: data.paused,
+          theme: presets[preset] || presets["default"],
           source: "Soundcloud"
         }
         json = JSON.stringify(preJson)

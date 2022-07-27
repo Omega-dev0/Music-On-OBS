@@ -354,26 +354,73 @@
       </div>  
       <h1 class="localized">Theme editor</h1>
       <div class="box" style="flex-direction:row; display:flex">
-        <div id="Settings" style="border: #1c89ff 5px solid;">
+        <div id="Settings" style="width: 200px;">
           <div id="generalSettings">
             <h3>Container</h3>
-            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="containerBackgroundColor"> <br>
-            <label class="localized" style="color:aliceblue;">Background Transparency:</label> <input type="number" id="containerTransparency" style="width: 3em;"> <br>
-            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="containerPadding" style="width: 3em;"> <br>
-            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="containerBorderRadius" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="containerBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="containerTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="containerPadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="containerBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Spacing (px):</label><input type="number" id="spacing" style="width: 4em;" class="previewInput"> <br>
           </div>
           <div id="titleSettings">
+            <br>
             <h3>Title</h3>
-            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="titleBackgroundColor"> <br>
-            <label class="localized" style="color:aliceblue;">Background Transparency:</label> <input type="number" id="titleTransparency" style="width: 3em;"> <br>
-            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="titlePadding" style="width: 3em;"> <br>
-            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="titleBorderRadius" style="width: 3em;"> <br>
-            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="titleColor"> <br>
-            <label class="localized" style="color:aliceblue;">Text Transparency:</label> <input type="number" id="titleTextTransparency" style="width: 3em;"> <br>
+            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="titleBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="titleTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="titlePadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="titleBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="titleColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Text Opacity:</label> <input type="number" id="titleTextTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Font size (px):</label> <input type="number" id="titleSize" style="width: 3em;" class="previewInput"> <br>
+
+            
+            <label class="localized" style="color:aliceblue;">Font:</label> <br>
+            <select id="titleFont" style="display: block;" class="previewInput">
+              <option style='font-family: Georgia, serif' value='Georgia, serif'>Georgia</option>
+              <option style='font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif' value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
+              <option style='font-family: "Times New Roman", Times, serif' value='"Times New Roman", Times, serif' >Times New Roman</option>
+              <option style='font-family: Arial, Helvetica, sans-serif' value='Arial, Helvetica, sans-serif' >Arial</option>
+              <option style='font-family: "Arial Black", Gadget, sans-serif' value='"Arial Black", Gadget, sans-serif'>Arial Black</option>
+              <option style='font-family: "Comic Sans MS", cursive, sans-serif' value='"Comic Sans MS", cursive, sans-serif'>Comic Sans</option>
+              <option style='font-family: Impact, Charcoal, sans-serif' value='Impact, Charcoal, sans-serif'>Impact</option>
+              <option style='font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif' value='"Lucida Sans Unicode", "Lucida Grande", sans-serif'>Lucida Sans</option>
+              <option style='font-family: Tahoma, Geneva, sans-serif' value='Tahoma, Geneva, sans-serif'>Tahoma</option>
+              <option style='font-family: "Trebuchet MS", Helvetica, sans-serif' value=>Trebuchet</option>
+              <option style='font-family: Verdana, Geneva, sans-serif' value='Verdana, Geneva, sans-serif'>Verdana</option>
+              <option style='font-family: "Courier New", Courier, monospace' value='"Courier New", Courier, monospace'>Courier</option>
+              <option style='font-family: "Lucida Console", Monaco, monospace' value='"Lucida Console", Monaco, monospace'>Lucida Console</option>
+            </select>
+
 
           </div>
           <div id="subtitleSettings">
-            <h3>Subtitles</h3>
+            <br>
+            <h3>Subtitle</h3>
+            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="subtitleBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="subtitleTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="subtitlePadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="subtitleBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="subtitleColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Text Opacity:</label> <input type="number" id="subtitleTextTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">Font size (px):</label> <input type="number" id="subtitleSize" style="width: 3em;" class="previewInput"> <br>
+
+            <label class="localized" style="color:aliceblue;">Font:</label> <br>
+            <select id="subtitleFont" style="display: block;" class="previewInput">
+              <option style='font-family: Georgia, serif' value='Georgia, serif'>Georgia</option>
+              <option style='font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif' value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
+              <option style='font-family: "Times New Roman", Times, serif' value='"Times New Roman", Times, serif' >Times New Roman</option>
+              <option style='font-family: Arial, Helvetica, sans-serif' value='Arial, Helvetica, sans-serif' >Arial</option>
+              <option style='font-family: "Arial Black", Gadget, sans-serif' value='"Arial Black", Gadget, sans-serif'>Arial Black</option>
+              <option style='font-family: "Comic Sans MS", cursive, sans-serif' value='"Comic Sans MS", cursive, sans-serif'>Comic Sans</option>
+              <option style='font-family: Impact, Charcoal, sans-serif' value='Impact, Charcoal, sans-serif'>Impact</option>
+              <option style='font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif' value='"Lucida Sans Unicode", "Lucida Grande", sans-serif'>Lucida Sans</option>
+              <option style='font-family: Tahoma, Geneva, sans-serif' value='Tahoma, Geneva, sans-serif'>Tahoma</option>
+              <option style='font-family: "Trebuchet MS", Helvetica, sans-serif' value=>Trebuchet</option>
+              <option style='font-family: Verdana, Geneva, sans-serif' value='Verdana, Geneva, sans-serif'>Verdana</option>
+              <option style='font-family: "Courier New", Courier, monospace' value='"Courier New", Courier, monospace'>Courier</option>
+              <option style='font-family: "Lucida Console", Monaco, monospace' value='"Lucida Console", Monaco, monospace'>Lucida Console</option>
+            </select>
           </div>
         </div>
         <div id="preview" style="margin-left: 20px; flex-direction: row;">
@@ -384,8 +431,25 @@
           <br>
           <div>
           <iframe srcdoc="" width="900" height="400" style="border:none; background-color: aliceblue;" id="previewIframe">
-          </div>
+          
           </iframe>
+          <br>
+          <label class="localized" style="color:aliceblue;">Selected Preset: </label>
+          <select id="selectedPreset">
+            <option value="preset1">Preset 1</option>
+            <option value="preset2">Preset 2</option>
+            <option value="preset3">Preset 3</option>
+            <option value="preset4">Preset 4</option>
+            <option value="preset5">Preset 5</option>
+            <option value="preset6">Preset 6</option>
+            <option value="preset7">Preset 7</option>
+            <option value="preset8">Preset 8</option>
+            <option value="preset9">Preset 9</option>
+            <option value="preset10">Preset 10</option>
+          </select>
+          <br>
+          <button id="savePreset">Save</button>
+        </div>
         </div>
       </div>
       <script src="options.js"></script>
