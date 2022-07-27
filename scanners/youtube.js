@@ -124,6 +124,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     iterations = iterations + 1;
     let title = document.querySelector(".title.ytd-video-primary-info-renderer > yt-formatted-string.style-scope.ytd-video-primary-info-renderer");
     let chapter = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls > div.ytp-chapter-container > button > div.ytp-chapter-title-content");
+    
     if (!data.chapters && data.descHTML) {
       data.chapters = getChapters(data);
     }
@@ -136,7 +137,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     data.title = title ? title.innerHTML : false;
     data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
-    data.descHTML = document.querySelector(".content.style-scope.ytd-video-secondary-info-renderer");
+    data.descHTML = document.querySelector(".style-scope.ytd-video-secondary-info-renderer") || document.querySelector("content.style-scope.ytd-video-secondary-info-renderer");
     data.url = window.location.href;
     data.ytplayer = document.getElementsByClassName("video-stream")[0];
     data.timestamp = data.ytplayer.currentTime;
