@@ -1,8 +1,219 @@
 {
+  
   "settingsTitle": {
     "message": "Settings"
   },
+  "OPTIONScontactingServer": {
+    "message": "Contacting server..."
+  },
+  "OPTIONSsaved": {
+    "message": "Settings saved !"
+  },
+  "OPTIONSnotFound": {
+    "message": "Instance not found"
+  },
+  "OPTIONSsavedFailed": {
+    "message": "Save failed"
+  },
+  "OPTIONSsettingsLoaded": {
+    "message": "Settings Loaded !"
+  },
+  "OPTIONSrequestFailed": {
+    "message": "Request Failed !"
+  },
+  "OPTIONScreated": {
+    "message": "Instance created"
+  },
+  "OPTIONScreationFailed": {
+    "message": "Creation failed !"
+  },
   "extensionName": {
     "message": "Music on Stream"
+  },
+  "information":{
+    "message":"Information"
+  },
+  "token":{
+    "message":"Token"
+  },
+  "overlayLink":{
+    "message":"Overlay Link"
+  },
+  "createInstance":{
+    "message":"Create instance"
+  },
+  "loadFromInstance":{
+    "message":"Load settings from instance"
+  },
+  "loadSettings":{
+    "message":"Load Settings"
+  },
+  "documentationOnTheExtension":{
+    "message":"Documentation on the extension "
+  },
+  "here":{
+    "message":"here"
+  },
+  "integrationNightbotCC":{
+    "message":"Integration - Nightbot custom command"
+  },
+  "stoppedMessage":{
+    "message":"Stopped Message"
+  },
+  "link":{
+    "message":"link"
+  },
+  "errorMessage":{
+    "message":"Error message"
+  },
+  "currentPlaylistText":{
+    "message":"Current Playlist:"
+  },
+  "stoppedText":{
+    "message":"The extension is currently stopped"
+  },
+  "couldNotFetchText":{
+    "message":"Could not fetch current playlist !"
+  },
+  "nightbotCommand":{
+    "message":"Nightbot command"
+  },
+  "extensionBehaviour":{
+    "message":"Extension behaviour"
+  },
+  "saveSettings":{
+    "message":"Save Settings"
+  },
+  "ytSettings":{
+    "message":"Youtube Settings"
+  },
+  "detectVideoPause":{
+    "message":"Detect video pause"
+  },
+  "displayPause":{
+    "message":"Display pause"
+  },
+  "pauseText":{
+    "message":"Pause text"
+  },
+  "pauseBehavior":{
+    "message":"Pause behaviour"
+  },
+  "displayedInformation":{
+    "message":"Displayed information"
+  },
+  "displayVideoTitle":{
+    "message":"Display the video title"
+  },
+  "displayVideoChapter":{
+    "message":"Display the video chapter"
+  },
+  "displaySongTitle":{
+    "message":"Display the song title"
+  },
+  "displaySongChapter":{
+    "message":"Display the song author"
+  },
+  "spotSettings":{
+    "message":"Spotify Settings"
+  },
+  "soundSettings":{
+    "message":"Soundcloud Settings"
+  },
+  "pretSettings":{
+    "message":"Pretzel Settings"
+  },
+  "ytmSettings":{
+    "message":"Youtube Music Settings"
+  },
+  "ytmWarning":{
+    "message":"YOUTUBE MUSIC IS NOT FULLY SUPPORTED DUE TO POOR YOUTUBE API AND MAY HAVE BUGS/REFRESH ISSUES"
+  },
+  "themeEditor":{
+    "message":"Theme editor"
+  },
+  "title":{
+    "message":"Title"
+  },
+  "container":{
+    "message":"Container"
+  },
+  "subtitle":{
+    "message":"Subtitle"
+  },
+  "bgColor":{
+    "message":"Background Color"
+  },
+  "bgOpacity":{
+    "message":"Background Opacity"
+  },
+  "padding":{
+    "message":"Padding"
+  },
+  "bRadius":{
+    "message":"Border Radius"
+  },
+  "spacing":{
+    "message":"Spacing"
+  },
+  "font":{
+    "message":"Font"
+  },
+  "textColor":{
+    "message":"Text Color"
+  },
+  "textOpacity":{
+    "message":"Text Opacity"
+  },
+  "fontSize":{
+    "message":"Font size"
+  },
+  "selectedPreset":{
+    "message":"Selected Preset"
+  },
+  "save":{
+    "message":"Save"
+  },
+  "myTitle":{
+    "message":"My title"
+  },
+  "mySubtitle":{
+    "message":"The author of this song"
+  },
+  "preview":{
+    "message":"Preview"
+  },
+  "previewSize":{
+    "message":"Preview size in pixels"
+  },
+  "confirm":{
+    "message":"Confirm"
+  },
+  "themePreset":{
+    "message":"Theme preset"
+  },
+  "selectedTab":{
+    "message":"Selected tab"
+  },
+  "start":{
+    "message":"Start"
+  },
+  "stop":{
+    "message":"Stop"
+  },
+  "update":{
+    "message":"Update"
+  },
+  "notRunning":{
+    "message":"Not running"
+  },
+  "paused":{
+    "message":"Paused"
+  },
+  "runningOnTab":{
+    "message":"Running on tab"
+  },
+  "theExtensionIsStopped":{
+    "message":"The extension is stopped"
   }
 }

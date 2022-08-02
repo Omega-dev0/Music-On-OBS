@@ -26,7 +26,7 @@
     <br />
     <h3 style="color: aliceblue">Music on Stream</h3>
     <br />
-    <label class="localized" style="color: aliceblue"><b>Theme preset:</b></label><br>
+    <label class="localized" style="color: aliceblue"><b class="localized">__MSG_themePreset__:</b></label><br>
     <select id="selectedPreset">
       <option value="preset1">Preset 1</option>
       <option value="preset2">Preset 2</option>
@@ -41,7 +41,7 @@
     </select>
     <br>
     <br>
-    <label class="localized" style="color: aliceblue"><b>Selected tab</b></label>
+    <label class="localized" style="color: aliceblue"><b class="localized">__MSG_selectedTab__</b></label>
     <div>
       <select name="themes" id="tabSelector" style="border: none"></select>
     </div>
@@ -69,7 +69,7 @@
         width: 80px;
       "
     >
-      Start
+      __MSG_start__
     </button>
     <button
       class="localized"
@@ -93,7 +93,7 @@
         width: 80px;
       "
     >
-      Stop
+    __MSG_stop__
     </button>
     <button
       class="localized"
@@ -118,11 +118,11 @@
         margin-top: 5px;
       "
     >
-      Update
+    __MSG_update__
     </button>
     <br />
     <br />
-    <h5 class="localized" id="status" style="color: red">Not running</h5>
+    <h5 class="localized" id="status" style="color: red">__MSG_notRunning__</h5>
 
     <div id="display" style="background-color: rgb(19, 23, 29); border-radius: 10px">
       <p style="color: rgb(216, 208, 252); padding: 3px">
@@ -132,7 +132,7 @@
       </p>
     </div>
 
-    <label class="warning" id="pauseWarning" hidden>If this is a wrongfull pause detection, please reload the youtube video one or more times (up to 3) to unblock the youtube API.</label>
+    <label class="warning" id="pauseWarning" hidden></label>
     <script src="popup.js"></script>
   </body>
 </html>

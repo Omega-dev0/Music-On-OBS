@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     chrome.storage.local.set({ activeScanner: "0" });
   }
 
-  const server_url = "https://OBS-Music-Display.omega77073.repl.co";
+  const server_url = "http://129.151.84.152:3000";
 
   chrome.storage.local.set({ server_url: server_url });
 
@@ -95,13 +95,40 @@ chrome.runtime.onInstalled.addListener(async () => {
         token: "",
         serverLink: server_url,
         youtube: {
-          detectPause: true,
-          displayPause: false,
-          pausedText: "The music is currently paused",
-
-          displayTitle: true,
-          displayChapter: true,
-        },
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        spotify: {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        soundcloud: {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        pretzel: {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
+        ytmusic: {
+              detectPause: true,
+              displayPause: false,
+              pausedText: "The music is currently paused",
+              displayTitle: true,
+              displayChapter: true,
+            },
       },
     });
   } else {

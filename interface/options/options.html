@@ -95,291 +95,300 @@
   </head>
   <body style="background-color: rgb(35, 41, 51); height: 2000px;">
     <h1 class="localized" id="title">__MSG_settingsTitle__</h1>
-    <h1 class="localized">Information</h1>
+    <h1 class="localized">__MSG_information__</h1>
     <br>
     <div class="container" id="information">
       <div class="box">
-        <label class="localized" style="color:aliceblue;">Token</label>
+        <label class="localized" style="color:aliceblue;">__MSG_token__</label>
         <br>
         <input id="token" readonly></input>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;">Overlay Link</label>
+        <label class="localized" style="color:aliceblue;">__MSG_overlayLink__</label>
         <br>
         <input id="link" readonly></input>
         <br>
         <br>
-        <button class="button" id="create">Create instance</button>
+        <button class="button" id="create">__MSG_createInstance__</button>
       </div>
       <div class="box">
         <label>
-          <b>Load settings from instance</b>
+          <b class="localized">__MSG_loadFromInstance__</b>
         </label>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;">Token</label>
+        <label class="localized" style="color:aliceblue;">__MSG_token__</label>
         <br>
         <input id="newToken"></input>
         <br>
         <br>
-        <button class="button" id="load">Load Settings</button>
+        <button class="button" id="load">__MSG_loadSettings__</button>
         <br>
-        <label class="localized" style="color:aliceblue;">Documentation on the extension <a href = "https://omega-2.gitbook.io/music-on-stream/">here</a></label>
+        <label class="localized" style="color:aliceblue;">__MSG_documentationOnTheExtension__<a class= "localized" href = "https://omega-2.gitbook.io/music-on-stream/">__MSG_here__</a></label>
 
       </div>
       <div class="box">
         <label>
-          <b>Integration - Nightbot custom command</b>
+          <b class="localized">__MSG_integrationNightbotCC__</b>
         </label>
         <br>
-        <br><label class="localized" style="color:aliceblue;">Message --> Message <i>link</i>
+        <br><label class="localized" style="color:aliceblue;">Message --> Message <i class="localized">__MSG_link__</i>
         </label>
         <br>
         <input id="nightbotMessage" style="width: auto;" value="Current Playlist:"></input>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;">Stopped Message</label>
+        <label class="localized" style="color:aliceblue;">__MSG_stoppedText__</label>
         <br>
         <input id="nightbotStoppedMessage" style="width: auto;" value="The extension is currently stopped"></input>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;">Error message</label>
+        <label class="localized" style="color:aliceblue;">__MSG_errorMessage__</label>
         <br>
         <input id="nightbotErrorMessage" style="width: auto;" value="Could not fetch current playlist !"></input>
         <br>
         <br>
         <br>
-        <label class="localized" style="color:aliceblue;"><b>Nightbot command</b></label><br>
+        <label class="localized" style="color:aliceblue;"><b class="localized">__MSG_nightbotCommand__</b></label><br>
         <textarea id="nightbotCommand" readonly></textarea>
       </div>
     </div>
     <br>
     <br>
-    <h1 class="localized">Extension behaviour</h1>
+    <h1 class="localized">__MSG_extensionBehaviour__</h1>
     <br>
-    <button class="button" id="save">Save Settings</button>
+    <button class="button" id="save">__MSG_saveSettings__</button>
     <br>
     <br>
     <br>
-    <button type="button" class="collapsible">> Youtube Settings</button>
+    <button type="button" class="collapsible">> __MSG_ytSettings__</button>
     <div class="content">
       <div class="container" id="Youtube" style="margin: 10px;">
         <img src="./imgs/youtube.webp" class="icon">
         <div class="box">
           <label>
-            <b>Pause behavior</b>
+            <b class="localized"> __MSG_pauseBehavior__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="YTpauseDetection">
-          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <label class="localized" style="color:aliceblue;"> __MSG_detectVideoPause__</label>
           <br>
           <br>
           <input type="checkbox" id="YTdisplayPause">
-          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <label class="localized" style="color:aliceblue;"> __MSG_displayPause__</label>
           <br>
           <br>
-          <label>Pause text</label>
+          <label class="localized"> __MSG_pauseText__</label>
           <br>
           <textarea type="text" id="YTpauseText"></textarea>
         </div>
         <div class="box">
           <label>
-            <b>Displayed information</b>
+            <b class="localized"> __MSG_displayedInformation__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="YTdisplayTitle">
-          <label class="localized" style="color:aliceblue;">Display the video title</label>
+          <label class="localized" style="color:aliceblue;"> __MSG_displayVideoTitle__</label>
           <br>
           <br>
           <input type="checkbox" id="YTdisplayChapter">
-          <label class="localized" style="color:aliceblue;">Display the video chapter</label>
+          <label class="localized" style="color:aliceblue;"> __MSG_displayVideoChapter__</label>
           <br>
         </div>
       </div>
     </div>
     <br>
-    <button type="button" class="collapsible">> Spotify Settings</button>
+    <button type="button" class="collapsible">>  __MSG_spotSettings__</button>
     <div class="content">
       <div class="container" id="Spotify" style="margin: 10px;">
         <img src="./imgs/spotify.webp" class="icon">
         <div class="box">
           <label>
-            <b>Pause behavior</b>
+            <b class="localized"> __MSG_pauseBehavior__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="SPpauseDetection">
-          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_detectVideoPause__</label>
           <br>
           <br>
           <input type="checkbox" id="SPdisplayPause">
-          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displayPause__</label>
           <br>
           <br>
-          <label>Pause text</label>
+          <label class="localized"> __MSG_pauseText__</label>
           <br>
           <textarea type="text" id="SPpauseText"></textarea>
         </div>
         <div class="box">
           <label>
-            <b>Displayed information</b>
+           <b class="localized"> __MSG_displayedInformation__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="SPdisplayTitle">
-          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongTitle__</label>
           <br>
           <br>
           <input type="checkbox" id="SPdisplayChapter">
-          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongChapter__</label>
           <br>
         </div>
       </div>
     </div>
     <br>
-    <button type="button" class="collapsible">> Soundcloud Settings</button>
+    <button type="button" class="collapsible">> __MSG_soundSettings__</button>
     <div class="content">
       <div class="container" id="SoundCloud" style="margin: 10px;">
         <img src="./imgs/soundcloud.webp" class="icon">
         <div class="box">
           <label>
-            <b>Pause behavior</b>
+            <b class="localized"> __MSG_pauseBehavior__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="SCpauseDetection">
-          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_detectVideoPause__</label>
           <br>
           <br>
           <input type="checkbox" id="SCdisplayPause">
-          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displayPause__</label>
           <br>
           <br>
-          <label>Pause text</label>
+          <label class="localized"> __MSG_pauseText__</label>
           <br>
           <textarea type="text" id="SCpauseText"></textarea>
         </div>
         <div class="box">
           <label>
-            <b>Displayed information</b>
+           <b class="localized"> __MSG_displayedInformation__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="SCdisplayTitle">
-          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongTitle__</label>
           <br>
           <br>
           <input type="checkbox" id="SCdisplayChapter">
-          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongChapter__</label>
           <br>
         </div>
       </div>
     </div>
     <br>
-    <button type="button" class="collapsible">> Pretzel Settings</button>
+    <button type="button" class="collapsible">> __MSG_pretSettings__</button>
     <div class="content">
       <div class="container" id="Pretzel" style="margin: 10px;">
         <img src="./imgs/pretzel.webp" class="icon">
         <div class="box">
           <label>
-            <b>Pause behavior</b>
+            <b class="localized"> __MSG_pauseBehavior__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="PZpauseDetection">
-          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_detectVideoPause__</label>
           <br>
           <br>
           <input type="checkbox" id="PZdisplayPause">
-          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displayPause__</label>
           <br>
           <br>
-          <label>Pause text</label>
+          <label class="localized"> __MSG_pauseText__</label>
           <br>
           <textarea type="text" id="PZpauseText"></textarea>
         </div>
         <div class="box">
           <label>
-            <b>Displayed information</b>
+           <b class="localized"> __MSG_displayedInformation__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="PZdisplayTitle">
-          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongTitle__</label>
           <br>
           <br>
           <input type="checkbox" id="PZdisplayChapter">
-          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongChapter__</label>
           <br>
         </div>
       </div>
     </div>
     <br>
-      <button type="button" class="collapsible">> Youtube Music Settings</button>
+      <button type="button" class="collapsible">> __MSG_ytmSettings__</button>
     <div class="content">
       <div class="container" id="YTMusic" style="margin: 10px;">
         <img src="./imgs/ytmusic.png" class="icon">
-        <label class="localized" style="color:aliceblue;">YOUTUBE MUSIC IS NOT FULLY SUPPORTED DUE TO POOR YOUTUBE API AND MAY HAVE BUGS/REFRESH ISSUES</label> <br>
+        <label class="localized" style="color:aliceblue;">__MSG_ytmWarning__</label> <br>
         <div class="box">
           <label>
-            <b>Pause behavior</b>
+            <b class="localized"> __MSG_pauseBehavior__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="YTMpauseDetection">
-          <label class="localized" style="color:aliceblue;">Detect video pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_detectVideoPause__</label>
           <br>
           <br>
           <input type="checkbox" id="YTMdisplayPause">
-          <label class="localized" style="color:aliceblue;">Display pause</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displayPause__</label>
           <br>
           <br>
-          <label>Pause text</label>
+          <label class="localized"> __MSG_pauseText__</label>
           <br>
           <textarea type="text" id="YTMpauseText"></textarea>
         </div>
         <div class="box">
           <label>
-            <b>Displayed information</b>
+           <b class="localized"> __MSG_displayedInformation__</b>
           </label>
           <br>
           <br>
           <input type="checkbox" id="YTMdisplayTitle">
-          <label class="localized" style="color:aliceblue;">Display the song title</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongTitle__</label>
           <br>
           <br>
           <input type="checkbox" id="YTMdisplayChapter">
-          <label class="localized" style="color:aliceblue;">Display the song author</label>
+          <label class="localized" style="color:aliceblue;">__MSG_displaySongChapter__</label>
           <br>
         </div>
       </div>
-      </div>  
-      <h1 class="localized">Theme editor</h1>
+      </div> 
+
+
+
+
+
+
+
+
+
+      <h1 class="localized">__MSG_themeEditor__</h1>
       <div class="box" style="flex-direction:row; display:flex">
         <div id="Settings" style="width: 200px;">
           <div id="generalSettings">
-            <h3>Container</h3>
-            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="containerBackgroundColor" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="containerTransparency" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="containerPadding" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="containerBorderRadius" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Spacing (px):</label><input type="number" id="spacing" style="width: 4em;" class="previewInput"> <br>
+            <h3 class="localized">__MSG_container__</h3>
+            <label class="localized" style="color:aliceblue;">__MSG_bgColor__:</label> <input type="color" id="containerBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bgOpacity__:</label> <input type="number" id="containerTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_padding__ (px):</label><input type="number" id="containerPadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bRadius__ (px):</label><input type="number" id="containerBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_spacing__ (px):</label><input type="number" id="spacing" style="width: 4em;" class="previewInput"> <br>
           </div>
           <div id="titleSettings">
             <br>
-            <h3>Title</h3>
-            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="titleBackgroundColor" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="titleTransparency" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="titlePadding" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="titleBorderRadius" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="titleColor" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Text Opacity:</label> <input type="number" id="titleTextTransparency" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Font size (px):</label> <input type="number" id="titleSize" style="width: 3em;" class="previewInput"> <br>
+            <h3 class="localized">__MSG_title__</h3>
+            <label class="localized" style="color:aliceblue;">__MSG_bgColor__:</label> <input type="color" id="titleBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bgOpacity__:</label> <input type="number" id="titleTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_padding__ (px):</label><input type="number" id="titlePadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bRadius__ (px):</label><input type="number" id="titleBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_textColor__:</label> <input type="color" id="titleColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_textOpacity__:</label> <input type="number" id="titleTextTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_fontSize__ (px):</label> <input type="number" id="titleSize" style="width: 3em;" class="previewInput"> <br>
 
             
-            <label class="localized" style="color:aliceblue;">Font:</label> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_font__:</label> <br>
             <select id="titleFont" style="display: block;" class="previewInput">
               <option style='font-family: Georgia, serif' value='Georgia, serif'>Georgia</option>
               <option style='font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif' value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
@@ -400,16 +409,16 @@
           </div>
           <div id="subtitleSettings">
             <br>
-            <h3>Subtitle</h3>
-            <label class="localized" style="color:aliceblue;">Background Color:</label> <input type="color" id="subtitleBackgroundColor" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Background Opacity:</label> <input type="number" id="subtitleTransparency" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Padding (px):</label><input type="number" id="subtitlePadding" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Border Radius (px):</label><input type="number" id="subtitleBorderRadius" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Text Color:</label> <input type="color" id="subtitleColor" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Text Opacity:</label> <input type="number" id="subtitleTextTransparency" style="width: 3em;" class="previewInput"> <br>
-            <label class="localized" style="color:aliceblue;">Font size (px):</label> <input type="number" id="subtitleSize" style="width: 3em;" class="previewInput"> <br>
+            <h3 class="localized">__MSG_subtitle__</h3>
+            <label class="localized" style="color:aliceblue;">__MSG_bgColor__:</label> <input type="color" id="subtitleBackgroundColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bgOpacity__:</label> <input type="number" id="subtitleTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_padding__ (px):</label><input type="number" id="subtitlePadding" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_bRadius__ (px):</label><input type="number" id="subtitleBorderRadius" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_textColor__:</label> <input type="color" id="subtitleColor" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_textOpacity__:</label> <input type="number" id="subtitleTextTransparency" style="width: 3em;" class="previewInput"> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_fontSize__ (px):</label> <input type="number" id="subtitleSize" style="width: 3em;" class="previewInput"> <br>
 
-            <label class="localized" style="color:aliceblue;">Font:</label> <br>
+            <label class="localized" style="color:aliceblue;">__MSG_font__:</label> <br>
             <select id="subtitleFont" style="display: block;" class="previewInput">
               <option style='font-family: Georgia, serif' value='Georgia, serif'>Georgia</option>
               <option style='font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif' value='"Palatino Linotype", "Book Antiqua", Palatino, serif'>Palatino</option>
@@ -428,9 +437,9 @@
           </div>
         </div>
         <div id="preview" style="margin-left: 20px; flex-direction: row;">
-          <h3>Preview</h3>
+          <h3 class="localized">__MSG_preview__</h3>
           <div>
-          <label class="localized" style="color:aliceblue;">Preview size in pixels: </label> <input type="number" value="900" id="psizex" style="width: 5em;"> <label style="color:aliceblue;">x</label> <input type="number" value="400" id="psizey" style="width: 5em;"> <button style="border-radius: 15px; color:aliceblue; background-color: #070c1b; border: #4b535c 2px solid;" id="confirmPreviewSize">Confirm</button>
+          <label class="localized" style="color:aliceblue;">__MSG_previewSize__: </label> <input type="number" value="900" id="psizex" style="width: 5em;"> <label style="color:aliceblue;">x</label> <input type="number" value="400" id="psizey" style="width: 5em;"> <button style="border-radius: 15px; color:aliceblue; background-color: #070c1b; border: #4b535c 2px solid;" id="confirmPreviewSize" class="localized">__MSG_confirm__</button>
           </div>
           <br>
           <div>
@@ -438,7 +447,7 @@
           
           </iframe>
           <br>
-          <label class="localized" style="color:aliceblue;">Selected Preset: </label>
+          <label class="localized" style="color:aliceblue;">__MSG_selectedPreset__: </label>
           <select id="selectedPreset">
             <option value="preset1">Preset 1</option>
             <option value="preset2">Preset 2</option>
@@ -452,7 +461,7 @@
             <option value="preset10">Preset 10</option>
           </select>
           <br>
-          <button id="savePreset">Save</button>
+          <button id="savePreset" class="localized">__MSG_save__</button>
         </div>
         </div>
       </div>

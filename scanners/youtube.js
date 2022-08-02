@@ -137,7 +137,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     data.title = title ? title.innerHTML : false;
     data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
-    data.descHTML = document.querySelector(".style-scope.ytd-video-secondary-info-renderer") || document.querySelector("content.style-scope.ytd-video-secondary-info-renderer");
+    data.descHTML = document.querySelector("#content > #description > yt-formatted-string")
     data.url = window.location.href;
     data.ytplayer = document.getElementsByClassName("video-stream")[0];
     data.timestamp = data.ytplayer.currentTime;

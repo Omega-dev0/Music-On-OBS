@@ -13,7 +13,7 @@ document.getElementById("stop").addEventListener("click", async () => {
   let preset = (await chrome.storage.local.get("usedPreset")).usedPreset
   preJson = {
     type: "full",
-    title: "The extension is stopped",
+    title: chrome.i18n.getMessage("theExtensionIsStopped"),
     chapter: "",
     url: "",
     theme: presets[preset] || presets["default"],
@@ -60,15 +60,15 @@ async function updateStatus() {
 
   let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
   if (activeScanner == 0) {
-    document.getElementById("status").innerHTML = "Not running";
+    document.getElementById("status").innerHTML = chrome.i18n.getMessage("notRunning");
     document.getElementById("status").style = "color: red";
     document.getElementById("pauseWarning").hidden = true;
   } else if (state.paused == true) {
-    document.getElementById("status").innerHTML = "Paused";
+    document.getElementById("status").innerHTML = chrome.i18n.getMessage("paused");
     document.getElementById("status").style = "color: rgb(235, 141, 18)";
     document.getElementById("pauseWarning").hidden = true;
   } else {
-    document.getElementById("status").innerHTML = "Running on tab: " + activeScanner;
+    document.getElementById("status").innerHTML = chrome.i18n.getMessage("runningOnTab") + ": " + activeScanner;
     document.getElementById("status").style = "color: green";
     document.getElementById("pauseWarning").hidden = true;
   }
@@ -78,6 +78,23 @@ async function loop() {
   updateTabs();
   updateStatus();
 }
+
+function localizeString(_, str) {
+  let txt = str ? chrome.i18n.getMessage(str) : "";
+  return txt;
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    for (let element of document.getElementsByClassName("localized")) {
+      var messageRegex = /__MSG_(\w+)__/g;
+      element.innerHTML = element.innerHTML.replace(messageRegex, localizeString);
+    }
+  },
+  false
+);
+
 
 async function onOpen() {
   let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;

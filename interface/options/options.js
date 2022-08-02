@@ -12,14 +12,14 @@ debounce = {
 //-Couleur background
 
 const messages = {
-  contacting: chrome.i18n.getMessage("OPTIONScontactingServer") || "Contacting server...",
-  saved: chrome.i18n.getMessage("OPTIONSsaved") || "Settings saved !",
-  notFound: chrome.i18n.getMessage("OPTIONSnotFound") || "Instance not found",
-  savedFailed: chrome.i18n.getMessage("OPTIONSsavedFailed") || "Save failed",
-  settingsLoaded: chrome.i18n.getMessage("OPTIONSsettingsLoaded") || "Settings Loaded !",
-  requestFailed: chrome.i18n.getMessage("OPTIONSrequestFailed") || "Request Failed !",
-  created: chrome.i18n.getMessage("OPTIONScreated") || "Instance created",
-  creationFailed: chrome.i18n.getMessage("OPTIONScreationFailed") || "Creation failed !",
+  contacting: chrome.i18n.getMessage("OPTIONScontactingServer"),
+  saved: chrome.i18n.getMessage("OPTIONSsaved"),
+  notFound: chrome.i18n.getMessage("OPTIONSnotFound"),
+  savedFailed: chrome.i18n.getMessage("OPTIONSsavedFailed"),
+  settingsLoaded: chrome.i18n.getMessage("OPTIONSsettingsLoaded"),
+  requestFailed: chrome.i18n.getMessage("OPTIONSrequestFailed"),
+  created: chrome.i18n.getMessage("OPTIONScreated"),
+  creationFailed: chrome.i18n.getMessage("OPTIONScreationFailed"),
 };
 
 const manifest = chrome.runtime.getManifest();
@@ -70,6 +70,14 @@ document.addEventListener(
   "DOMContentLoaded",
   function () {
     for (let element of document.getElementsByClassName("localized")) {
+      var messageRegex = /__MSG_(\w+)__/g;
+      element.innerHTML = element.innerHTML.replace(messageRegex, localizeString);
+    }
+    for (let element of document.getElementsByClassName("button")) {
+      var messageRegex = /__MSG_(\w+)__/g;
+      element.innerHTML = element.innerHTML.replace(messageRegex, localizeString);
+    }
+    for (let element of document.getElementsByClassName("collapsible")) {
       var messageRegex = /__MSG_(\w+)__/g;
       element.innerHTML = element.innerHTML.replace(messageRegex, localizeString);
     }
@@ -130,13 +138,13 @@ async function getSettings() {
 
 function makeCommand() {
   let command = `$(eval 
-    const error_message = "${document.getElementById("nightbotErrorMessage").value}";
-    const message = "${document.getElementById("nightbotMessage").value}";
+    const em = "${document.getElementById("nightbotErrorMessage").value}";
+    const m = "${document.getElementById("nightbotMessage").value}";
     const api = $(urlfetch json http://129.151.84.152:3000/get?token=${
       document.getElementById("token").value
-    }&format=json); if(api.error || api.url == "undefined"){error_message}else{if(api.paused == false){\`\${(api.url == "") ? "" : message} \${(api.url == "") ? "${
+    }&format=json); if(api.error || api.url == "undefined"){em}else{if(api.paused == false){\`\${(api.url == "") ? "" : m} \${(api.url == "") ? "${
     document.getElementById("nightbotStoppedMessage").value
-  }" : api.url.split("https://www.")[1]}\`}else{api.config.youtube.pausedText}};)`;
+  }" : api.url}\`}else{api.config[api.platform.toLowerCase()].pausedText || api.config["youtube"].pausedText}};)`;
 
   document.getElementById("nightbotCommand").value = command;
 }
@@ -262,6 +270,7 @@ function loadFromInstance() {
 
 chrome.storage.local.get("settings", ({ settings }) => {
   console.log("Settings", settings);
+  console.log()
   load(settings);
 });
 
@@ -445,8 +454,8 @@ function previewUpdate() {
   </head>
   <body>
   <div class="container">
-  <h1>My title</h1>
-  <h2>The author of this song</h2>
+  <h1>${chrome.i18n.getMessage("myTitle")}</h1>
+  <h2>${chrome.i18n.getMessage("mySubtitle")}</h2>
   </div>
   </body>
   </html>

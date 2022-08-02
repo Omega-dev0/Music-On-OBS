@@ -1,0 +1,219 @@
+{
+  
+  "settingsTitle": {
+    "message": "Paramètres"
+  },
+  "OPTIONScontactingServer": {
+    "message": "Chargement..."
+  },
+  "OPTIONSsaved": {
+    "message": "Paramètres sauvegardés !"
+  },
+  "OPTIONSnotFound": {
+    "message": "Instance introuvable"
+  },
+  "OPTIONSsavedFailed": {
+    "message": "Échec de la sauvegarde"
+  },
+  "OPTIONSsettingsLoaded": {
+    "message": "Paramètres chargés !"
+  },
+  "OPTIONSrequestFailed": {
+    "message": "Requête échoué !"
+  },
+  "OPTIONScreated": {
+    "message": "Instance créée"
+  },
+  "OPTIONScreationFailed": {
+    "message": "La création a échoué !"
+  },
+  "extensionName": {
+    "message": "Music on Stream"
+  },
+  "information":{
+    "message":"Informations"
+  },
+  "token":{
+    "message":"Token"
+  },
+  "overlayLink":{
+    "message":"Lien d'Overlay"
+  },
+  "createInstance":{
+    "message":"Créer une instance"
+  },
+  "loadFromInstance":{
+    "message":"Charger les paramètres d'une instance"
+  },
+  "loadSettings":{
+    "message":"Charger"
+  },
+  "documentationOnTheExtension":{
+    "message":"Documentation sur l'extension "
+  },
+  "here":{
+    "message":"ici"
+  },
+  "integrationNightbotCC":{
+    "message":"Intégration - Commande personnalisée Nightbot"
+  },
+  "stoppedMessage":{
+    "message":"Message d'arrêt"
+  },
+  "link":{
+    "message":"lien"
+  },
+  "errorMessage":{
+    "message":"Message d'erreur"
+  },
+  "currentPlaylistText":{
+    "message":"Playlist actuelle:"
+  },
+  "stoppedText":{
+    "message":"L'extension est actuellement arrêtée"
+  },
+  "couldNotFetchText":{
+    "message":"Impossible de récupérer la playlist actuelle !"
+  },
+  "nightbotCommand":{
+    "message":"Commande Nightbot"
+  },
+  "extensionBehaviour":{
+    "message":"Comportement de l'extension"
+  },
+  "saveSettings":{
+    "message":"Sauvegarder"
+  },
+  "ytSettings":{
+    "message":"Paramètres Youtube"
+  },
+  "detectVideoPause":{
+    "message":"Détecter la pause vidéo"
+  },
+  "displayPause":{
+    "message":"Afficher la pause"
+  },
+  "pauseText":{
+    "message":"Mettre le texte en pause"
+  },
+  "pauseBehavior":{
+    "message":"Comportement de pause"
+  },
+  "displayedInformation":{
+    "message":"Informations affichées"
+  },
+  "displayVideoTitle":{
+    "message":"Afficher le titre de la vidéo"
+  },
+  "displayVideoChapter":{
+    "message":"Afficher le chapitre dela vidéo"
+  },
+  "displaySongTitle":{
+    "message":"Afficher le titre de la musique"
+  },
+  "displaySongChapter":{
+    "message":"Afficher l'auteur de la musique"
+  },
+  "spotSettings":{
+    "message":"Paramètres Spotify"
+  },
+  "soundSettings":{
+    "message":"Paramètres SoundCloud"
+  },
+  "pretSettings":{
+    "message":"Paramètres Pretzel"
+  },
+  "ytmSettings":{
+    "message":"Paramètres de YouTube Music"
+  },
+  "ytmWarning":{
+    "message":"YOUTUBE MUSIC N'EST PAS ENTIÈREMENT PRIS EN CHARGE EN RAISON D'UNE API YOUTUBE MAUVAISE ET PEUT AVOIR DES BUGS/PROBLÈMES DE RAFRAÎCHISSEMENT"
+  },
+  "themeEditor":{
+    "message":"Éditeur de thème"
+  },
+  "title":{
+    "message":"Titre"
+  },
+  "container":{
+    "message":"Container"
+  },
+  "subtitle":{
+    "message":"Sous-titre"
+  },
+  "bgColor":{
+    "message":"Couleur de l'arrière plan"
+  },
+  "bgOpacity":{
+    "message":"Opacité d'arrière-plan"
+  },
+  "padding":{
+    "message":"Marges"
+  },
+  "bRadius":{
+    "message":"Rayon de bordure"
+  },
+  "spacing":{
+    "message":"Espacement"
+  },
+  "font":{
+    "message":"Police"
+  },
+  "textColor":{
+    "message":"Couleur du texte"
+  },
+  "textOpacity":{
+    "message":"Opacité du texte"
+  },
+  "fontSize":{
+    "message":"Taille de la police"
+  },
+  "selectedPreset":{
+    "message":"Préréglage sélectionné"
+  },
+  "save":{
+    "message":"Sauvegarder"
+  },
+  "myTitle":{
+    "message":"Mon titre"
+  },
+  "mySubtitle":{
+    "message":"L'auteur de cette musique"
+  },
+  "preview":{
+    "message":"Aperçu"
+  },
+  "previewSize":{
+    "message":"Taille de l'aperçu en pixels"
+  },
+  "confirm":{
+    "message":"Confirmer"
+  },
+  "themePreset":{
+    "message":"Thème prédéfini"
+  },
+  "selectedTab":{
+    "message":"Onglet sélectionné"
+  },
+  "start":{
+    "message":"Start"
+  },
+  "stop":{
+    "message":"Stop"
+  },
+  "update":{
+    "message":"Mettre à jour"
+  },
+  "notRunning":{
+    "message":"A l'arrêt"
+  },
+  "paused":{
+    "message":"En pause"
+  },
+  "runningOnTab":{
+    "message":"Exécution sur l'onglet"
+  },
+  "theExtensionIsStopped":{
+    "message":"L'extension est arrêtée"
+  }
+}
