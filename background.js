@@ -204,10 +204,8 @@ chrome.runtime.onInstalled.addListener(async () => {
     });
   }
 
-  usedPreset = (await chrome.storage.local.get("usedPreset")).usedPreset;
-  if (!usedPreset) {
-    chrome.storage.local.set({ usedPreset: "default" });
-  }
+  chrome.storage.local.set({ usedPreset:"preset1"});
+
 });
 
 //Sending tabid to scanners

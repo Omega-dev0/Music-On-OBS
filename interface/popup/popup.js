@@ -101,8 +101,10 @@ async function onOpen() {
   if (activeScanner.toString() != "0") {
     document.getElementById("tabSelector").value = activeScanner;
   }
+  document.getElementById("selectedPreset").value = (await chrome.storage.local.get("usedPreset")).usedPreset;
 }
 document.getElementById("selectedPreset").addEventListener("change",()=>{
+  console.log("Selected preset:",document.getElementById("selectedPreset").value)
   chrome.storage.local.set({ usedPreset:document.getElementById("selectedPreset").value });
   chrome.storage.local.set({ updateRequired: true });
 })
