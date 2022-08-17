@@ -62,15 +62,15 @@ async function updateStatus() {
   if (activeScanner == 0) {
     document.getElementById("status").innerHTML = chrome.i18n.getMessage("notRunning");
     document.getElementById("status").style = "color: red";
-    document.getElementById("pauseWarning").hidden = true;
+    //document.getElementById("pauseWarning").hidden = true;
   } else if (state.paused == true) {
     document.getElementById("status").innerHTML = chrome.i18n.getMessage("paused");
     document.getElementById("status").style = "color: rgb(235, 141, 18)";
-    document.getElementById("pauseWarning").hidden = true;
+    //document.getElementById("pauseWarning").hidden = true;
   } else {
     document.getElementById("status").innerHTML = chrome.i18n.getMessage("runningOnTab") + ": " + activeScanner;
     document.getElementById("status").style = "color: green";
-    document.getElementById("pauseWarning").hidden = true;
+    //document.getElementById("pauseWarning").hidden = true;
   }
 }
 
