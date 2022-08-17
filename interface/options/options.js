@@ -99,6 +99,7 @@ async function getSettings() {
         pausedText: document.getElementById("YTpauseText").value,
         displayTitle: document.getElementById("YTdisplayTitle").checked,
         displayChapter: document.getElementById("YTdisplayChapter").checked,
+        smartTabSwitch: document.getElementById("smartTabSwitch").checked,
       },
       spotify: {
         detectPause: document.getElementById("SPpauseDetection").checked,
@@ -198,7 +199,7 @@ async function load(data) {
     document.getElementById("token").value = persistent.token;
     document.getElementById("link").value = persistent.serverLink + `/get?token=${persistent.token}`;
   }
-
+  document.getElementById("smartTabSwitch").checked = data.youtube.smartTabSwitch || false
   document.getElementById("YTpauseDetection").checked = data.youtube.detectPause;
   document.getElementById("YTdisplayPause").checked = data.youtube.displayPause;
   document.getElementById("YTdisplayTitle").checked = data.youtube.displayTitle;

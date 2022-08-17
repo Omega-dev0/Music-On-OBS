@@ -98,10 +98,12 @@ document.addEventListener(
 
 async function onOpen() {
   let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
+  let settings = (await chrome.storage.local.get("settings")).settings;
   if (activeScanner.toString() != "0") {
     document.getElementById("tabSelector").value = activeScanner;
   }
   document.getElementById("selectedPreset").value = (await chrome.storage.local.get("usedPreset")).usedPreset;
+  document.getElementById("smartSwitchWarning").style.display = settings.youtube.smartTabSwitch ? "block" : "none"
 }
 document.getElementById("selectedPreset").addEventListener("change",()=>{
   console.log("Selected preset:",document.getElementById("selectedPreset").value)

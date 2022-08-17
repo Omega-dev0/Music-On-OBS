@@ -100,6 +100,7 @@ chrome.runtime.onInstalled.addListener(async () => {
               pausedText: "The music is currently paused",
               displayTitle: true,
               displayChapter: true,
+              smartTabSwitch: false,
             },
         spotify: {
               detectPause: true,
@@ -144,6 +145,7 @@ chrome.runtime.onInstalled.addListener(async () => {
               pausedText: "The music is currently paused",
               displayTitle: true,
               displayChapter: true,
+              smartTabSwitch: false,
             },
         spotify: settings.spotify
           ? settings.spotify
@@ -314,15 +316,16 @@ async function updateTabs() {
         let domain = new URL(tab.url);
         domain = domain.hostname.replace("www.", "");
         if (domains.includes(domain)) {
-          console.log(tab.title);
+          //console.log(tab.title);
           title = tab.title ? tab.title.replace(/^\(\d+\)\ /, "") : `Tab ${tab.id}`;
           new_scanners.push({ tabId: tab.id, url: tab.url, title: title });
         }
       }
     }
     chrome.storage.local.set({ scanners: new_scanners });
-  });
 
+    //chapter.storage.local.get
+  });
   //console.log("Scanners:", new_scanners)
 }
 
@@ -331,7 +334,8 @@ lastActiveScanner = 0;
 
 async function loop() {
   let state = (await chrome.storage.local.get("state")).state;
-  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
+  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner
+
   if (state.paused != lastPausedState || lastActiveScanner != activeScanner) {
     if (activeScanner == 0) {
       chrome.action.setIcon({

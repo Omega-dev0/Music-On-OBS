@@ -215,5 +215,14 @@
   },
   "theExtensionIsStopped":{
     "message":"The extension is stopped"
+  },
+  "smartTabSwitch":{
+    "message":"Smart tab switch"
+  },
+  "smartTabSwitchDesc":{
+    "message":"The extension will try to always listen at an unpaused tab"
+  },
+  "smartSwitchWarning":{
+    "message":"The smart tab switch option is enabled, the extension may change the current tab automatically"
   }
 }

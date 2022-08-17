@@ -111,7 +111,26 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
 
     let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
-    //console.log(parseInt(activeScanner) == tab.tab.id, tab.tab.id, activeScanner)
+    let config = (await chrome.storage.local.get("settings")).settings;
+    data.ytplayer = document.getElementsByClassName("video-stream")[0];
+    data.timestamp = data.ytplayer.currentTime;   
+    detectPause = config.youtube.detectPause
+    if (pauseState.lastTimestamp == data.timestamp) {
+      pauseState.stallCounter = pauseState.stallCounter + 1;
+    } else {
+      pauseState.stallCounter = 0;
+    }
+    if (pauseState.stallCounter >= 5 && detectPause == true) {
+      data.paused = true;
+    } else {
+      data.paused = false;
+      if(config.youtube.smartTabSwitch == true){
+        chrome.storage.local.set({activeScanner: tab.tab.id})
+      }
+    }
+
+    pauseState.lastTimestamp = data.timestamp;
+
     if (parseInt(activeScanner) != tab.tab.id) {
       enabled = false
       ur2 = true
@@ -137,26 +156,10 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     data.title = title ? title.innerHTML : false;
     data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
-    data.descHTML = document.querySelector("#content > #description > yt-formatted-string")
+    let descs = document.querySelectorAll("#content > #description > yt-formatted-string")
+    data.descHTML = descs[2] || descs[1] || descs[0]
+
     data.url = window.location.href;
-    data.ytplayer = document.getElementsByClassName("video-stream")[0];
-    data.timestamp = data.ytplayer.currentTime;
-
-    let config = (await chrome.storage.local.get("settings")).settings;
-    detectPause = config.youtube.detectPause
-    if (pauseState.lastTimestamp == data.timestamp) {
-      pauseState.stallCounter = pauseState.stallCounter + 1;
-    } else {
-      pauseState.stallCounter = 0;
-    }
-
-    if (pauseState.stallCounter >= 5 && detectPause == true) {
-      data.paused = true;
-    } else {
-      data.paused = false;
-    }
-
-    pauseState.lastTimestamp = data.timestamp;
   }
 
   //UPDATES LOOP

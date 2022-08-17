@@ -215,5 +215,14 @@
   },
   "theExtensionIsStopped":{
     "message":"L'extension est arrêtée"
+  },
+  "smartTabSwitch":{
+    "message":"Changement d'onglet intelligent"
+  },
+  "smartTabSwitchDesc":{
+    "message":"L'extension essaye de toujours afficher un onglet qui n'est pas en pause"
+  },
+  "smartSwitchWarning":{
+    "message":"Le changement d'onglet intelligent est activé, l'extension peut changer d'onglet automatiquement"
   }
 }
