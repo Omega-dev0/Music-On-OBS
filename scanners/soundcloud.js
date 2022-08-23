@@ -75,7 +75,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     let chapter = document.querySelector(`.playbackSoundBadge__titleContextContainer> a`).innerHTML
     data.title = title
     data.chapterName = chapter
-
+    data.imageUrl = document.querySelector(".playbackSoundBadge > .sc-media-image > .sc-artwork > span").style['backgroundImage'].replace('url("',"").replace('")',"")
     data.url =  document.querySelector(`.playbackSoundBadge__title > a`).href
 
     a = document.querySelector(`.playbackTimeline__timePassed > span:nth-child(2)`).innerHTML.split(":")
@@ -132,7 +132,8 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           version: manifest.version,
           paused: data.paused,
           theme: presets[preset] || presets["default"],
-          source: "Soundcloud"
+          source: "Soundcloud",
+          imageUrl: data.imageUrl.replace("50x50","500x500")
         }
         json = JSON.stringify(preJson)
         updating = true

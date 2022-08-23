@@ -75,6 +75,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     subtitle = document.querySelector(".subtitle > .byline").textContent
     let chapter = subtitle.split(" •")[0]
     data.title = title
+    data.imageUrl = document.querySelector(".image.style-scope.ytmusic-player-bar").src.replace("=w60-h60","=w500-h500")
     data.chapterName = chapter
 
     url = ""
@@ -140,6 +141,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           version: manifest.version,
           paused: data.paused,
           theme: presets[preset] || presets["default"],
+          imageUrl: data.imageUrl,
           source: "YTMusic"
         }
         json = JSON.stringify(preJson)

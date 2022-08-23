@@ -74,6 +74,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     let title = document.querySelector(`span[data-testid="title"]`).getAttribute("title")
     let chapter = document.querySelector(`span[data-testid="artist"]`).getAttribute("title")
     data.title = title
+    data.imageUrl = document.querySelector("div[data-heapid='track-artwork'] > img").src
     data.chapterName = chapter
 
     data.url =  document.querySelector(`a[data-testid="album"]`).href
@@ -133,7 +134,8 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           version: manifest.version,
           paused: data.paused,
           theme: presets[preset] || presets["default"],
-          source: "Pretzel"
+          source: "Pretzel",
+          imageUrl: data.imageUrl
         }
         json = JSON.stringify(preJson)
         updating = true

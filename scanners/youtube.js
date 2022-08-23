@@ -156,9 +156,11 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
 
     data.title = title ? title.innerHTML : false;
     data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
+    if(data.chapterName == ""){
+      data.chapterName = document.querySelector(".style-scope.ytd-channel-name > #text-container > #text > a").innerHTML || ""
+    }
     let descs = document.querySelectorAll("#content > #description > yt-formatted-string")
     data.descHTML = descs[2] || descs[1] || descs[0]
-
     data.url = window.location.href;
   }
 
@@ -191,7 +193,8 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           version: manifest.version,
           paused: data.paused,
           theme: presets[preset] || presets["default"],
-          source: "Youtube"
+          source: "Youtube",
+          imageUrl: `https://i.ytimg.com/vi/${(new URL(window.location.href)).searchParams.get("v")}/hqdefault.jpg`
         }
         json = JSON.stringify(preJson)
         updating = true

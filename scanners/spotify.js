@@ -75,6 +75,8 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     let chapter = (document.querySelector(`a[data-testid="context-item-info-artist"]`) ||  document.querySelector(`a[data-testid="context-item-info-show"]`))
     data.title = title
     data.chapterName = chapter.innerHTML
+    data.imageUrl = document.querySelector(`img[data-testid="cover-art-image"]`).src
+
 
     data.url = document.querySelector(`a[data-testid="context-item-link"]`).href
     a = document.querySelector(`div[data-testid="playback-position"]`).innerHTML.split(":")
@@ -131,7 +133,8 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
           version: manifest.version,
           paused: data.paused,
           theme: presets[preset] || presets["default"],
-          source: "Spotify"
+          source: "Spotify",
+          imageUrl: data.imageUrl
         }
         json = JSON.stringify(preJson)
         updating = true

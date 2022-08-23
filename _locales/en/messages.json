@@ -224,5 +224,8 @@
   },
   "smartSwitchWarning":{
     "message":"The smart tab switch option is enabled, the extension may change the current tab automatically"
+  },
+  "platformDefined":{
+    "message":"Platform Style"
   }
 }

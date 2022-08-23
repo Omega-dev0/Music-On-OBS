@@ -224,5 +224,8 @@
   },
   "smartSwitchWarning":{
     "message":"Le changement d'onglet intelligent est activé, l'extension peut changer d'onglet automatiquement"
+  },
+  "platformDefined":{
+    "message":"Style de platforme"
   }
 }

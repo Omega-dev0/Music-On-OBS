@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     chrome.storage.local.set({ activeScanner: "0" });
   }
 
-  const server_url = "http://129.151.84.152:3000";
+  const server_url = "https://OBS-Music-Display.omega77073.repl.co";
 
   chrome.storage.local.set({ server_url: server_url });
 
@@ -202,6 +202,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         preset8: defaultPreset,
         preset9: defaultPreset,
         preset10: defaultPreset,
+        platformDefined: {}
       },
     });
   }
@@ -247,6 +248,9 @@ function update(data) {
       },
     };
     data.token = persistent.token;
+    //usedPreset
+    let usedPreset = (await chrome.storage.local.get("usedPreset")).usedPreset;
+    data.usedPreset = usedPreset
     Rdata.body = JSON.stringify(data);
 
     fetch(server_url + "/update", Rdata)
