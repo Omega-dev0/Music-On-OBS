@@ -72,7 +72,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     //console.log(data)
     iterations = iterations + 1;
     let title = document.querySelector(`span[data-testid="title"]`).getAttribute("title")
-    let chapter = document.querySelector(`span[data-testid="artist"]`).getAttribute("title")
+    let chapter = document.querySelector(`span[data-testid="artist"]`) ? document.querySelector(`span[data-testid="artist"]`).getAttribute("title") : document.querySelector(`a[data-testid="album"]`).innerHTML
     data.title = title
     data.imageUrl = document.querySelector("div[data-heapid='track-artwork'] > img").src
     data.chapterName = chapter
