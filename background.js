@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     chrome.storage.local.set({ activeScanner: "0" });
   }
 
-  const server_url = "https://OBS-Music-Display.omega77073.repl.co";
+  const server_url = "http://129.151.84.152:3000";
 
   chrome.storage.local.set({ server_url: server_url });
 
