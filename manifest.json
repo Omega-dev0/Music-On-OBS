@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "2.1.3",
-  "version_name": "2.1.3 Colors Update - Platform defined Theme",
+  "version": "2.1.4",
+  "version_name": "2.1.4 Colors Update - Platform defined Theme",
 
   "default_locale": "en",
 

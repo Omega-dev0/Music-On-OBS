@@ -157,7 +157,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     data.title = title ? title.innerHTML : false;
     data.chapterName = chapter.innerHTML != "" ? chapter.innerHTML : chapter2;
     if(data.chapterName == ""){
-      data.chapterName = document.querySelector(".style-scope.ytd-channel-name > #text-container > #text > a").innerHTML || ""
+      data.chapterName = document.querySelectorAll('div[id="upload-info"]')[1].querySelector("ytd-channel-name > .ytd-channel-name > .ytd-channel-name > .ytd-channel-name > a").innerHTML || ""
     }
     let descs = document.querySelectorAll("#content > #description > yt-formatted-string")
     data.descHTML = descs[2] || descs[1] || descs[0]
