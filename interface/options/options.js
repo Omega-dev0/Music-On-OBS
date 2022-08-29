@@ -133,6 +133,14 @@ async function getSettings() {
         displayTitle: document.getElementById("YTMdisplayTitle").checked,
         displayChapter: document.getElementById("YTMdisplayChapter").checked,
       },
+      epidemic: {
+        detectPause: document.getElementById("EPIpauseDetection").checked,
+        displayPause: document.getElementById("EPIdisplayPause").checked,
+        pausedText: document.getElementById("EPIpauseText").value,
+
+        displayTitle: document.getElementById("EPIdisplayTitle").checked,
+        displayChapter: document.getElementById("EPIdisplayChapter").checked,
+      }
     });
   });
 }
