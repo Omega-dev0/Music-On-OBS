@@ -1,6 +1,6 @@
 const manifest = chrome.runtime.getManifest();
 
-const domains = ["youtube.com", "open.spotify.com", "soundcloud.com", "play.pretzel.rocks", "music.youtube.com"];
+const domains = ["youtube.com", "open.spotify.com", "soundcloud.com", "play.pretzel.rocks", "music.youtube.com","epidemicsound.com"];
 
 chrome.runtime.onInstalled.addListener(async () => {
   console.log("Extension installed");
@@ -46,7 +46,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     },
     subtitleSize: "40",
     subtitleFont: "Arial, Helvetica, sans-serif",
-  }
+  };
   let scanners = (await chrome.storage.local.get("scanners")).scanners;
   if (!scanners) {
     chrome.storage.local.set({ scanners: [] });
@@ -95,41 +95,48 @@ chrome.runtime.onInstalled.addListener(async () => {
         token: "",
         serverLink: server_url,
         youtube: {
-              detectPause: true,
-              displayPause: false,
-              pausedText: "The music is currently paused",
-              displayTitle: true,
-              displayChapter: true,
-              smartTabSwitch: false,
-            },
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+          smartTabSwitch: false,
+        },
         spotify: {
-              detectPause: true,
-              displayPause: false,
-              pausedText: "The music is currently paused",
-              displayTitle: true,
-              displayChapter: true,
-            },
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
         soundcloud: {
-              detectPause: true,
-              displayPause: false,
-              pausedText: "The music is currently paused",
-              displayTitle: true,
-              displayChapter: true,
-            },
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
         pretzel: {
-              detectPause: true,
-              displayPause: false,
-              pausedText: "The music is currently paused",
-              displayTitle: true,
-              displayChapter: true,
-            },
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
         ytmusic: {
-              detectPause: true,
-              displayPause: false,
-              pausedText: "The music is currently paused",
-              displayTitle: true,
-              displayChapter: true,
-            },
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
+        epidemic: {
+          detectPause: true,
+          displayPause: false,
+          pausedText: "The music is currently paused",
+          displayTitle: true,
+          displayChapter: true,
+        },
       },
     });
   } else {
@@ -183,6 +190,15 @@ chrome.runtime.onInstalled.addListener(async () => {
               displayTitle: true,
               displayChapter: true,
             },
+            epidemic: settings.epidemic
+              ? settings.epidemic
+              : {
+                  detectPause: true,
+                  displayPause: false,
+                  pausedText: "The music is currently paused",
+                  displayTitle: true,
+                  displayChapter: true,
+                },
       },
     });
   }
@@ -202,13 +218,12 @@ chrome.runtime.onInstalled.addListener(async () => {
         preset8: defaultPreset,
         preset9: defaultPreset,
         preset10: defaultPreset,
-        platformDefined: {}
+        platformDefined: {},
       },
     });
   }
 
-  chrome.storage.local.set({ usedPreset:"preset1"});
-
+  chrome.storage.local.set({ usedPreset: "preset1" });
 });
 
 //Sending tabid to scanners
@@ -250,7 +265,7 @@ function update(data) {
     data.token = persistent.token;
     //usedPreset
     let usedPreset = (await chrome.storage.local.get("usedPreset")).usedPreset;
-    data.usedPreset = usedPreset
+    data.usedPreset = usedPreset;
     Rdata.body = JSON.stringify(data);
 
     fetch(server_url + "/update", Rdata)
@@ -338,7 +353,7 @@ lastActiveScanner = 0;
 
 async function loop() {
   let state = (await chrome.storage.local.get("state")).state;
-  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner
+  let activeScanner = (await chrome.storage.local.get("activeScanner")).activeScanner;
 
   if (state.paused != lastPausedState || lastActiveScanner != activeScanner) {
     if (activeScanner == 0) {

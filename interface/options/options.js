@@ -229,6 +229,12 @@ async function load(data) {
   document.getElementById("YTMdisplayTitle").checked = data.ytmusic.displayTitle;
   document.getElementById("YTMdisplayChapter").checked = data.ytmusic.displayChapter;
   document.getElementById("YTMpauseText").value = data.ytmusic.pausedText;
+
+  document.getElementById("EPIpauseDetection").checked = data.epidemic.detectPause;
+  document.getElementById("EPIdisplayPause").checked = data.epidemic.displayPause;
+  document.getElementById("EPIdisplayTitle").checked = data.epidemic.displayTitle;
+  document.getElementById("EPIdisplayChapter").checked = data.epidemic.displayChapter;
+  document.getElementById("EPIpauseText").value = data.ytmusic.pausedText;
 }
 
 function loadFromInstance() {

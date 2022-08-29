@@ -227,5 +227,8 @@
   },
   "platformDefined":{
     "message":"Style de platforme"
+  },
+  "epiSettings":{
+    "message":"Paramètre Epidemic Sound"
   }
 }

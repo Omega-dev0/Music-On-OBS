@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "2.1.4",
-  "version_name": "2.1.4 Colors Update - Platform defined Theme",
+  "version": "2.1.5",
+  "version_name": "2.1.5 Colors Update - Platform defined Theme",
 
   "default_locale": "en",
 
@@ -16,7 +16,7 @@
   },
 
   "permissions": ["storage"],
-  "host_permissions": ["https://*.youtube.com/*","https://open.spotify.com/*","https://*.soundcloud.com/*","https://play.pretzel.rocks/*"],
+  "host_permissions": ["https://*.youtube.com/*","https://open.spotify.com/*","https://*.soundcloud.com/*","https://play.pretzel.rocks/*","https://*.epidemicsound.com/*"],
 
   "action": {
     "default_popup": "/interface/popup/popup.html",
@@ -54,6 +54,10 @@
     {
       "matches": ["https://music.youtube.com/*"],
       "js": ["/scanners/ytmusic.js"]
+    },
+    {
+      "matches": ["https://*.epidemicsound.com/*"],
+      "js": ["/scanners/epidemicsound.js"]
     }
   ],
 

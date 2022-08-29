@@ -227,5 +227,8 @@
   },
   "platformDefined":{
     "message":"Platform Style"
+  },
+  "epiSettings":{
+    "message":"Epidemic Sound Settings"
   }
 }
