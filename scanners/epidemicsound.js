@@ -78,7 +78,7 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
     data.imageUrl = "https://yt3.ggpht.com/Pya1SavXmrR9FIUIAMhkqRACkMISVjppDC7wZr8oisbOEWkWxOgXnXCJZ1IdjlHW31MMzCZk=s900-c-k-c0x00ffffff-no-rj"
     data.url =  document.querySelector('a[aria-label="track page"]').href
 
-    a = document.querySelector('.src-mainapp-player-components-___LineProgressBar__duration___1dluu > span').innerHTML.split(":")
+    a = document.querySelector('.src-mainapp-player-components-___LineProgressBar__duration___1dluu > span') != null ? document.querySelector('.src-mainapp-player-components-___LineProgressBar__duration___1dluu > span').innerHTML.split(":") : document.querySelector(".src-mainapp-player-components-___PlayerBar__elapsedTime___3j43S").innerHTML.split(":")
     if(a.length  >2){
       data.timestamp = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
     }else{
