@@ -184,11 +184,11 @@ chrome.runtime.sendMessage({ text: "TABID_REQUEST" }, (tab) => {
       if (updating == false) {
         let presets = (await chrome.storage.local.get("presets")).presets
         let preset = (await chrome.storage.local.get("usedPreset")).usedPreset
-
+        let isLive = document.querySelector(".ytp-live-badge")!= undefined ? getComputedStyle(document.querySelector(".ytp-live-badge")).display != 'none' :false
         preJson = {
           type: "full",
           title: data.title,
-          chapter: data.chapterName,
+          chapter: isLive ? "🔴 " +data.chapterName : data.chapterName,
           url: data.url,
           version: manifest.version,
           paused: data.paused,
