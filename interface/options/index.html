@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="script.js"></script>
+    <title translated>MOS Settings</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div style="display: flex; align-content: center; align-items: center">
+        <img src="../../images/default/default.png" class="icon" style="margin-top: 5px" />
+        <span class="text" style="text-align: end; font-size: 1.5vw" translated>extensionName</span>
+      </div>
+      <br />
+      <div class="sidebar-element" id="instance-button">
+        <a class="sidebar-link prevent-select" translated>Instance</a>
+      </div>
+      <div class="sidebar-element" id="behaviour-button">
+        <a class="sidebar-link prevent-select" translated>Behaviour</a>
+      </div>
+      <div class="sidebar-element" id="overlay-button">
+        <a class="sidebar-link prevent-select" translated>Overlay</a>
+      </div>
+      <div class="sidebar-element" id="integration-button">
+        <a class="sidebar-link prevent-select" translated>Integration</a>
+      </div>
+    </div>
+    <div class="content">
+      <div class="container" id="Instance" style="display: flex">
+        <h1 style="flex-basis: 100%" translated>Instance settings</h1>
+        <br />
+        <div class="box">
+          <h3 translated>Create an instance</h3>
+          <label translated>Instance token</label><br />
+          <input class="input-locked" type="password" readonly id="instanceToken"/><br />
+          <label translated>Instance link</label><br />
+          <input class="input-locked" type="text" readonly id="instanceLink"/><br />
+          <button class="button blue" translated>Create new instance</button><br>
+          <button class="button blue" translated>Copy link</button>
+          <button class="button blue" translated>Copy token</button>
+        </div>
+        <div class="box">
+          <h3 translated>Load an instance</h3>
+          <label translated>Instance token</label><br />
+          <input class="input-locked" type="password" /><br><br>
+          <label class="warning" style="margin-top: 2vh;" translated>⚠️Loading a token will destroy the previous instance</label><br /><br />
+          <button class="button red" translated>Load instance from token</button>
+        </div>
+      </div>
+      <div class="container" id="Behaviour" style="display: none">
+        <h1 style="flex-basis: 100%" translated>Behaviour settings</h1>
+        <br />
+        <div style="flex-basis: 100%">
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="displayPause" /><label class="prevent-select" translated>Display overlay when paused</label></div>
+          <label class="subtitle" translated>The overlay will disappear if you pause the music instead of displaying a pause message</label>
+        </div>
+        <div style="flex-basis: 100%; margin-top: 1.5rem">
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="smartSwitch" /><label class="prevent-select" translated>Smart tab change</label></div>
+          <label class="subtitle" translated>The extension will try to always be listening on an active tab instead of waiting for a manual change</label>
+        </div>
+      </div>
+      <div class="container" id="Overlay" style="display: none">
+        <h1 style="flex-basis: 100%" translated>Overlay settings</h1>
+      </div>
+      <div class="container" id="Integration" style="display: none">
+        <h1 style="flex-basis: 100%" translated>Integration settings</h1>
+        <div class="box">
+          <h3 translated>Bot messages</h3>
+          <label translated>Default message</label><br />
+          <input class="input-locked" type="text" value="Current song: [__SONG__]" saveTrigger id="defaultMessage" /><br />
+          <label translated>Paused message</label><br />
+          <input class="input-locked" type="text" value="The music is currently paused" saveTrigger id="pausedMessage" /><br />
+          <label translated>Error message</label><br />
+          <input class="input-locked" type="text" value="Unable to get current song name!" saveTrigger id="errorMessage" /><br />
+          <label></label><br />
+          <button class="button blue" translated>Copy Nightbot command</button><br /><button class="button blue" translated>Copy Stream elements command</button>
+        </div>
+        <div class="box">
+          <h3 translated>Dynamic values</h3>
+          <label translated>You can use dynamic values to insert data into the bot answer</label><br><br>
+          <label translated>[__SONG__]: The current song name</label><br>
+          <label translated>[__SUBTITLE__]: The current song chapter or song author</label><br>
+          <label translated>[__LINK__]: The URL of the current listening tab</label><br>
+          <br>
+          <label translated>[__TIME__]: The current song progression (might not be always available)</label><br>
+          <label translated>[__DURATION__]: The current song duration (might not be always available)</label><br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
