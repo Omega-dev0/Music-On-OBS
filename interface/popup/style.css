@@ -97,3 +97,11 @@ h4 {
 .paused{
     color:burlywood
 }
+
+button[customDisable]{
+  cursor: auto;
+  background-color: #6b686c;
+}
+button[customDisable]:hover{
+  background-color: #6b686c;
+}

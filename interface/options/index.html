@@ -35,19 +35,16 @@
         <div class="box">
           <h3 translated>Create an instance</h3>
           <label translated>Instance token</label><br />
-          <input class="input-locked" type="password" readonly id="instanceToken"/><br />
+          <input class="input-locked" type="password" readonly id="instanceToken" /><br />
           <label translated>Instance link</label><br />
-          <input class="input-locked" type="text" readonly id="instanceLink"/><br />
-          <button class="button blue" translated>Create new instance</button><br>
+          <input class="input-locked" type="text" readonly id="instanceLink" /><br />
+          <button class="button blue" translated>Create new instance</button><br />
           <button class="button blue" translated>Copy link</button>
           <button class="button blue" translated>Copy token</button>
         </div>
         <div class="box">
-          <h3 translated>Load an instance</h3>
-          <label translated>Instance token</label><br />
-          <input class="input-locked" type="password" /><br><br>
-          <label class="warning" style="margin-top: 2vh;" translated>⚠️Loading a token will destroy the previous instance</label><br /><br />
-          <button class="button red" translated>Load instance from token</button>
+          <h3 translated>API authentification</h3>
+          <label translated>Spotify API</label><br /><button class="button blue" id="spotifyAPI" translated>Login</button><button class="button red" id="spotifyAPILogout" translated customDisable>Logout</button>
         </div>
       </div>
       <div class="container" id="Behaviour" style="display: none">
@@ -80,13 +77,13 @@
         </div>
         <div class="box">
           <h3 translated>Dynamic values</h3>
-          <label translated>You can use dynamic values to insert data into the bot answer</label><br><br>
-          <label translated>[__SONG__]: The current song name</label><br>
-          <label translated>[__SUBTITLE__]: The current song chapter or song author</label><br>
-          <label translated>[__LINK__]: The URL of the current listening tab</label><br>
-          <br>
-          <label translated>[__TIME__]: The current song progression (might not be always available)</label><br>
-          <label translated>[__DURATION__]: The current song duration (might not be always available)</label><br>
+          <label translated>You can use dynamic values to insert data into the bot answer</label><br /><br />
+          <label translated>[__SONG__]: The current song name</label><br />
+          <label translated>[__SUBTITLE__]: The current song chapter or song author</label><br />
+          <label translated>[__LINK__]: The URL of the current listening tab</label><br />
+          <br />
+          <label translated>[__TIME__]: The current song progression (might not be always available)</label><br />
+          <label translated>[__DURATION__]: The current song duration (might not be always available)</label><br />
         </div>
       </div>
     </div>

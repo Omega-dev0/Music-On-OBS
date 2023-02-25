@@ -130,5 +130,17 @@
   },
   "__DURATION___The_current_song_duration_might_not_be_always_available": {
     "message": "[__DURATION__]: The current song duration (might not be always available)"
+  },
+  "API_authentification":{
+    "message":"API authentification"
+  },
+  "Spotify_API":{
+    "message":"Spotify API"
+  },
+  "Logout":{
+    "message":"Logout"
+  },
+  "Login":{
+    "message":"Login"
   }
 }
