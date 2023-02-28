@@ -142,5 +142,11 @@
   },
   "Login":{
     "message":"Login"
+  },
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Detect_pause":{
+    "message":"Detect pause"
   }
 }

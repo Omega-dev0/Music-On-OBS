@@ -9,6 +9,8 @@ function translator() {
   });
 }
 
+
+
 async function update() {
   let extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
@@ -78,5 +80,43 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   }
 });
 
+function e(){
+  document.getElementById("listenerSelect").addEventListener("change", async ()=>{
+    let value = document.getElementById("listenerSelect").value
+
+    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+
+    chrome.storage.local.set({
+      "extension-state": {
+        stopped: extensionState.stopped,
+        scanners: extensionState.scanners,
+        selectedScanner: value,
+      },
+    });
+  })
+
+  document.getElementById("start").addEventListener("click", async ()=>{
+    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    chrome.storage.local.set({
+      "extension-state": {
+        stopped: false,
+        scanners: extensionState.scanners,
+        selectedScanner: document.getElementById("listenerSelect").value,
+      },
+    });
+  })
+  document.getElementById("stop").addEventListener("click", async ()=>{
+    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    chrome.storage.local.set({
+      "extension-state": {
+        stopped: true,
+        scanners: extensionState.scanners,
+        selectedScanner: document.getElementById("listenerSelect").value,
+      },
+    });
+  })
+}
+
 document.addEventListener("DOMContentLoaded", update);
 document.addEventListener("DOMContentLoaded", translator);
+document.addEventListener("DOMContentLoaded", e);

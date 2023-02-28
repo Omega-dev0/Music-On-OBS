@@ -90,6 +90,7 @@ async function saveSettings() {
   let settings = {
     behaviour: {
       displayPause: dv("displayPause"),
+      detectPause: dv("detectPause"),
       smartSwitch: dv("smartSwitch"),
     },
     integration: {
@@ -122,7 +123,8 @@ async function loadSettings() {
 
   dsv("instanceToken", extensionSettings.instance.privateToken);
   dsv("instanceLink", extensionSettings.instance.publicToken);
-
+  
+  dsv("detectPause",extensionSettings.behaviour.detectPause)
   dsv("displayPause", extensionSettings.behaviour.displayPause);
   dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 

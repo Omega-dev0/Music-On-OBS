@@ -5,12 +5,14 @@ var socket;
 const spotifySettings = {
   clientId: encodeURIComponent("d645ca3edc6e4394ab6b52d0f1bbd772"),
   responseType: encodeURIComponent("code"),
-  redirectURI: encodeURIComponent("https://clecjadmjjoknaflecccgpjkojafeail.chromiumapp.org/"),
+  redirectURI: "https://clecjadmjjoknaflecccgpjkojafeail.chromiumapp.org/",
   scope: encodeURIComponent("user-read-currently-playing"),
   showDialog: encodeURIComponent("true"),
   state: "",
 };
 
+
+//IMPORTS
 try {
   importScripts("socket.io.js");
 
@@ -25,6 +27,16 @@ try {
   console.error("SOCKET.IO DID NOT LOAD OR CONNECT!!!!!! EVERYTHING IS LOST (almost try to reload the extension and if the error persists send to the dev the error below and make sure to let them know it's PANIK time)");
   console.log(e);
 }
+
+try {
+  importScripts("spotifyAPI.js");
+  SpotifyAPIScanner();
+} catch (e) {
+  console.error("Spotify API scanner failed to load!");
+  console.log(e);
+}
+
+
 //ADD SETTING
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
@@ -43,6 +55,7 @@ chrome.runtime.onInstalled.addListener(() => {
       currentTime: "",
       currentLength: "",
       url: "",
+      cover: "",
     },
   });
 
@@ -56,6 +69,7 @@ chrome.runtime.onInstalled.addListener(() => {
       behaviour: {
         displayPause: false,
         smartSwitch: false,
+        detectPause: true,
       },
       integration: {
         defaultMessage: "Current song: [__SONG__]",
@@ -160,48 +174,45 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (oauth.spotify.loggedIn == true) {
         sendResponse({ status: false, message: "Already logged in" });
       }
-      let url = getSpotifyEndpoint()
-      console.log(url)
+      let url = getSpotifyEndpoint();
+      console.log(url);
       chrome.identity.launchWebAuthFlow(
         {
           url: url,
           interactive: true,
         },
-        function (redirect_url) {
+        async function (redirect_url) {
           if (chrome.runtime.lastError) {
-            sendResponse({ status: false, message: "Chrome runtime error",error:chrome.runtime.lastError});
+            sendResponse({ status: false, message: "Chrome runtime error", error: chrome.runtime.lastError });
           } else {
             if (redirect_url.includes("callback?error=access_denied")) {
               sendResponse({ status: false, message: "Access denied" });
             } else {
-              let ACCESS_TOKEN = redirect_url.substring(redirect_url.indexOf("access_token=") + 13);
-              ACCESS_TOKEN = ACCESS_TOKEN.substring(0, ACCESS_TOKEN.indexOf("&"));
-              let state = redirect_url.substring(redirect_url.indexOf("state=") + 6);
+              let params = new URLSearchParams("?" + redirect_url.split("?")[1]);
+              ACCESS_TOKEN = params.get("code");
+              state = params.get("state");
 
               if (state === spotifySettings.state) {
-                chrome.storage.local.set({
+                response = await contactServer("spotify-token", {
+                  code: ACCESS_TOKEN,
+                  redirect_uri: spotifySettings.redirectURI,
+                });
+
+                //GETTING THE REFRESHTOKEN + TOKEN
+                if (response.success == false) {
+                  sendResponse({ status: false, message: "Failed to fetch token from code" + response.error });
+                  return;
+                }
+                await chrome.storage.local.set({
                   "extension-oauth": {
                     spotify: {
-                      token: ACCESS_TOKEN,
-                      refreshToken: "",
-                      expiry: new Date(new Date().getTime() + 3600000),
+                      token: response.Token,
+                      refreshToken: response.refreshToken,
+                      expiry: new Date(new Date().getTime() + 50 * 60 * 1000),
                       loggedIn: true,
                     },
                   },
                 });
-                setTimeout(() => {
-                  //REFRESH BEFORE THAT
-                  chrome.storage.local.set({
-                    "extension-oauth": {
-                      spotify: {
-                        token: "",
-                        refreshToken: "",
-                        expiry: "",
-                        loggedIn: false,
-                      },
-                    },
-                  });
-                }, 3600000);
                 sendResponse({ status: true });
               } else {
                 sendResponse({ status: false, message: "State not valid" });
@@ -211,10 +222,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       );
     },
-    test:async () => {
-      setTimeout(() => {
-        sendResponse("GG");
-      }, 1500);
+    "spotify-refresh": async () => {
+      let oauth = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
+      if (oauth.refreshToken == "") {
+        sendResponse({ success: false, message: "No refresh token available" });
+      }
+      let response = await contactServer("spotify-refresh", {
+        refresh_token: oauth.spotify.refreshToken,
+      });
     },
   };
   let action = actions[message.key];
@@ -223,13 +238,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log(message);
     return true;
   } else {
-    action()
+    action();
     return true;
   }
 });
 
-chrome.storage.onChanged.addListener(async (object, areaName) => {
-  console.log("Change detected:", object);
-});
+chrome.storage.onChanged.addListener(async (object, areaName) => {});
 
 onLaunch();
