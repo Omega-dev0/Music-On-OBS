@@ -1,3 +1,7 @@
+let extensionSettings;
+let extensionOAUTH;
+let extensionState
+
 window.addEventListener("DOMContentLoaded", function () {
   function showContainer(id) {
     for (let i = 0; i < document.getElementsByClassName("container").length; i++) {
@@ -40,9 +44,38 @@ window.addEventListener("DOMContentLoaded", function () {
     chrome.runtime.sendMessage({ key: "spotify-login" }, (res) => {
       if (res.status == false) {
         console.warn("SPOTIFY LOGIN ERROR", res);
-      } else if (res.status == true) {
-        document.getElementById("spotifyAPI").setAttribute("customDisable", "");
-        document.getElementById("spotifyAPILogout").removeAttribute("customDisable");
+      }
+    });
+  });
+
+  document.getElementById("spotifyAPILogout").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ key: "spotify-logout" }, (res) => {
+      if (res.status == false) {
+        console.warn("SPOTIFY LOGIN ERROR", res);
+      }else{
+        if(extensionState.selectedScanner == "spotifyAPI"){
+          chrome.storage.local.set({
+            "extension-state": {
+              stopped: true,
+              scanners: extensionState.scanners,
+              selectedScanner: extensionState.selectedScanner,
+            },
+          });
+
+          chrome.storage.local.set({
+            "extension-scanner-state": {
+              paused: false,
+              title: "Default title",
+              subtitle: "Default subtitle",
+              currentTime: 0,
+              currentLength: 0,
+              url: "",
+              cover: "",
+            },
+          });
+
+
+        }
       }
     });
   });
@@ -104,7 +137,7 @@ async function saveSettings() {
       style: "",
     },
   };
-  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   chrome.storage.local.set({
     "extension-settings": {
       instance: extensionSettings.instance,
@@ -114,17 +147,17 @@ async function saveSettings() {
     },
   });
 
-  chrome.runtime.sendMessage({ key: "sync-server" });
+  //chrome.runtime.sendMessage({ key: "sync-server" });
 }
 
 async function loadSettings() {
-  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-  let extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
+  extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
 
   dsv("instanceToken", extensionSettings.instance.privateToken);
   dsv("instanceLink", extensionSettings.instance.publicToken);
-  
-  dsv("detectPause",extensionSettings.behaviour.detectPause)
+
+  dsv("detectPause", extensionSettings.behaviour.detectPause);
   dsv("displayPause", extensionSettings.behaviour.displayPause);
   dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 
@@ -144,6 +177,48 @@ async function loadSettings() {
   }
   //TODO ADD OVERLAY
 }
+
+function update() {
+  console.log("update")
+  dsv("instanceToken", extensionSettings.instance.privateToken);
+  dsv("instanceLink", extensionSettings.instance.publicToken);
+
+  dsv("detectPause", extensionSettings.behaviour.detectPause);
+  dsv("displayPause", extensionSettings.behaviour.displayPause);
+  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
+
+  dsv("displayPause", extensionSettings.behaviour.displayPause);
+  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
+
+  dsv("defaultMessage", extensionSettings.integration.defaultMessage);
+  dsv("pausedMessage", extensionSettings.integration.pausedMessage);
+  dsv("errorMessage", extensionSettings.integration.errorMessage);
+
+  if (extensionOAUTH.spotify.loggedIn == true) {
+    document.getElementById("spotifyAPI").setAttribute("customDisable", "");
+    document.getElementById("spotifyAPILogout").removeAttribute("customDisable");
+  } else {
+    document.getElementById("spotifyAPILogout").setAttribute("customDisable", "");
+    document.getElementById("spotifyAPI").removeAttribute("customDisable");
+  }
+  //TODO ADD OVERLAY
+}
+
+chrome.storage.onChanged.addListener(async (object, areaName) => {
+  if (areaName != "local") {
+    return;
+  }
+  if (object["extension-settings"] != undefined) {
+    extensionSettings = object["extension-settings"].newValue;
+  }
+  if (object["extension-oauth"] != undefined) {
+    extensionOAUTH = object["extension-oauth"].newValue;
+  }
+  if (object["extension-state"] != undefined) {
+    extensionState = object["extension-state"].newValue;
+  }
+  update();
+});
 
 //SPOTIFY OAUTH END
 loadSettings();

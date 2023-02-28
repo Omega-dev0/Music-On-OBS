@@ -8,12 +8,12 @@ function SpotifyAPIScanner() {
   async function onLaunch() {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     oauth = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
-    
+    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     if (!extensionState.selectedScanner == "SpotifyAPI" || oauth.loggedIn == false || extensionState.stopped == false) {
       return;
     }
 
-    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    
 
     run();
   }
@@ -29,6 +29,9 @@ function SpotifyAPIScanner() {
     });
 
     const content = await response.json();
+    if(content.currently_playing_type != "track"){
+      return {type: content.currently_playing_type}
+    }
     return {
       url: content.item.external_urls.spotify,
       subtitle: content.item.artists
@@ -48,6 +51,7 @@ function SpotifyAPIScanner() {
   async function run() {
     let fn = async () => {
       if (oauth.spotify.loggedIn == false || extensionState.selectedScanner != "spotifyAPI") {
+        console.log("KILL ", oauth.spotify.loggedIn,extensionState.selectedScanner)
         if (interval) {
           clearInterval(interval);
         }
@@ -70,6 +74,18 @@ function SpotifyAPIScanner() {
             cover: data.cover,
           },
         });
+      }else{
+        chrome.storage.local.set({
+          "extension-scanner-state": {
+            paused: true,
+            title: "Unsupported type",
+            subtitle: "",
+            currentTime: 0,
+            currentLength: 0,
+            url: "",
+            cover: "",
+          },
+        });
       }
       syncServer();
     };
@@ -84,7 +100,8 @@ function SpotifyAPIScanner() {
     }
     if (object["extension-state"] != undefined) {
       extensionState = object["extension-state"].newValue;
-      if (extensionState.selectedScanner == "spotifyAPI" && interval == undefined && extensionState.stopped == false) {
+      console.log(extensionState.selectedScanner,interval,extensionState.stopped)
+      if (extensionState.selectedScanner == "spotifyAPI" && interval == undefined &&  extensionState.stopped== false) {
         run();
       } else {
         clearInterval(interval);

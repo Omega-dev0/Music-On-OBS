@@ -11,7 +11,6 @@ const spotifySettings = {
   state: "",
 };
 
-
 //IMPORTS
 try {
   importScripts("socket.io.js");
@@ -35,7 +34,6 @@ try {
   console.error("Spotify API scanner failed to load!");
   console.log(e);
 }
-
 
 //ADD SETTING
 chrome.runtime.onInstalled.addListener(() => {
@@ -231,6 +229,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         refresh_token: oauth.spotify.refreshToken,
       });
     },
+    "spotify-logout": async () => {
+      await chrome.storage.local.set({
+        "extension-oauth": {
+          spotify: {
+            token: "",
+            refreshToken: "",
+            expiry: new Date(),
+            loggedIn: false,
+          },
+        },
+      });
+      sendResponse({ success: true });
+    },
   };
   let action = actions[message.key];
   if (!action) {
@@ -243,6 +254,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-chrome.storage.onChanged.addListener(async (object, areaName) => {});
+chrome.storage.onChanged.addListener(async (object, areaName) => {
+  syncServer()
+});
 
 onLaunch();

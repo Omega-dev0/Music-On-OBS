@@ -9,15 +9,21 @@ function translator() {
   });
 }
 
-
+let extensionSettings;
+let extensionOAUTH;
+let extensionState;
+let extensionScannerState
 
 async function update() {
-  let extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
-  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-
+  if (!extensionSettings || !extensionOAUTH || !extensionState || !extensionScannerState) {
+    extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
+    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
+  }
   document.getElementById("titleDisplay").innerHTML = extensionScannerState.title;
   document.getElementById("subtitleDisplay").innerHTML = extensionScannerState.subtitle;
-  if (extensionScannerState.paused == true) {
+  if (extensionState.paused == true) {
     document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: Paused`;
     document.getElementById("statusDisplay").className = "paused";
     document.getElementById("start").setAttribute("customDisable", "");
@@ -36,55 +42,11 @@ async function update() {
   }
 }
 
-chrome.storage.onChanged.addListener(async (object, areaName) => {
-  if (areaName != "local") {
-    return;
-  }
-  if (object["extension-scanner-state"] != undefined) {
-    let data = object["extension-scanner-state"].newValue;
-    document.getElementById("titleDisplay").innerHTML = data.title;
-    document.getElementById("subtitleDisplay").innerHTML = data.subtitle;
-    if (data.paused == true) {
-      document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: Paused`;
-      document.getElementById("statusDisplay").className = "paused";
-      document.getElementById("start").setAttribute("customDisable", "");
-      document.getElementById("stop").removeAttribute("customDisable");
-    } else {
-      document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: Active`;
-      document.getElementById("statusDisplay").className = "active";
-      document.getElementById("start").setAttribute("customDisable", "");
-      document.getElementById("stop").removeAttribute("customDisable");
-    }
-  }
-  if (object["extension-state"] != undefined) {
-    let data = object["extension-state"].newValue;
-    if (data.stopped == true) {
-      document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: Inactive`;
-      document.getElementById("statusDisplay").className = "inactive";
-      document.getElementById("stop").setAttribute("customDisable", "");
-      document.getElementById("start").removeAttribute("customDisable");
-    }
-    let html = ``;
-    /*
-    {
-      tabId:""
-      name:""
-    }
-    
-    for(let i;i=0;i<=data.scanners.length){
-      scanner = data.scanners[i]
-      html += ``
-    }
-    */
-    //TODO
-  }
-});
+function e() {
+  document.getElementById("listenerSelect").addEventListener("change", async () => {
+    let value = document.getElementById("listenerSelect").value;
 
-function e(){
-  document.getElementById("listenerSelect").addEventListener("change", async ()=>{
-    let value = document.getElementById("listenerSelect").value
-
-    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    //let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
     chrome.storage.local.set({
       "extension-state": {
@@ -93,10 +55,17 @@ function e(){
         selectedScanner: value,
       },
     });
-  })
+  });
 
-  document.getElementById("start").addEventListener("click", async ()=>{
-    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+  document.getElementById("start").addEventListener("click", async () => {
+    extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
+    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+
+    console.log(extensionOAUTH.spotify.loggedIn, document.getElementById("listenerSelect").value);
+    if (extensionOAUTH.spotify.loggedIn == false && document.getElementById("listenerSelect").value == "spotifyAPI") {
+      return;
+    }
     chrome.storage.local.set({
       "extension-state": {
         stopped: false,
@@ -104,8 +73,8 @@ function e(){
         selectedScanner: document.getElementById("listenerSelect").value,
       },
     });
-  })
-  document.getElementById("stop").addEventListener("click", async ()=>{
+  });
+  document.getElementById("stop").addEventListener("click", async () => {
     let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     chrome.storage.local.set({
       "extension-state": {
@@ -114,9 +83,27 @@ function e(){
         selectedScanner: document.getElementById("listenerSelect").value,
       },
     });
-  })
+  });
 }
 
 document.addEventListener("DOMContentLoaded", update);
 document.addEventListener("DOMContentLoaded", translator);
 document.addEventListener("DOMContentLoaded", e);
+chrome.storage.onChanged.addListener(async (object, areaName) => {
+  if (areaName != "local") {
+    return;
+  }
+  if (object["extension-settings"] != undefined) {
+    extensionSettings = object["extension-settings"].newValue;
+  }
+  if (object["extension-oauth"] != undefined) {
+    extensionOAUTH = object["extension-oauth"].newValue;
+  }
+  if (object["extension-state"] != undefined) {
+    extensionState = object["extension-state"].newValue;
+  }
+  if(object["extension-scanner-state"] != undefined){
+    extensionScannerState = object["extension-scanner-state"].newValue
+  }
+  update(object);
+});
