@@ -4,6 +4,7 @@ function SpotifyAPIScanner() {
   let oauth;
 
   let interval;
+  let snapshot;
 
   async function onLaunch() {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
@@ -12,8 +13,6 @@ function SpotifyAPIScanner() {
     if (!extensionState.selectedScanner == "SpotifyAPI" || oauth.loggedIn == false || extensionState.stopped == false) {
       return;
     }
-
-    
 
     run();
   }
@@ -27,10 +26,15 @@ function SpotifyAPIScanner() {
         Authorization: "Bearer " + oauth.spotify.token,
       },
     });
-
+    if (response.status == 204) {
+      return {
+        type: "204"
+      }
+    }
     const content = await response.json();
-    if(content.currently_playing_type != "track"){
-      return {type: content.currently_playing_type}
+
+    if (content.currently_playing_type != "track") {
+      return { type: content.currently_playing_type };
     }
     return {
       url: content.item.external_urls.spotify,
@@ -50,8 +54,7 @@ function SpotifyAPIScanner() {
 
   async function run() {
     let fn = async () => {
-      if (oauth.spotify.loggedIn == false || extensionState.selectedScanner != "spotifyAPI") {
-        console.log("KILL ", oauth.spotify.loggedIn,extensionState.selectedScanner)
+      if (oauth.spotify.loggedIn == false || extensionState.selectedScanner != "spotifyAPI" || extensionState.stopped == true) {
         if (interval) {
           clearInterval(interval);
         }
@@ -74,12 +77,13 @@ function SpotifyAPIScanner() {
             cover: data.cover,
           },
         });
-      }else{
+      } else {
+        console.log("unsupported type", data);
         chrome.storage.local.set({
           "extension-scanner-state": {
             paused: true,
             title: "Unsupported type",
-            subtitle: "",
+            subtitle: data.type == "204" ? "Player not detected" : "",
             currentTime: 0,
             currentLength: 0,
             url: "",
@@ -87,21 +91,27 @@ function SpotifyAPIScanner() {
           },
         });
       }
-      syncServer();
+      if (!snapshot) {
+        syncServer();
+      } else {
+        if (snapshot.paused != data.paused || snapshot.title != data.title || snapshot.subtitle != data.subtitle || snapshot.url != data.url || snapshot.cover != data.cover) {
+          syncServer();
+        }
+      }
+
+      snapshot = data;
     };
     interval = setInterval(fn, 5000);
     fn();
   }
 
   chrome.storage.onChanged.addListener(async (object, areaName) => {
-    console.log("Change detected:", object);
     if (areaName != "local") {
       return;
     }
     if (object["extension-state"] != undefined) {
       extensionState = object["extension-state"].newValue;
-      console.log(extensionState.selectedScanner,interval,extensionState.stopped)
-      if (extensionState.selectedScanner == "spotifyAPI" && interval == undefined &&  extensionState.stopped== false) {
+      if (extensionState.selectedScanner == "spotifyAPI" && interval == undefined && extensionState.stopped == false) {
         run();
       } else {
         clearInterval(interval);

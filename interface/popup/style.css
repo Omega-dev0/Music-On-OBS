@@ -105,3 +105,15 @@ button[customDisable]{
 button[customDisable]:hover{
   background-color: #6b686c;
 }
+
+select{
+  width: 225px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.platform-icon{
+  width: auto;
+  height: 1rem;
+}

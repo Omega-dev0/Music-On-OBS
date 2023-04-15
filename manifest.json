@@ -15,7 +15,7 @@
     "service_worker": "background.js"
   },
 
-  "permissions": ["storage","identity"],
+  "permissions": ["storage","identity","tabs"],
   "host_permissions": ["https://*.youtube.com/*","https://open.spotify.com/*","https://*.soundcloud.com/*","https://play.pretzel.rocks/*","https://*.epidemicsound.com/*"],
 
   "action": {

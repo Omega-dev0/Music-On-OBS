@@ -92,8 +92,8 @@
   "Stop": {
     "message": "Stop"
   },
-  "Active_tabs":{
-    "message":"Active tabs"
+  "Active_listener":{
+    "message":"Active listener"
   },
   "Status": {
     "message": "Status"
@@ -148,5 +148,8 @@
   },
   "Detect_pause":{
     "message":"Detect pause"
+  },
+  "Listening_to":{
+    "message":"Listening to"
   }
 }
