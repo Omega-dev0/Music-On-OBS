@@ -43,12 +43,12 @@
 
 @keyframes title_marquee {
   0% {
-    left: calc(var(--textWidth) + var(--titleOffset));
+    left: calc(var(--titletextWidth) + var(--titleOffset));
     opacity: 1;
   }
 
   100% {
-    left: calc((var(--textWidth) * -1) - var(--titleOffset));
+    left: calc((var(--titletextWidth) * -1) - var(--titleOffset));
     opacity: 1;
   }
 }

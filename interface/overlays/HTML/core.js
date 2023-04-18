@@ -19,29 +19,30 @@ function getCanvasFont(el = document.body) {
   return `${fontWeight} ${fontSize} ${fontFamily}`;
 }
 
-function updateMarquee(marqueeElement, text) {
+function updateMarquee(marqueeElement, text, type) {
+  //subtitle or title
   let size = parseInt(getTextWidth(text, getCanvasFont(marqueeElement.querySelector("div > span"))));
-  document.documentElement.style.setProperty("--textWidth", size + "px");
+  document.documentElement.style.setProperty("--"+type+"textWidth", size + "px");
   let csv = window.getComputedStyle(document.documentElement);
   csv.getVar = getVar;
 
-  if (size < parseInt(csv.getVar("titleWidth", "px"))) {
-    document.getElementById("title").querySelector(".title_marquee__inner").hidden = true;
-    document.getElementById("title").querySelector(".title_marquee_default").hidden = false;
-    document.getElementById("title").querySelector(".title_marquee_default").innerHTML = text;
+  if (size < parseInt(csv.getVar(`${type}Width`, "px"))) {
+    document.getElementById(type).querySelector(`.${type}_marquee_inner`).hidden = true;
+    document.getElementById(type).querySelector(`.${type}_marquee_default`).hidden = false;
+    document.getElementById(type).querySelector(`.${type}_marquee_default`).innerHTML = text;
     return;
   } else {
-    document.getElementById("title").querySelector(".title_marquee__inner").hidden = false;
-    document.getElementById("title").querySelector(".title_marquee_default").hidden = true;
+    document.getElementById(type).querySelector(`.${type}_marquee_inner`).hidden = false;
+    document.getElementById(type).querySelector(`.${type}_marquee_default`).hidden = true;
   }
 
-  let animationDuration = (((size) / csv.getVar("titleSpeed", "")) + ((csv.getVar("titleOffset", "px")) / csv.getVar("titleSpeed", ""))) * 2;
+  let animationDuration = (((size) / csv.getVar(`${type}Speed`, "")) + ((csv.getVar(`${type}Offset`, "px")) / csv.getVar(`${type}Speed`, ""))) * 2;
   //REDO
-  let separation = size / csv.getVar("titleSpeed", "") + csv.getVar("titleOffset", "px") / csv.getVar("titleSpeed", "");
+  let separation = size / csv.getVar(`${type}Speed`, "") + csv.getVar(`${type}Offset`, "px") / csv.getVar(`${type}Speed`, "");
   console.log(separation, animationDuration, size);
 
-  document.documentElement.style.setProperty("--titleSeparation", separation + "s");
-  document.documentElement.style.setProperty("--titleAnimationDuration", animationDuration + "s");
+  document.documentElement.style.setProperty(`--${type}Separation`, separation + "s");
+  document.documentElement.style.setProperty(`--${type}AnimationDuration`, animationDuration + "s");
 
   for (span of marqueeElement.querySelectorAll("span")) {
     span.innerHTML = text;
@@ -49,7 +50,7 @@ function updateMarquee(marqueeElement, text) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  updateMarquee(document.querySelector(".title_marquee"), "This is a test");
+  updateMarquee(document.querySelector(".title_marquee"), "This is a test","title");
 });
 
 //UTILITY FUNCTIONS
