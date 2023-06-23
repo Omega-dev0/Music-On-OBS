@@ -45,7 +45,6 @@ chrome.runtime.onInstalled.addListener(() => {
     "extension-settings": {
       instance: {
         privateToken: "",
-        publicToken: "",
         serverURL: serverURL,
       },
       behaviour: {
@@ -88,9 +87,9 @@ async function syncServer() {
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
   let data = {
-    scannerState: extensionScannerState,
-    settings: extensionSettings,
-    state: extensionState,
+    extensionScannerState: extensionScannerState,
+    extensionSettings: extensionSettings,
+    extensionState: extensionState,
   };
 
   contactServer("sync-server", data);
