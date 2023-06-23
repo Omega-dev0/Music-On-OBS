@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popup</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div style="flex-basis: 100%; display: flex; justify-content: space-around">
+      <img src="../../images/default/default.png" class="icon" style="margin-top: 5px" />
+      <h1 translated>extensionName</h1>
+    </div>
+    <br />
+    <div style="display: flex; align-items: center; flex-direction: column">
+      <h3 translated>Active listener</h3>
+      <select id="listenerSelect">
+        <!-- <option value="spotifyAPI">Spotify API</option> -->
+        <option value="none">None</option>
+      </select>
+    </div>
+    <div style="display: flex; justify-content: space-around">
+      <div style="background-color: white; width: 250px; height: 2px; margin: 25px 0px"></div>
+    </div>
+    <div style="display: flex; justify-content: space-around"><button class="button blue" style="width: 140px" translated id="start">Start</button><button class="button red" style="width: 140px" translated id="stop">Stop</button></div>
+    <br />
+    <br />
+    <div style="display: flex; justify-content: space-around">
+      <h3 class="paused" id="statusDisplay">Status: Inactive</h3>
+    </div>
+    <br />
+    <div class="box">
+      <h3 id="titleDisplay">Title</h3>
+      <h4 id="subtitleDisplay">Subtitle</h4>
+    </div>
+  </body>
+</html>

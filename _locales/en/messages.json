@@ -1,0 +1,155 @@
+{
+  "extensionName": {
+    "message": "Music on Stream"
+  },
+  "updateName": {
+    "message": "2.2 - Revamp"
+  },
+  "testLink": {
+    "message": "LOL"
+  },
+  "Instance": {
+    "message": "Instance"
+  },
+  "Behaviour": {
+    "message": "Behaviour"
+  },
+  "Overlay": {
+    "message": "Overlay"
+  },
+  "Integration": {
+    "message": "Integration"
+  },
+  "Instance_settings": {
+    "message": "Instance settings"
+  },
+  "Create_an_instance": {
+    "message": "Create an instance"
+  },
+  "Instance_token": {
+    "message": "Instance token"
+  },
+  "Instance_link": {
+    "message": "Instance link"
+  },
+  "Create_new_instance": {
+    "message": "Create new instance"
+  },
+  "Copy_instance_link": {
+    "message": "Copy instance link"
+  },
+  "Load_an_instance": {
+    "message": "Load an instance"
+  },
+  "Loading_a_token_will_destroy_the_previous_instance": {
+    "message": "⚠️Loading a token will destroy the previous instance"
+  },
+  "Load_instance_from_token": {
+    "message": "Load instance from token"
+  },
+  "Behaviour_settings": {
+    "message": "Behaviour settings"
+  },
+  "Display_overlay_when_paused": {
+    "message": "Display overlay when paused"
+  },
+  "The_overlay_will_disappear_if_you_pause_the_music_instead_of_displaying_a_pause_message": {
+    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+  },
+  "Smart_tab_change": {
+    "message": "Smart tab change"
+  },
+  "The_extension_will_try_to_always_be_listening_on_an_active_tab_instead_of_waiting_for_a_manual_change": {
+    "message": "The extension will try to always be listening on an active tab instead of waiting for a manual change"
+  },
+  "Overlay_settings": {
+    "message": "Overlay settings"
+  },
+  "Integration_settings": {
+    "message": "Integration settings"
+  },
+  "Bot_messages": {
+    "message": "Bot messages"
+  },
+  "Default_message": {
+    "message": "Default message"
+  },
+  "Paused_message": {
+    "message": "Paused message"
+  },
+  "Error_message": {
+    "message": "Error message"
+  },
+  "Copy_Nightbot_command": {
+    "message": "Copy Nightbot command"
+  },
+  "Copy_Stream_elements_command": {
+    "message": "Copy Stream elements command"
+  },
+  "Start": {
+    "message": "Start"
+  },
+  "Stop": {
+    "message": "Stop"
+  },
+  "Active_listener":{
+    "message":"Active listener"
+  },
+  "Status": {
+    "message": "Status"
+  },
+  "Active": {
+    "message": "Active"
+  },
+  "Inactive": {
+    "message": "Inactive"
+  },
+  "Paused": {
+    "message": "Paused"
+  },
+  "Copy_token": {
+    "message": "Copy token"
+  },
+  "Dynamic_values": {
+    "message": "Dynamic values"
+  },
+  "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
+    "message": "You can use dynamic values to insert data into the bot answer:"
+  },
+  "__SONG___The_current_song_name": {
+    "message": "[__SONG__]: The current song name"
+  },
+  "__SUBTITLE___The_current_song_chapter_or_song_author": {
+    "message": "[__SUBTITLE__]: The current song chapter or song author"
+  },
+  "__LINK___The_URL_of_the_current_listening_tab": {
+    "message": "[__LINK__]: The URL of the current listening tab"
+  },
+  "__TIME___The_current_song_progression_might_not_be_always_available": {
+    "message": "[__TIME__]: The current song progression (might not be always available)"
+  },
+  "__DURATION___The_current_song_duration_might_not_be_always_available": {
+    "message": "[__DURATION__]: The current song duration (might not be always available)"
+  },
+  "API_authentification":{
+    "message":"API authentification"
+  },
+  "Spotify_API":{
+    "message":"Spotify API"
+  },
+  "Logout":{
+    "message":"Logout"
+  },
+  "Login":{
+    "message":"Login"
+  },
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Detect_pause":{
+    "message":"Detect pause"
+  },
+  "Listening_to":{
+    "message":"Listening to"
+  }
+}

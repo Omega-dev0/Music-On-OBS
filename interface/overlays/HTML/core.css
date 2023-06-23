@@ -1,0 +1,54 @@
+.title_marquee > div > #s1, .title_marquee > div > #s2{
+  position: absolute;
+  animation: var(--titleAnimationDuration) infinite title_marquee linear;
+  animation-play-state: running;
+  width: max-content;
+  opacity: 0;
+}
+
+.title_marquee > div > #s2 {
+  animation-delay: var(--titleSeparation);
+}
+
+.title_marquee {
+  position: absolute;
+  width: var(--titleWidth);
+  height: calc(var(--titleFontSize) * 1.1);
+  overflow: hidden;
+  background-color: var(--titleBackgroundColor);
+}
+
+
+.title_marquee > div {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0)
+  }
+
+.title_marquee > span {
+  color: var(--titleColor);
+  font-family: var(--titleFontFamily);
+  font-weight: bold;
+  font-size: var(--titleFontSize);
+  transition:  opacity 0.4s;
+}
+.title_marquee > div >span {
+    color: var(--titleColor);
+    font-family: var(--titleFontFamily);
+    font-weight: bold;
+    font-size: var(--titleFontSize);
+  }
+
+@keyframes title_marquee {
+  0% {
+    left: calc(var(--titletextWidth) + var(--titleOffset));
+    opacity: 1;
+  }
+
+  100% {
+    left: calc((var(--titletextWidth) * -1) - var(--titleOffset));
+    opacity: 1;
+  }
+}
