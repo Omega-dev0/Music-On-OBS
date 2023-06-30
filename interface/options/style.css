@@ -118,7 +118,7 @@ h1 {
   background-color: #252525;
   border-radius: 22px;
   width: fit-content;
-  margin-right: 1.5vw;
+  margin: .75vw;
   border: #000000 1px solid;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -234,8 +234,40 @@ h3 {
   transform: scale(1);
 }
 
+input[type="color"] {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.15rem;
+  border: none;
+  margin-left: 4px;
+  margin-right: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+input[type="color"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid;
+  pointer-events: none;
+}
+
+
 .checkbox-container > label {
   cursor: pointer;
+  display: inline;
+  line-height: 1.25em;
+  vertical-align: top;
+  clear: both;
+  padding-left: 1px;
+  font-size: 1.5vw;
+}
+
+.large-label {
   display: inline;
   line-height: 1.25em;
   vertical-align: top;
@@ -274,3 +306,10 @@ button[customDisable]:hover{
   background-color: rgba(255, 255, 255, 0.575);
   margin-top: 20px;
 }
+
+
+
+
+
+
+

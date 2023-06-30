@@ -151,5 +151,41 @@
   },
   "Listening_to":{
     "message":"Listening to"
+  },
+  "Background_settings":{
+    "message":"Background settings"
+  },
+  "Primary_gradient_color":{
+    "message":"Primary gradient color"
+  },
+  "Secondary_gradient_color":{
+    "message":"Secondary gradient color"
+  },
+  "Display_the_song_cover":{
+    "message":"Display the song cover"
+  },
+ "Use_cover_as_content_background":{
+    "message":"Use cover as content background"
+  },
+  "Title_color":{
+    "message":"Title color"
+  },
+  "Display_title":{
+    "message":"Display title"
+  },
+  "Display_subtitle":{
+    "message":"Display subtitle"
+  },
+  "Subtitle_color":{
+    "message":"Subtitle color"
+  },
+  "Progress_bar_color":{
+    "message":"Progress bar color"
+  },
+  "Progress_bar_background_color":{
+    "message":"Progress bar background color"
+  },
+  "Display_progress_bar":{
+    "message":"Display progress bar"
   }
 }

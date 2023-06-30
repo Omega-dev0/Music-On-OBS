@@ -87,7 +87,7 @@ async function update() {
   let options = "";
   if (extensionState.scanners && extensionState.scanners.length > 0) {
     for (let listener of extensionState.scanners) {
-      options += `<option value="${listener.id}">${fitStringToWidth(listener.title,170)}</option>`;
+      options += `<option value="${listener.id}">${fitStringToWidth(`${listener.platform} - ${listener.title}`,170)}</option>`;
     }
   }
   options += `<option value="none">None</option>`;

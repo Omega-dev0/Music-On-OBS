@@ -1,11 +1,14 @@
 let extensionState;
 let extensionSettings;
+let extensionScannerState;
 let interval;
 
 let allowed = false;
 let TAB_ID;
 
 let snapshot;
+
+const platform = "soundcloud"
 
 const observer = new MutationObserver(update);
 const selectors = {
@@ -55,7 +58,7 @@ async function onLaunch() {
   extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
   //GET TAB
-  let res = await chrome.runtime.sendMessage({ key: "listener-register", data: { platform: "soundcloud" } });
+  let res = await chrome.runtime.sendMessage({ key: "listener-register", data: { platform: platform, title: document.title } });
   TAB_ID = res.tabId;
   if (extensionState.selectedScanner != TAB_ID || TAB_ID != undefined) {
     return;
@@ -63,12 +66,18 @@ async function onLaunch() {
   allowed = true;
 }
 
+new MutationObserver(function (mutations) {
+  //Tab title changed
+  chrome.runtime.sendMessage({ key: "listener-update", data: { platform: platform, title: document.title } });
+}).observe(document.querySelector("title"), { subtree: true, characterData: true, childList: true });
+
 //UPDATE
+let data = null;
 function update() {
   if (allowed != true) {
     return;
   }
-  let data = getData();
+  data = getData();
   if (data == snapshot) {
     return; // ALREADY UPDATED
   }
@@ -87,7 +96,7 @@ function update() {
   if (!snapshot) {
     chrome.runtime.sendMessage({ key: "sync-server" });
   } else {
-    if (snapshot.paused != data.paused || snapshot.title != data.title || snapshot.subtitle != data.subtitle || snapshot.url != data.url || snapshot.cover != data.cover) {
+    if (snapshot != data) {
       chrome.runtime.sendMessage({ key: "sync-server" });
     }
   }
@@ -100,11 +109,10 @@ function getData() {
     url: document.querySelector(".playbackSoundBadge__titleLink").href,
     subtitle: document.querySelector(".playbackSoundBadge__lightLink").innerHTML,
     title: document.querySelector(".playbackSoundBadge__titleLink").getAttribute("title"),
-    cover: document.querySelector(".sc-artwork > span").style.backgroundImage.replace('url("', "").replace('")', ""),
+    cover: document.querySelector(".playbackSoundBadge__avatar > .sc-artwork > span").style.backgroundImage.replaceAll("50x50", "200x200").replace('url("', "").replace('")', ""),
     progress: document.querySelector(".playbackTimeline__timePassed > span[aria-hidden='true']").innerHTML,
     duration: document.querySelector(".playbackTimeline__duration > span[aria-hidden='true']").innerHTML,
     paused: !document.querySelector(".playControl ").classList.contains("playing"),
-    
   };
 }
 
@@ -118,16 +126,17 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (extensionState.selectedScanner == TAB_ID && TAB_ID != undefined && extensionState.stopped == false) {
       allowed = true;
       update();
-    } else {
-      allowed = false;
     }
   }
   if (object["extension-settings"] != undefined) {
     extensionSettings = object["extension-settings"].newValue;
   }
+  if (object["extension-scanner-state"] != undefined) {
+    extensionScannerState = object["extension-scanner-state"].newValue;
+  }
 });
 
-console.log("SoundCloud Scanner ready");
+console.log(`MOS - ${platform} Scanner ready`);
 onLaunch();
 register();
 

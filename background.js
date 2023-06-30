@@ -1,8 +1,8 @@
-const serverURL = "http://127.0.0.1:4001";
+const serverURL = "http://127.0.0.1:4011";
+const serverURL2 = "http://127.0.0.1:4013";
 var socket;
 
 //IMPORTS
-
 
 try {
   importScripts("socket.io.js");
@@ -13,6 +13,16 @@ try {
 
   socket.on("connect", () => {
     console.log(`Connected to ${serverURL}, socket id: ${socket.id}`);
+  });
+
+  socket.on("registerResponse", async (data) => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    extensionSettings.instance.privateToken = data.token;
+    chrome.storage.local.set({
+      "extension-settings": extensionSettings,
+    });
+
+    console.log("New token received!");
   });
 } catch (e) {
   console.error("SOCKET.IO DID NOT LOAD OR CONNECT!!!!!! EVERYTHING IS LOST (almost try to reload the extension and if the error persists send to the dev the error below and make sure to let them know it's PANIK time)");
@@ -46,10 +56,11 @@ chrome.runtime.onInstalled.addListener(() => {
       instance: {
         privateToken: "",
         serverURL: serverURL,
+        serverURL2: serverURL2,
       },
       behaviour: {
         displayPause: false,
-        smartSwitch: false,
+       // smartSwitch: false,
         detectPause: true,
       },
       integration: {
@@ -58,20 +69,24 @@ chrome.runtime.onInstalled.addListener(() => {
         errorMessage: "Unable to get current song name!",
       },
       overlay: {
-        primaryColor: "",
-        secondaryColor: "",
-        style: "",
-        displayTitle:true,
-        displaySubtitle:true,
-        displayProgress:true,
-        displayDurationCounter:false,
-        displayProgressCounter:false,
-        displayCover:true
+        primaryColor: "#b94901",
+        secondaryColor: "#0013ff",
+        titleColor: "#FFFFFF",
+        subtitleColor: "#DEDEDE",
+        style: "default",
+        displayTitle: true,
+        displaySubtitle: true,
+        displayProgress: true,
+        displayCover: true,
+        displayCoverOnContent: true,
+        progressBarColor: "#2B5983",
+        progressBarBackgroundColor: "#393030",
       },
     },
   });
-});
 
+  console.log("Default data installed");
+});
 
 function contactServer(channel, payload) {
   return new Promise((resolve, reject) => {
@@ -91,16 +106,18 @@ async function syncServer() {
     extensionSettings: extensionSettings,
     extensionState: extensionState,
   };
-
+  console.log("--> start sync server");
   contactServer("sync-server", data);
-  console.log("--> sync server")
+  console.log("--> sync server");
 }
 
 //HANDLING LISTENERS BEING CLOSED
-chrome.tabs.onRemoved.addListener(async (tabId,removeInfo)=>{
+chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-  let nl = extensionState.scanners.filter((x)=>{return tabId != x.id})
-  if(nl.length != extensionState.scanners.length){
+  let nl = extensionState.scanners.filter((x) => {
+    return tabId != x.id;
+  });
+  if (nl.length != extensionState.scanners.length) {
     chrome.storage.local.set({
       "extension-state": {
         stopped: extensionState.stopped,
@@ -109,7 +126,7 @@ chrome.tabs.onRemoved.addListener(async (tabId,removeInfo)=>{
       },
     });
   }
-})
+});
 
 async function onLaunch() {
   console.log("Launch");
@@ -125,27 +142,10 @@ async function onLaunch() {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let actions = {
     "instance-create": async () => {
-      let extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
-      let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-      let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-
-      if (message.payload.token == "") {
-        await contactServer("instance-create", {
-          generateToken: true,
-          scannerState: extensionScannerState,
-          settings: extensionSettings,
-          state: extensionState,
-        });
-        console.log(response);
-      } else {
-        await contactServer("instance-create", {
-          generateToken: false,
-          token: message.payload.token,
-          scannerState: extensionScannerState,
-          settings: extensionSettings,
-          state: extensionState,
-        });
-      }
+      await contactServer("register", {
+        generateNewToken: true,
+        token: message.payload.token,
+      });
       syncServer();
       sendResponse(true);
     },
@@ -155,10 +155,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      console.log("Scanners", extensionState.scanners);
       scanners = extensionState.scanners;
       scanners.push({
-        title: sender.tab.title,
+        title: message.data.title,
         id: sender.tab.id,
         platform: message.data.platform,
       });
@@ -169,7 +168,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           selectedScanner: extensionState.selectedScanner,
         },
       });
-      sendResponse({ tabId: sender.tab.id, url: sender.tab.url, title: sender.tab.title });
+      sendResponse({ tabId: sender.tab.id, url: sender.tab.url, title: message.data.title });
+    },
+    "listener-update": async () => {
+      let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+      scanners = extensionState.scanners;
+
+      let index = scanners.map(function (e) {
+        return e.id;
+      }).indexOf(sender.tab.id);
+      scanners[index] = {
+        title: message.data.title,
+        id: sender.tab.id,
+        platform: message.data.platform,
+      };
+
+      chrome.storage.local.set({
+        "extension-state": {
+          stopped: extensionState.stopped,
+          scanners: scanners,
+          selectedScanner: extensionState.selectedScanner,
+        },
+      });
     },
   };
   let action = actions[message.key];
@@ -188,7 +208,6 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   //syncServer()
 });
 
-chrome.runtime.onStartup.addListener(function() {
+chrome.runtime.onStartup.addListener(function () {
   onLaunch();
-})
-
+});
