@@ -10,15 +10,6 @@ let snapshot;
 
 const platform = "soundcloud"
 
-const observer = new MutationObserver(update);
-const selectors = {
-  title: ".playbackSoundBadge__titleLink",
-  subtitle: ".playbackSoundBadge__lightLink",
-  cover: ".sc-artwork > span",
-  duration: ".playbackTimeline__duration",
-  progress: ".playbackTimeline__timePassed",
-  paused: ".playControl",
-};
 
 let registered = {};
 //UTILITY
@@ -33,24 +24,7 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-//REGISTERS LISTENERS
-function register() {
-  Object.keys(selectors).forEach((key) => {
-    let selector = selectors[key];
-    if (selector != false) {
-      let element = document.querySelector(selector);
 
-      if (!element) {
-        registered[selector] = false;
-      } else {
-        if (registered[selector] == null || registered[selector] == false) {
-          observer.observe(element, { attributes: true, childList: true, characterData: true });
-          registered[selector] = true;
-        }
-      }
-    }
-  });
-}
 
 //GETS DATA FROM STORAGE
 async function onLaunch() {
@@ -78,7 +52,7 @@ function update() {
     return;
   }
   data = getData();
-  if (data == snapshot) {
+  if (JSON.stringify(data) == JSON.stringify(snapshot)) {
     return; // ALREADY UPDATED
   }
 
@@ -126,6 +100,8 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (extensionState.selectedScanner == TAB_ID && TAB_ID != undefined && extensionState.stopped == false) {
       allowed = true;
       update();
+    } else {
+      allowed = false;
     }
   }
   if (object["extension-settings"] != undefined) {
@@ -138,6 +114,4 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
 
 console.log(`MOS - ${platform} Scanner ready`);
 onLaunch();
-register();
-
-setInterval(register, 5000);
+setInterval(update, 1000);

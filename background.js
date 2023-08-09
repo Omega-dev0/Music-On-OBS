@@ -30,7 +30,7 @@ try {
 }
 
 //ADD SETTING
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
   chrome.storage.local.set({
     "extension-state": {
       stopped: true,
@@ -50,11 +50,12 @@ chrome.runtime.onInstalled.addListener(() => {
       cover: "",
     },
   });
-
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+ 
   chrome.storage.local.set({
     "extension-settings": {
       instance: {
-        privateToken: "",
+        privateToken: extensionSettings == undefined ? "" : extensionSettings.instance.privateToken,
         serverURL: serverURL,
         serverURL2: serverURL2,
       },
@@ -155,7 +156,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      scanners = extensionState.scanners;
+      scanners = extensionState.scanners.filter(x=>{
+        return x.id != sender.tab.id
+      })
       scanners.push({
         title: message.data.title,
         id: sender.tab.id,
