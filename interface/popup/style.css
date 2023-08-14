@@ -111,6 +111,16 @@ select{
   margin-top: 5px;
   margin-bottom: 0px;
   text-align: center;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-size: 13px;
+  color: #60666d;
+  font-weight: bold;
+}
+
+option{
+  color:white;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-weight: 500;
 }
 
 .platform-icon{

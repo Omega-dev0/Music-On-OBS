@@ -51,7 +51,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     },
   });
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
- 
+
   chrome.storage.local.set({
     "extension-settings": {
       instance: {
@@ -61,11 +61,11 @@ chrome.runtime.onInstalled.addListener(async () => {
       },
       behaviour: {
         displayPause: false,
-       // smartSwitch: false,
+        // smartSwitch: false,
         detectPause: true,
       },
       integration: {
-        defaultMessage: "Current song: [__SONG__]",
+        defaultMessage: "Current song: [__LINK__]",
         pausedMessage: "The music is currently paused",
         errorMessage: "Unable to get current song name!",
       },
@@ -80,8 +80,8 @@ chrome.runtime.onInstalled.addListener(async () => {
         displayProgress: true,
         displayCover: true,
         displayCoverOnContent: true,
-        progressBarColor: "#2B5983",
-        progressBarBackgroundColor: "#393030",
+        progressBarColor: "#334484",
+        progressBarBackgroundColor: "#121111",
       },
     },
   });
@@ -102,14 +102,44 @@ async function syncServer() {
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
+
+  if(extensionState.stopped == true){
+    chrome.action.setIcon({
+      path: {
+        16: "/images/default/default16.png",
+        32: "/images/default/default32.png",
+        48: "/images/default/default48.png",
+        128: "/images/default/default128.png",
+      },
+    });
+  }else if(extensionScannerState.paused == true) {
+    chrome.action.setIcon({
+      path: {
+        16: "/images/paused/16x16.png",
+        32: "/images/paused/32x32.png",
+        48: "/images/paused/48x48.png",
+        128: "/images/paused/128x128.png",
+      },
+    });
+  }else{
+    chrome.action.setIcon({
+      path: {
+        16: "/images/playing/16x16.png",
+        32: "/images/playing/32x32.png",
+        48: "/images/playing/48x48.png",
+        128: "/images/playing/128x128.png",
+      },
+    });
+  }
+
   let data = {
     extensionScannerState: extensionScannerState,
     extensionSettings: extensionSettings,
     extensionState: extensionState,
   };
-  console.log("--> start sync server");
+  
   contactServer("sync-server", data);
-  console.log("--> sync server");
+  
 }
 
 //HANDLING LISTENERS BEING CLOSED
@@ -156,9 +186,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      scanners = extensionState.scanners.filter(x=>{
-        return x.id != sender.tab.id
-      })
+      scanners = extensionState.scanners.filter((x) => {
+        return x.id != sender.tab.id;
+      });
       scanners.push({
         title: message.data.title,
         id: sender.tab.id,
@@ -177,9 +207,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
       scanners = extensionState.scanners;
 
-      let index = scanners.map(function (e) {
-        return e.id;
-      }).indexOf(sender.tab.id);
+      let index = scanners
+        .map(function (e) {
+          return e.id;
+        })
+        .indexOf(sender.tab.id);
       scanners[index] = {
         title: message.data.title,
         id: sender.tab.id,
@@ -211,6 +243,14 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   //syncServer()
 });
 
-chrome.runtime.onStartup.addListener(function () {
-  onLaunch();
+chrome.storage.onChanged.addListener(async (object, areaName) => {
+  if (areaName != "local") {
+    return;
+  }
+  if (object["extension-state"] != undefined) {
+    extensionState = object["extension-state"].newValue;
+  }
+  if (object["extension-scanner-state"] != undefined) {
+    extensionScannerState = object["extension-scanner-state"].newValue;
+  }
 });

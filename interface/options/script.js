@@ -3,7 +3,6 @@ let extensionOAUTH;
 let extensionState;
 
 function showContainer(id) {
-  
   for (let i = 0; i < document.getElementsByClassName("container").length; i++) {
     container = document.getElementsByClassName("container")[i];
     if (container.id != id) {
@@ -12,7 +11,7 @@ function showContainer(id) {
       container.style = "display: flex;";
     }
   }
-  id = id.toLowerCase() + "-button"
+  id = id.toLowerCase() + "-button";
   for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
     container = document.getElementsByClassName("sidebar-element")[i];
     if (container.id != id) {
@@ -23,13 +22,13 @@ function showContainer(id) {
   }
 }
 
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", async function () {
   //Checkbox title clickable bind
   for (let i = 0; i < document.getElementsByClassName("checkbox-container").length; i++) {
     let div = document.getElementsByClassName("checkbox-container")[i];
     div.children[1].addEventListener("click", () => {
       div.children[0].checked = !div.children[0].checked;
-      saveSettings()
+      saveSettings();
     });
   }
 
@@ -56,6 +55,16 @@ window.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("createNewInstance").addEventListener("click", createNewInstance);
+
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  document.getElementById("nightbotCommandCopy").addEventListener("click", () => {
+    navigator.clipboard.writeText(`$(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken})`);
+    alert("Command copied, be careful to not show it!");
+  });
+  document.getElementById("seCommandCopy").addEventListener("click", () => {
+    navigator.clipboard.writeText(`$(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}))`);
+    alert("Command copied, Make sure in command > advanced settings > Hide command from public pages --> Enabled !");
+  });
 
   loadSettings();
 });
@@ -102,26 +111,26 @@ async function saveSettings() {
     behaviour: {
       displayPause: dv("displayPause"),
       detectPause: dv("detectPause"),
-     // smartSwitch: dv("smartSwitch"),
+      // smartSwitch: dv("smartSwitch"),
     },
     integration: {
       defaultMessage: dv("defaultMessage"),
       pausedMessage: dv("pausedMessage"),
       errorMessage: dv("errorMessage"),
     },
-    overlay:{
+    overlay: {
       primaryColor: dv("overlayPrimaryColor"),
       secondaryColor: dv("overlaySecondaryColor"),
-      titleColor:dv("overlayTitleColor"),
-      subtitleColor:dv("overlaySubtitleColor"),
+      titleColor: dv("overlayTitleColor"),
+      subtitleColor: dv("overlaySubtitleColor"),
       style: "default",
-      displayTitle:dv("overlayDisplayTitle"),
-      displaySubtitle:dv("overlayDisplaySubtitle"),
-      displayProgress:dv("overlayDisplayProgressBar"),
-      displayCover:dv("overlayUseCover"),
-      displayCoverOnContent:dv("overlayUserCoverAsContent"),
+      displayTitle: dv("overlayDisplayTitle"),
+      displaySubtitle: dv("overlayDisplaySubtitle"),
+      displayProgress: dv("overlayDisplayProgressBar"),
+      displayCover: dv("overlayUseCover"),
+      displayCoverOnContent: dv("overlayUserCoverAsContent"),
       progressBarColor: dv("overlayProgressBarColor"),
-      progressBarBackgroundColor: dv("overlayProgressBarBackgroundColor")
+      progressBarBackgroundColor: dv("overlayProgressBarBackgroundColor"),
     },
   };
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
@@ -154,18 +163,18 @@ async function loadSettings() {
   dsv("defaultMessage", extensionSettings.integration.defaultMessage);
   dsv("pausedMessage", extensionSettings.integration.pausedMessage);
   dsv("errorMessage", extensionSettings.integration.errorMessage);
-  
+
   dsv("overlayPrimaryColor", extensionSettings.overlay.primaryColor),
-  dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
-  dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
-  dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
-  dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
-  dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
-  dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
-  dsv("overlayUseCover", extensionSettings.overlay.displayCover),
-  dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
-  dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
-  dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor)
+    dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
+    dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
+    dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
+    dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
+    dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
+    dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
+    dsv("overlayUseCover", extensionSettings.overlay.displayCover),
+    dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
+    dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
+    dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor);
 }
 
 function update() {
@@ -182,16 +191,16 @@ function update() {
   dsv("errorMessage", extensionSettings.integration.errorMessage);
 
   dsv("overlayPrimaryColor", extensionSettings.overlay.primaryColor),
-  dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
-  dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
-  dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
-  dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
-  dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
-  dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
-  dsv("overlayUseCover", extensionSettings.overlay.displayCover),
-  dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
-  dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
-  dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor)
+    dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
+    dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
+    dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
+    dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
+    dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
+    dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
+    dsv("overlayUseCover", extensionSettings.overlay.displayCover),
+    dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
+    dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
+    dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor);
 }
 
 chrome.storage.onChanged.addListener(async (object, areaName) => {
@@ -205,7 +214,6 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   if (object["extension-state"] != undefined) {
     extensionState = object["extension-state"].newValue;
   }
-  
 });
 
 //SPOTIFY OAUTH END

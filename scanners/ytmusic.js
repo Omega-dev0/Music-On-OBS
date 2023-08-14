@@ -14,11 +14,11 @@ const platform = "youtube music"
 function getTimeFromTimeString(str, divider) {
   let split = str.split(divider);
   if (split.length == 1) {
-    return str;
+    return parseInt(str);
   } else if (split.length == 2) {
-    return split[0] * 60 + split[1];
+    return parseInt(split[0]) * 60 + parseInt(split[1]);
   } else if (split.length == 3) {
-    return split[0] * 3600 + split[1] * 60 + split[2];
+    return parseInt(split[0]) * 3600 + parseInt(split[1]) * 60 + parseInt(split[2]);
   }
 }
 
@@ -45,12 +45,12 @@ new MutationObserver(function (mutations) {
 
 //UPDATE
 let data = null;
-function update() {
+function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
   data = getData();
-  if (JSON.stringify(data) == JSON.stringify(snapshot)) {
+  if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
 
@@ -59,8 +59,8 @@ function update() {
       paused: data.paused,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress),
-      currentLength: getTimeFromTimeString(data.duration),
+      currentTime: getTimeFromTimeString(data.progress, ":"),
+      currentLength: getTimeFromTimeString(data.duration, ":"),
       url: data.url,
       cover: data.cover,
     },
@@ -79,7 +79,7 @@ function update() {
 function getData() {
   return {
     url: document.querySelector(".ytp-title-link.yt-uix-sessionlink").href.replace(/list=[^&]*&/g, ''),
-    subtitle: document.querySelector("span.subtitle > yt-formatted-string > a").innerHTML,
+    subtitle: document.querySelector("span.subtitle > yt-formatted-string > a") != null ? document.querySelector("span.subtitle > yt-formatted-string > a").innerHTML : document.querySelector("span.subtitle > yt-formatted-string > span").innerHTML,
     title: document.querySelector("yt-formatted-string.title.ytmusic-player-bar").title,
     cover: new URL(document.querySelector(".image.style-scope.ytmusic-player-bar").src).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar").src.replace("w60-h60","w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar").src.split("?sqp")[0],
     progress: document.querySelector(`.time-info`).innerHTML.split(" / ")[0].replace("\n    ",""),
@@ -97,7 +97,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     extensionState = object["extension-state"].newValue;
     if (extensionState.selectedScanner == TAB_ID && TAB_ID != undefined && extensionState.stopped == false) {
       allowed = true;
-      update();
+      update(true);
     } else {
         allowed = false;
       }

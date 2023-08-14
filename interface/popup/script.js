@@ -25,33 +25,47 @@ function getTextWidth(str, className) {
   span.style.padding = "0px";
   document.body.appendChild(span);
   span.innerHTML = _escTag(str);
-  let w = span.offsetWidth
+  let w = span.offsetWidth;
   document.body.removeChild(span);
   return w;
 }
-function fitStringToWidth(str,width,className) {
+function fitStringToWidth(str, width, className) {
   var span = document.createElement("span");
-  if (className) span.className=className;
-  span.style.display='inline';
-  span.style.visibility = 'hidden';
-  span.style.padding = '0px';
+  if (className) span.className = className;
+  span.style.display = "inline";
+  span.style.visibility = "hidden";
+  span.style.padding = "0px";
   document.body.appendChild(span);
   var result = _escTag(str);
   span.innerHTML = result;
   if (span.offsetWidth > width) {
-    var posStart = 0, posMid, posEnd = str.length, posLength;
-    while (posLength = (posEnd - posStart) >> 1) {
+    var posStart = 0,
+      posMid,
+      posEnd = str.length,
+      posLength;
+    while ((posLength = (posEnd - posStart) >> 1)) {
       posMid = posStart + posLength;
-      span.innerHTML = _escTag(str.substring(0,posMid)) + '&hellip;';
-      if ( span.offsetWidth > width ) posEnd = posMid; else posStart=posMid;
+      span.innerHTML = _escTag(str.substring(0, posMid)) + "&hellip;";
+      if (span.offsetWidth > width) posEnd = posMid;
+      else posStart = posMid;
     }
-    result = '<abbr title="' +
-      str.replace("\"","&quot;") + '">' +
-      _escTag(str.substring(0,posStart)) +
-      '&hellip;<\/abbr>';
+    result = '<abbr title="' + str.replace('"', "&quot;") + '">' + _escTag(str.substring(0, posStart)) + "&hellip;</abbr>";
   }
   document.body.removeChild(span);
   return result;
+}
+
+//SELECT CUSTOM
+
+function updateSelect() {
+  let selectElement = document.getElementById("listenerSelect");
+  let selectDiv = document.getElementById("customSelect")
+
+  let innerHTML = ``
+
+  for (option of selectElement.options) {
+    innerHTML += `<div class="select-item"> `
+  }
 }
 
 
@@ -85,20 +99,31 @@ async function update() {
 
   //SCANNERS LIST
   let options = "";
-  if (extensionState.scanners && extensionState.scanners.length > 0) {
-    for (let listener of extensionState.scanners) {
-      options += `<option value="${listener.id}">${fitStringToWidth(`${listener.platform} - ${listener.title}`,170)}</option>`;
-    }
-  }
-  options += `<option value="none">None</option>`;
-  document.getElementById("listenerSelect").innerHTML = options;
 
-  if(extensionState.scanners.filter(x=>x.id == extensionState.selectedScanner).length > 0){
-    document.getElementById("listenerSelect").value = extensionState.selectedScanner
-  }else{
-    document.getElementById("listenerSelect").value = "none"
+  let platformColours = {
+    "youtube":"#bf2e2e",
+    "spotify":"#2ebf52",
+    "soundcloud":"#bf7b2e",
+    "epidemic sound":"#363433",
+    "youtube music":"#363433"
   }
   
+  if (extensionState.scanners && extensionState.scanners.length > 0) {
+    options += `<option value="none" style="background-color:#1f1d1d;">None</option>`;
+    for (let listener of extensionState.scanners) {
+      options += `<option value="${listener.id}" style="background-color:${platformColours[listener.platform]};">${fitStringToWidth(`${listener.title}`, 170)}</option>`;
+    }
+  }
+ 
+  document.getElementById("listenerSelect").innerHTML = options;
+
+  if (extensionState.scanners.filter((x) => x.id == extensionState.selectedScanner).length > 0) {
+    document.getElementById("listenerSelect").value = extensionState.selectedScanner;
+  } else {
+    document.getElementById("listenerSelect").value = "none";
+  }
+
+  updateSelect()
 }
 
 function e() {

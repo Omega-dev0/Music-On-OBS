@@ -48,10 +48,6 @@
       "js": ["/scanners/soundcloud.js"]
     },
     {
-      "matches": ["https://play.pretzel.rocks/*"],
-      "js": ["/scanners/pretzel.js"]
-    },
-    {
       "matches": ["https://music.youtube.com/*"],
       "js": ["/scanners/ytmusic.js"]
     },

@@ -8,7 +8,7 @@ let TAB_ID;
 
 let snapshot;
 
-const platform = "youtube music";
+const platform = "youtube";
 let chapterList = {};
 let descChapters = {};
 let commentChapters = {};
@@ -16,28 +16,60 @@ let commentChapters = {};
 function getTimeFromTimeString(str, divider) {
   let split = str.split(divider);
   if (split.length == 1) {
-    return str;
+    return parseInt(str);
   } else if (split.length == 2) {
-    return split[0] * 60 + split[1];
+    return parseInt(split[0]) * 60 + parseInt(split[1]);
   } else if (split.length == 3) {
-    return split[0] * 3600 + split[1] * 60 + split[2];
+    return parseInt(split[0]) * 3600 + parseInt(split[1]) * 60 + parseInt(split[2]);
   }
 }
 
-function getChapterFromList(time){
-  if(time < parseInt(Object.keys(chapterList)[0])){
-    return chapterList[Object.keys(chapterList)[0]]
+
+function capitalizeFirstAsciiLetter(inputString) {
+  for (let i = 0; i < inputString.length; i++) {
+    const charCode = inputString.charCodeAt(i);
+    if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
+      // Check if the character is an uppercase or lowercase letter
+      const capitalizedChar = inputString[i].toUpperCase();
+      return inputString.slice(0, i) + capitalizedChar + inputString.slice(i + 1);
+    }
   }
-  for(let timestamp of Object.keys(chapterList)){
-    let chapterName = chapterList[timestamp]
-    if(time <= parseInt(timestamp)){
-      return chapterList[Object.keys(chapterList)[Object.keys(chapterList).indexOf(timestamp) - 1]]
+  return inputString; // No ASCII letters found
+}
+
+function removeNonLetterBeforeFirstLetter(inputString) {
+  // Find the index of the first letter character
+  let firstLetterIndex = -1;
+  for (let i = 0; i < inputString.length; i++) {
+      if (/[a-zA-Z]/.test(inputString[i])) {
+          firstLetterIndex = i;
+          break;
+      }
+  }
+
+  // If no letter is found, return the original string
+  if (firstLetterIndex === -1) {
+      return inputString;
+  }
+
+  // Remove non-letter characters before the first letter
+  return inputString.slice(firstLetterIndex).replace(/^[^a-zA-Z]*/, '');
+}
+
+
+function getChapterFromList(time) {
+  if (time < parseInt(Object.keys(chapterList)[0])) {
+    return chapterList[Object.keys(chapterList)[0]];
+  }
+  for (let timestamp of Object.keys(chapterList)) {
+    let chapterName = chapterList[timestamp];
+    if (time <= parseInt(timestamp)) {
+      return chapterList[Object.keys(chapterList)[Object.keys(chapterList).indexOf(timestamp) - 1]];
     }
   }
 
-  return chapterList[Object.keys(chapterList)[Object.keys(chapterList).length - 1]]
+  return chapterList[Object.keys(chapterList)[Object.keys(chapterList).length - 1]];
 }
-
 
 //GETS DATA FROM STORAGE
 async function onLaunch() {
@@ -60,24 +92,23 @@ new MutationObserver(function (mutations) {
 
 //UPDATE
 let data = null;
-function update() {
+function update(forceUpdate) {
+  console.log("update",allowed)
   if (allowed != true) {
     return;
   }
   data = getData();
-  if (JSON.stringify(data) == JSON.stringify(snapshot)) {
+  if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
-
-  
 
   chrome.storage.local.set({
     "extension-scanner-state": {
       paused: data.paused,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress),
-      currentLength: getTimeFromTimeString(data.duration),
+      currentTime: data.progress,
+      currentLength: data.duration,
       url: data.url,
       cover: data.cover,
     },
@@ -85,8 +116,8 @@ function update() {
   if (!snapshot) {
     chrome.runtime.sendMessage({ key: "sync-server" });
   } else {
-    if(data.url != snapshot.url) {
-      chapterList, descChapters, commentChapters = {}
+    if (data.url != snapshot.url) {
+      chapterList, descChapters, (commentChapters = {});
     }
     if (snapshot != data) {
       chrome.runtime.sendMessage({ key: "sync-server" });
@@ -99,24 +130,29 @@ function update() {
 function getData() {
   //CHAPTERS
   let videoChapter = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls > div.ytp-chapter-container > button > div.ytp-chapter-title-content").innerHTML;
-  let chapter = ""
+  let chapter = "";
 
-  if(videoChapter != ""){
-    chapter = videoChapter
-  }else if(Object.keys(chapterList).length > 0){
-    chapter = getChapterFromList(parseInt(getTimeFromTimeString(document.querySelector(".ytp-time-current").innerHTML, ":")))
-  }else{
-    chapter = document.querySelector("#channel-name > #container > #text-container > #text > a").innerHTML;
+  let videoElement = document.getElementsByClassName("video-stream")[0];
+  let progress = parseInt(videoElement.currentTime);
+
+  if (videoChapter != "") {
+    chapter = videoChapter;
+  } else if (Object.keys(chapterList).length > 0) {
+    chapter = getChapterFromList(progress);
+  } else {
+    chapter =  document.querySelector("#upload-info >#channel-name > #container > #text-container > #text > a").innerHTML;
   }
 
+  let isLive =  document.querySelector(".ytp-live-badge")!= undefined ? getComputedStyle(document.querySelector(".ytp-live-badge")).display != 'none' :false
+
   return {
-    url: window.location.href,
-    subtitle: chapter,
-    title: document.querySelector("#title > h1 > yt-formatted-string").innerHTML,
+    url: window.location.href.split("&ab_channel=")[0],
+    subtitle: removeNonLetterBeforeFirstLetter(capitalizeFirstAsciiLetter(chapter)),
+    title: capitalizeFirstAsciiLetter(document.querySelector("#title > h1 > yt-formatted-string > font > font") != null ? document.querySelector("#title > h1 > yt-formatted-string > font > font").innerHTML : document.querySelector("#title > h1 > yt-formatted-string").innerHTML),
     cover: `https://img.youtube.com/vi/${window.location.href.split("watch?v=")[1].split("&")[0]}/mqdefault.jpg`,
-    progress: document.querySelector(".ytp-time-current").innerHTML,
-    duration: document.querySelector(".ytp-time-duration").innerHTML,
-    paused: !(document.querySelector(".ytp-play-button.ytp-button").getAttribute("data-title-no-tooltip") == "Pause"),
+    progress: progress,
+    duration: isLive == true ? "live" : videoElement.duration,
+    paused: videoElement.paused,
   };
 }
 
@@ -129,7 +165,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     extensionState = object["extension-state"].newValue;
     if (extensionState.selectedScanner == TAB_ID && TAB_ID != undefined && extensionState.stopped == false) {
       allowed = true;
-      update();
+      update(true);
     } else {
       allowed = false;
     }
@@ -142,43 +178,43 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   }
 });
 
-
-
 let chaptersLoopConnection = setInterval(() => {
-  if (Object.keys(descChapters).length == 0) {
-    let descSpanList = document.querySelectorAll("#description > .content > span > span");
-    for (var i = 0; i < descSpanList.length; i++) {
-      let span = descSpanList.item(i);
-      let link = span.querySelector("a");
-      if (link != undefined && descSpanList.item(i + 1) != undefined) {
-        if (link.href.includes("watch?v=") &&  link.innerHTML.replace(/[:0123456789]+/g,"") == "") {
-          descChapters[getTimeFromTimeString(link.innerHTML, ":")] = descSpanList.item(i + 1).innerHTML;
-        }
-      }
-    }
-    chapterList = descChapters;
-  }
-  if (Object.keys(commentChapters).length == 0) {
-    let firstCommentSpanList = document.querySelectorAll("#sections > #contents > ytd-comment-thread-renderer").item(0);
-    if (firstCommentSpanList != undefined) {
-      firstCommentSpanList = firstCommentSpanList.querySelectorAll("#body > #main > #comment-content > #expander > #content > #content-text > span");
-    }
-    if (firstCommentSpanList != undefined) {
-      for (var i = 0; i < firstCommentSpanList.length; i++) {
-        let span = firstCommentSpanList.item(i);
+  if (allowed == true) {
+    if (Object.keys(descChapters).length == 0) {
+      let descSpanList = document.querySelectorAll("#description > .content > span > span");
+      for (var i = 0; i < descSpanList.length; i++) {
+        let span = descSpanList.item(i);
         let link = span.querySelector("a");
-        if (link != undefined && firstCommentSpanList.item(i + 1) != undefined) {
-          if (link.href.includes("watch?v=") &&  link.innerHTML.replace(/[:0123456789]+/g,"") == "") {
-            commentChapters[getTimeFromTimeString(link.innerHTML, ":")] = firstCommentSpanList.item(i + 1).innerHTML;
+        if (link != undefined && descSpanList.item(i + 1) != undefined) {
+          if (link.href.includes("watch?v=") && link.innerHTML.replace(/[:0123456789]+/g, "") == "") {
+            descChapters[getTimeFromTimeString(link.innerHTML, ":")] = descSpanList.item(i + 1).innerHTML;
           }
         }
       }
-      if (Object.keys(descChapters).length < Object.keys(commentChapters).length) {
-        chapterList = commentChapters;
+      chapterList = descChapters;
+    }
+    if (Object.keys(commentChapters).length == 0) {
+      let firstCommentSpanList = document.querySelectorAll("#sections > #contents > ytd-comment-thread-renderer").item(0);
+      if (firstCommentSpanList != undefined) {
+        firstCommentSpanList = firstCommentSpanList.querySelectorAll("#body > #main > #comment-content > #expander > #content > #content-text > span");
+      }
+      if (firstCommentSpanList != undefined) {
+        for (var i = 0; i < firstCommentSpanList.length; i++) {
+          let span = firstCommentSpanList.item(i);
+          let link = span.querySelector("a");
+          if (link != undefined && firstCommentSpanList.item(i + 1) != undefined) {
+            if (link.href.includes("watch?v=") && link.innerHTML.replace(/[:0123456789]+/g, "") == "") {
+              commentChapters[getTimeFromTimeString(link.innerHTML, ":")] = firstCommentSpanList.item(i + 1).innerHTML;
+            }
+          }
+        }
+        if (Object.keys(descChapters).length < Object.keys(commentChapters).length) {
+          chapterList = commentChapters;
+        }
       }
     }
   }
-},10000);
+}, 10000);
 
 console.log(`MOS - ${platform} Scanner ready`);
 onLaunch();

@@ -16,11 +16,11 @@ let registered = {};
 function getTimeFromTimeString(str, divider) {
   let split = str.split(divider);
   if (split.length == 1) {
-    return str;
+    return parseInt(str);
   } else if (split.length == 2) {
-    return split[0] * 60 + split[1];
+    return parseInt(split[0]) * 60 + parseInt(split[1]);
   } else if (split.length == 3) {
-    return split[0] * 3600 + split[1] * 60 + split[2];
+    return parseInt(split[0]) * 3600 + parseInt(split[1]) * 60 + parseInt(split[2]);
   }
 }
 
@@ -47,22 +47,21 @@ new MutationObserver(function (mutations) {
 
 //UPDATE
 let data = null;
-function update() {
+function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
   data = getData();
-  if (JSON.stringify(data) == JSON.stringify(snapshot)) {
+  if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
-
   chrome.storage.local.set({
     "extension-scanner-state": {
       paused: data.paused,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress),
-      currentLength: getTimeFromTimeString(data.duration),
+      currentTime: getTimeFromTimeString(data.progress, ":"),
+      currentLength: getTimeFromTimeString(data.duration, ":"),
       url: data.url,
       cover: data.cover,
     },
@@ -99,7 +98,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     extensionState = object["extension-state"].newValue;
     if (extensionState.selectedScanner == TAB_ID && TAB_ID != undefined && extensionState.stopped == false) {
       allowed = true;
-      update();
+      update(true);
     } else {
       allowed = false;
     }

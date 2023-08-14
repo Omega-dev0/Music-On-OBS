@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="content">
-      <div class="container" id="Instance" style="display: none">
+      <div class="container" id="Instance" style="display: flex">
         <h1 style="flex-basis: 100%" translated>Instance</h1>
         <br />
         <div class="box">
@@ -70,7 +70,7 @@
         </div>
         -->
       </div>
-      <div class="container" id="Overlay" style="display: flex;">
+      <div class="container" id="Overlay" style="display: none;">
         <h1 style="flex-basis: 100%" translated>Overlay</h1>
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Background settings</h3>
@@ -109,7 +109,7 @@
           <label translated>Error message</label><br />
           <input class="input-locked" type="text" value="Unable to get current song name!" saveTrigger id="errorMessage" /><br />
           <label></label><br />
-          <button class="button blue" translated>Copy Nightbot command</button><br /><button class="button blue" translated>Copy Stream elements command</button>
+          <button class="button blue" translated id="nightbotCommandCopy">Copy Nightbot command</button><br /><button class="button blue" translated id="seCommandCopy">Copy Stream elements command</button>
         </div>
         <div class="box">
           <h3 translated>Dynamic values</h3>
