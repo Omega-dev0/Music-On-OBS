@@ -93,7 +93,6 @@ new MutationObserver(function (mutations) {
 //UPDATE
 let data = null;
 function update(forceUpdate) {
-  console.log("update",allowed)
   if (allowed != true) {
     return;
   }
@@ -116,8 +115,10 @@ function update(forceUpdate) {
   if (!snapshot) {
     chrome.runtime.sendMessage({ key: "sync-server" });
   } else {
-    if (data.url != snapshot.url) {
-      chapterList, descChapters, (commentChapters = {});
+    if (data.url != snapshot.url || data.title != snapshot.title) {
+      chapterList = {};
+      descChapters = {};
+      commentChapters = {};
     }
     if (snapshot != data) {
       chrome.runtime.sendMessage({ key: "sync-server" });

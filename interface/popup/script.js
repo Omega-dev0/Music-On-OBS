@@ -57,19 +57,6 @@ function fitStringToWidth(str, width, className) {
 
 //SELECT CUSTOM
 
-function updateSelect() {
-  let selectElement = document.getElementById("listenerSelect");
-  let selectDiv = document.getElementById("customSelect")
-
-  let innerHTML = ``
-
-  for (option of selectElement.options) {
-    innerHTML += `<div class="select-item"> `
-  }
-}
-
-
-
 async function update() {
   if (!extensionSettings || !extensionState || !extensionScannerState) {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
@@ -101,35 +88,45 @@ async function update() {
   let options = "";
 
   let platformColours = {
-    "youtube":"#bf2e2e",
-    "spotify":"#2ebf52",
-    "soundcloud":"#bf7b2e",
-    "epidemic sound":"#363433",
-    "youtube music":"#363433"
-  }
-  
+    youtube: "#bf2e2e",
+    spotify: "#2ebf52",
+    soundcloud: "#bf7b2e",
+    "epidemic sound": "#363433",
+    "youtube music": "#363433",
+  };
+
   if (extensionState.scanners && extensionState.scanners.length > 0) {
     options += `<option value="none" style="background-color:#1f1d1d;">None</option>`;
     for (let listener of extensionState.scanners) {
       options += `<option value="${listener.id}" style="background-color:${platformColours[listener.platform]};">${fitStringToWidth(`${listener.title}`, 170)}</option>`;
     }
   }
- 
+
   document.getElementById("listenerSelect").innerHTML = options;
 
   if (extensionState.scanners.filter((x) => x.id == extensionState.selectedScanner).length > 0) {
     document.getElementById("listenerSelect").value = extensionState.selectedScanner;
+    updateSelectColor()
   } else {
     document.getElementById("listenerSelect").value = "none";
+    updateSelectColor()
   }
+}
 
-  updateSelect()
+function updateSelectColor(){
+  let select = document.getElementById("listenerSelect")
+  for(let option of select.querySelectorAll("option")){
+    console.log(option.innerHTML, option.value, select.value)
+    if(option.value == select.value){
+      select.style.backgroundColor = option.style.backgroundColor
+    }
+  }
 }
 
 function e() {
   document.getElementById("listenerSelect").addEventListener("change", async () => {
     let value = document.getElementById("listenerSelect").value;
-
+    updateSelectColor()
     //let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
     chrome.storage.local.set({
@@ -174,17 +171,6 @@ function e() {
       },
     });
     chrome.runtime.sendMessage({ key: "sync-server" });
-  });
-
-  document.getElementById("listenerSelect").addEventListener("change", async () => {
-    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-    chrome.storage.local.set({
-      "extension-state": {
-        stopped: extensionState.stopped,
-        scanners: extensionState.scanners,
-        selectedScanner: document.getElementById("listenerSelect").value,
-      },
-    });
   });
 }
 

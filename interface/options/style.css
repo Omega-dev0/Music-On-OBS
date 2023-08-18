@@ -313,3 +313,19 @@ button[customDisable]:hover{
 
 
 
+select{
+  width: 225px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-size: 13px;
+  color:black;
+  font-weight: bold;
+}
+
+option{
+  color:black;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-weight: 500;
+}

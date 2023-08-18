@@ -102,8 +102,7 @@ async function syncServer() {
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
-
-  if(extensionState.stopped == true){
+  if (extensionState.stopped == true) {
     chrome.action.setIcon({
       path: {
         16: "/images/default/default16.png",
@@ -112,7 +111,7 @@ async function syncServer() {
         128: "/images/default/default128.png",
       },
     });
-  }else if(extensionScannerState.paused == true) {
+  } else if (extensionScannerState.paused == true) {
     chrome.action.setIcon({
       path: {
         16: "/images/paused/16x16.png",
@@ -121,7 +120,7 @@ async function syncServer() {
         128: "/images/paused/128x128.png",
       },
     });
-  }else{
+  } else {
     chrome.action.setIcon({
       path: {
         16: "/images/playing/16x16.png",
@@ -137,9 +136,8 @@ async function syncServer() {
     extensionSettings: extensionSettings,
     extensionState: extensionState,
   };
-  
+
   contactServer("sync-server", data);
-  
 }
 
 //HANDLING LISTENERS BEING CLOSED
@@ -159,12 +157,38 @@ chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
   }
 });
 
+//HANDLE NON EXISTING TABS
+
+setInterval(async function () {
+  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+  let nl = [];
+  for (let scanner of extensionState.scanners) {
+    try {
+      let tab = await chrome.tabs.get(scanner.id);
+      if (typeof tab != "undefined") {
+        nl.push(scanner);
+      }
+    } catch (e) {
+      //NO TAB EXISTS
+    }
+  }
+
+  chrome.storage.local.set({
+    "extension-state": {
+      stopped: extensionState.stopped,
+      scanners: nl,
+      selectedScanner: extensionState.selectedScanner,
+    },
+  });
+}, 1000);
+
 async function onLaunch() {
+  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
   console.log("Launch");
   chrome.storage.local.set({
     "extension-state": {
       stopped: true,
-      scanners: [],
+      scanners: extensionState.scanners,
       selectedScanner: "none",
     },
   });
@@ -186,14 +210,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+      console.log("BEFORE",extensionState.scanners.length)
+      let scanners = extensionState.scanners
+
       scanners = extensionState.scanners.filter((x) => {
         return x.id != sender.tab.id;
       });
+      console.log("FILTER",scanners.length)
       scanners.push({
         title: message.data.title,
         id: sender.tab.id,
         platform: message.data.platform,
       });
+      console.log("AFTER",scanners.length)
       chrome.storage.local.set({
         "extension-state": {
           stopped: extensionState.stopped,

@@ -36,7 +36,7 @@
     "message": "Create new instance"
   },
   "Copy_instance_link": {
-    "message": "Copy instance link"
+    "message": "Copy instance overlay link"
   },
   "Load_an_instance": {
     "message": "Load an instance"
@@ -187,5 +187,14 @@
   },
   "Display_progress_bar":{
     "message":"Display progress bar"
+  },
+  "Text_settings":{
+    "message":"Text settings"
+  },
+  "Progress_bar_settings":{
+    "message":"Progress bar settings"
+  },
+  "Overlay_style":{
+    "message":"Overlay style"
   }
 }

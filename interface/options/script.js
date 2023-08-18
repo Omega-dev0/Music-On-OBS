@@ -123,7 +123,7 @@ async function saveSettings() {
       secondaryColor: dv("overlaySecondaryColor"),
       titleColor: dv("overlayTitleColor"),
       subtitleColor: dv("overlaySubtitleColor"),
-      style: "default",
+      style: dv("styleSelection"),
       displayTitle: dv("overlayDisplayTitle"),
       displaySubtitle: dv("overlayDisplaySubtitle"),
       displayProgress: dv("overlayDisplayProgressBar"),
@@ -158,6 +158,7 @@ async function loadSettings() {
 
   dsv("detectPause", extensionSettings.behaviour.detectPause);
   dsv("displayPause", extensionSettings.behaviour.displayPause);
+  dsv("styleSelection", extensionSettings.overlay.style);
   //dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 
   dsv("defaultMessage", extensionSettings.integration.defaultMessage);
@@ -184,6 +185,7 @@ function update() {
 
   dsv("detectPause", extensionSettings.behaviour.detectPause);
   dsv("displayPause", extensionSettings.behaviour.displayPause);
+  dsv("styleSelection", extensionSettings.overlay.style);
   //dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 
   dsv("defaultMessage", extensionSettings.integration.defaultMessage);
