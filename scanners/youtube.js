@@ -8,6 +8,7 @@ let TAB_ID;
 
 let snapshot;
 
+
 const platform = "youtube";
 let chapterList = {};
 let descChapters = {};
@@ -71,15 +72,24 @@ function getChapterFromList(time) {
   return chapterList[Object.keys(chapterList)[Object.keys(chapterList).length - 1]];
 }
 
+
+
+
+function sendMessage(msg){
+  chrome.runtime.sendMessage(msg)
+}
+
 //GETS DATA FROM STORAGE
 async function onLaunch() {
   extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
   extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
+  
+
   //GET TAB
   let res = await chrome.runtime.sendMessage({ key: "listener-register", data: { platform: platform, title: document.title } });
   TAB_ID = res.tabId;
-  if (extensionState.selectedScanner != TAB_ID || TAB_ID != undefined) {
+  if (extensionState.selectedScanner != TAB_ID || TAB_ID == undefined) {
     return;
   }
   allowed = true;
@@ -87,7 +97,7 @@ async function onLaunch() {
 
 new MutationObserver(function (mutations) {
   //Tab title changed
-  chrome.runtime.sendMessage({ key: "listener-update", data: { platform: platform, title: document.title } });
+  sendMessage({ key: "listener-update", data: { platform: platform, title: document.title } });
 }).observe(document.querySelector("title"), { subtree: true, characterData: true, childList: true });
 
 //UPDATE
@@ -113,7 +123,7 @@ function update(forceUpdate) {
     },
   });
   if (!snapshot) {
-    chrome.runtime.sendMessage({ key: "sync-server" });
+    sendMessage({ key: "sync-server" });
   } else {
     if (data.url != snapshot.url || data.title != snapshot.title) {
       chapterList = {};
@@ -121,7 +131,7 @@ function update(forceUpdate) {
       commentChapters = {};
     }
     if (snapshot != data) {
-      chrome.runtime.sendMessage({ key: "sync-server" });
+      sendMessage({ key: "sync-server" });
     }
   }
   snapshot = data;

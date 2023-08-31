@@ -93,6 +93,7 @@ async function update() {
     soundcloud: "#bf7b2e",
     "epidemic sound": "#363433",
     "youtube music": "#363433",
+    "deezer":"#1d7833"
   };
 
   if (extensionState.scanners && extensionState.scanners.length > 0) {

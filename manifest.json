@@ -54,6 +54,10 @@
     {
       "matches": ["https://*.epidemicsound.com/*"],
       "js": ["/scanners/epidemicsound.js"]
+    },
+    {
+      "matches": ["https://www.deezer.com/*"],
+      "js": ["/scanners/deezer.js"]
     }
   ],
 

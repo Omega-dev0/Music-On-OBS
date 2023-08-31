@@ -7,13 +7,12 @@ let allowed = false;
 let TAB_ID;
 
 let snapshot;
+let port
+
+const platform = "deezer"
 
 
-const platform = "spotify"
-
-
-
-
+let registered = {};
 //UTILITY
 function getTimeFromTimeString(str, divider) {
   let split = str.split(divider);
@@ -59,7 +58,6 @@ function update(forceUpdate) {
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
-
   chrome.storage.local.set({
     "extension-scanner-state": {
       paused: data.paused,
@@ -81,16 +79,18 @@ function update(forceUpdate) {
   snapshot = data;
 }
 
+
+
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelector(`a[data-testid="context-item-link"]`).href,
-    subtitle: (document.querySelector(`a[data-testid="context-item-info-artist"]`) ||  document.querySelector(`a[data-testid="context-item-info-show"]`)).innerHTML,
-    title: document.querySelector(`a[data-testid="context-item-link"]`).innerHTML,
-    cover: document.querySelector(`img[data-testid="cover-art-image"]`).src.replace("4851","1e02"),
-    progress: document.querySelector(`div[data-testid="playback-position"]`).innerHTML,
-    duration: document.querySelector(`div[data-testid="playback-duration"]`).innerHTML,
-    paused: !(document.querySelector(`button[data-testid="control-button-playpause"]`).ariaLabel == "Pause"),
+    url: document.querySelector(".playbackSoundBadge__titleLink").href,
+    subtitle: document.querySelector(".playbackSoundBadge__lightLink").innerHTML,
+    title: document.querySelector(".playbackSoundBadge__titleLink").getAttribute("title"),
+    cover: document.querySelector(".playbackSoundBadge__avatar > .sc-artwork > span").style.backgroundImage.replaceAll("50x50", "200x200").replace('url("', "").replace('")', ""),
+    progress: document.querySelector(".playbackTimeline__timePassed > span[aria-hidden='true']").innerHTML,
+    duration: document.querySelector(".playbackTimeline__duration > span[aria-hidden='true']").innerHTML,
+    paused: !document.querySelector(".playControl ").classList.contains("playing"),
   };
 }
 
@@ -118,5 +118,4 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
 
 console.log(`MOS - ${platform} Scanner ready`);
 onLaunch();
-
 setInterval(update, 1000);

@@ -4,30 +4,6 @@ var socket;
 
 //IMPORTS
 
-try {
-  importScripts("socket.io.js");
-
-  socket = io(serverURL, {
-    jsonp: false,
-  });
-
-  socket.on("connect", () => {
-    console.log(`Connected to ${serverURL}, socket id: ${socket.id}`);
-  });
-
-  socket.on("registerResponse", async (data) => {
-    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-    extensionSettings.instance.privateToken = data.token;
-    chrome.storage.local.set({
-      "extension-settings": extensionSettings,
-    });
-
-    console.log("New token received!");
-  });
-} catch (e) {
-  console.error("SOCKET.IO DID NOT LOAD OR CONNECT!!!!!! EVERYTHING IS LOST (almost try to reload the extension and if the error persists send to the dev the error below and make sure to let them know it's PANIK time)");
-  console.log(e);
-}
 
 //ADD SETTING
 chrome.runtime.onInstalled.addListener(async () => {
@@ -97,6 +73,9 @@ function contactServer(channel, payload) {
   });
 }
 
+
+
+let snapshot = {}
 async function syncServer() {
   let extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
@@ -137,50 +116,30 @@ async function syncServer() {
     extensionState: extensionState,
   };
 
-  contactServer("sync-server", data);
-}
-
-//HANDLING LISTENERS BEING CLOSED
-chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
-  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-  let nl = extensionState.scanners.filter((x) => {
-    return tabId != x.id;
-  });
-  if (nl.length != extensionState.scanners.length) {
-    chrome.storage.local.set({
-      "extension-state": {
-        stopped: extensionState.stopped,
-        scanners: nl,
-        selectedScanner: extensionState.selectedScanner,
-      },
-    });
+  if(JSON.stringify(data) == JSON.stringify(snapshot)){
+    return
   }
-});
+
+  contactServer("sync-server", data).then((res)=>{
+    snapshot = data
+  })
+}
 
 //HANDLE NON EXISTING TABS
 
-setInterval(async function () {
-  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-  let nl = [];
-  for (let scanner of extensionState.scanners) {
-    try {
-      let tab = await chrome.tabs.get(scanner.id);
-      if (typeof tab != "undefined") {
-        nl.push(scanner);
-      }
-    } catch (e) {
-      //NO TAB EXISTS
-    }
+
+function getPlatformFromURL(url){
+  let platforms = {
+    "www.youtube.com":"youtube",
+    "open.spotify.com":"spotify",
+    "soundcloud.com":"soundcloud",
+    "music.youtube.com":"youtube music",
+    "epidemicsound.com":"epidemic sound",
   }
 
-  chrome.storage.local.set({
-    "extension-state": {
-      stopped: extensionState.stopped,
-      scanners: nl,
-      selectedScanner: extensionState.selectedScanner,
-    },
-  });
-}, 1000);
+  return platforms[new URL(url).host]
+}
+
 
 async function onLaunch() {
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
@@ -193,6 +152,68 @@ async function onLaunch() {
     },
   });
 }
+
+//HANDLING LISTENERS BEING CLOSED
+async function updateAvailableScanners(){
+  let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+
+  //CLEARING OUT OUTDATED TABS
+  let nl = [];
+  for (let scanner of extensionState.scanners) {
+    try {
+      let tab = await chrome.tabs.get(scanner.id);
+      if (typeof tab != "undefined") {
+        nl.push(scanner);
+      }
+    } catch (e) {
+      //NO TAB EXISTS
+    }
+  }
+
+  //ADDING NEW TABS (backup)
+  let matchingTabs = await chrome.tabs.query({
+    url: ["https://www.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://music.youtube.com/*", "https://*.epidemicsound.com/*"],
+  });
+
+  for (tab of matchingTabs) {
+    if (
+      nl.filter((scanner) => {
+        return scanner.id == tab.id;
+      }).length == 0
+    ) {
+      nl.push({
+        title: tab.title,
+        id: tab.id,
+        platform: getPlatformFromURL(tab.url),
+      })
+    }else{
+      let index = nl
+      .map(function (e) {
+        return e.id;
+      })
+      .indexOf(tab.id);
+
+    if (index >= 0) {
+      nl[index] = {
+        title:  tab.title,
+        id: tab.id,
+        platform: getPlatformFromURL(tab.url),
+      };
+    }
+    }
+  }
+
+  chrome.storage.local.set({
+    "extension-state": {
+      stopped: extensionState.stopped,
+      scanners: nl,
+      selectedScanner: extensionState.selectedScanner,
+    },
+  });
+}
+chrome.tabs.onUpdated.addListener(updateAvailableScanners)
+chrome.tabs.onRemoved.addListener(updateAvailableScanners)
+
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let actions = {
@@ -210,19 +231,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      console.log("BEFORE",extensionState.scanners.length)
-      let scanners = extensionState.scanners
+      console.log("BEFORE", extensionState.scanners.length);
+      let scanners = extensionState.scanners;
 
       scanners = extensionState.scanners.filter((x) => {
         return x.id != sender.tab.id;
       });
-      console.log("FILTER",scanners.length)
+      console.log("FILTER", scanners.length);
       scanners.push({
         title: message.data.title,
         id: sender.tab.id,
         platform: message.data.platform,
       });
-      console.log("AFTER",scanners.length)
+      console.log("AFTER", scanners.length);
       chrome.storage.local.set({
         "extension-state": {
           stopped: extensionState.stopped,
@@ -233,27 +254,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse({ tabId: sender.tab.id, url: sender.tab.url, title: message.data.title });
     },
     "listener-update": async () => {
-      let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      scanners = extensionState.scanners;
-
-      let index = scanners
-        .map(function (e) {
-          return e.id;
-        })
-        .indexOf(sender.tab.id);
-      scanners[index] = {
-        title: message.data.title,
-        id: sender.tab.id,
-        platform: message.data.platform,
-      };
-
-      chrome.storage.local.set({
-        "extension-state": {
-          stopped: extensionState.stopped,
-          scanners: scanners,
-          selectedScanner: extensionState.selectedScanner,
-        },
-      });
+      sendResponse(true)
     },
   };
   let action = actions[message.key];
@@ -265,6 +266,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     action();
     return true;
   }
+});
+
+
+
+chrome.runtime.onConnect.addListener(function (port) {
+  console.log(`New port connected: ${port}`);
+  if (port.name.split("-")[0] != "listener") {
+    console.log(`Port rejected: ${port}`);
+    return;
+  }
+  port.onMessage.addListener(function (message) {
+    let action = connectActions[message.key];
+    if (!action) {
+      console.error("A script called a message without a valid action !");
+      console.log(message);
+    } else {
+      action(port.name.split("-")[1], message);
+    }
+  });
 });
 
 chrome.storage.onChanged.addListener(async (object, areaName) => {
@@ -283,3 +303,33 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     extensionScannerState = object["extension-scanner-state"].newValue;
   }
 });
+
+chrome.runtime.onStartup.addListener(onLaunch);
+
+
+try {
+  importScripts("socket.io.js");
+
+  socket = io(serverURL, {
+    jsonp: false,
+  });
+
+  socket.on("connect", () => {
+    console.log(`Connected to ${serverURL}, socket id: ${socket.id}`);
+  });
+
+  socket.on("registerResponse", async (data) => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    extensionSettings.instance.privateToken = data.token;
+    chrome.storage.local.set({
+      "extension-settings": extensionSettings,
+    });
+
+    console.log("New token received!");
+  });
+} catch (e) {
+  console.error("SOCKET.IO DID NOT LOAD OR CONNECT!!!!!! EVERYTHING IS LOST (almost try to reload the extension and if the error persists send to the dev the error below and make sure to let them know it's PANIK time)");
+  console.log(e);
+}
+
+console.log("Hey I'm a background worker");

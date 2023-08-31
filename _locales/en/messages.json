@@ -196,5 +196,17 @@
   },
   "Overlay_style":{
     "message":"Overlay style"
+  },
+  "Whether_or_not_the_overlay_will_display_the_songs_art":{
+    "message":"Whether or not the overlay will display the song's art"
+  },
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box":{
+    "message":"Whether or not the overlay should try to use the song's art colors / image as the background for the content box"
+  },
+  "About":{
+    "message":"About"
+  },
+  "Supported_platforms":{
+    "message": "Supported platforms"
   }
 }

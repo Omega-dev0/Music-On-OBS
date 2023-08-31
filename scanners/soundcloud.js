@@ -7,6 +7,7 @@ let allowed = false;
 let TAB_ID;
 
 let snapshot;
+let port
 
 const platform = "soundcloud"
 
@@ -24,7 +25,9 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-
+function sendMessage(msg){
+  chrome.runtime.sendMessage(msg)
+}
 
 //GETS DATA FROM STORAGE
 async function onLaunch() {
@@ -42,7 +45,7 @@ async function onLaunch() {
 
 new MutationObserver(function (mutations) {
   //Tab title changed
-  chrome.runtime.sendMessage({ key: "listener-update", data: { platform: platform, title: document.title } });
+  sendMessage({ key: "listener-update", data: { platform: platform, title: document.title } });
 }).observe(document.querySelector("title"), { subtree: true, characterData: true, childList: true });
 
 //UPDATE
@@ -67,14 +70,16 @@ function update(forceUpdate) {
     },
   });
   if (!snapshot) {
-    chrome.runtime.sendMessage({ key: "sync-server" });
+    sendMessage({ key: "sync-server" });
   } else {
     if (snapshot != data) {
-      chrome.runtime.sendMessage({ key: "sync-server" });
+      sendMessage({ key: "sync-server" });
     }
   }
   snapshot = data;
 }
+
+
 
 //GETS DATA FROM PAGE
 function getData() {

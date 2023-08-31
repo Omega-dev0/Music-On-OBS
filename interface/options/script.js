@@ -56,14 +56,14 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   document.getElementById("createNewInstance").addEventListener("click", createNewInstance);
 
+
+  //Integration commands
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   document.getElementById("nightbotCommandCopy").addEventListener("click", () => {
-    navigator.clipboard.writeText(`$(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken})`);
+
+    let cmd = `$(eval const api = $(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}&format=json); if(api.error || api.url == "undefined"){"${extensionSettings.integration.errorMessage}"}else{api.m}; )`
+    navigator.clipboard.writeText(cmd);
     alert("Command copied, be careful to not show it!");
-  });
-  document.getElementById("seCommandCopy").addEventListener("click", () => {
-    navigator.clipboard.writeText(`$(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}))`);
-    alert("Command copied, Make sure in command > advanced settings > Hide command from public pages --> Enabled !");
   });
 
   loadSettings();
@@ -72,7 +72,7 @@ function translator() {
   let elements = document.querySelectorAll("[translated]");
   elements.forEach((element) => {
     try {
-      element.innerHTML = chrome.i18n.getMessage(
+      let translation = chrome.i18n.getMessage(
         element.innerHTML
           .replaceAll(" ", "_")
           .replace(/[^\x00-\x7F]/g, "")
@@ -82,6 +82,21 @@ function translator() {
           .replaceAll(")", "")
           .replaceAll("(", "")
       );
+      element.innerHTML = translation
+
+      if (element.title != "") {
+        element.title = chrome.i18n.getMessage(
+          element.title
+            .replaceAll(" ", "_")
+            .replace(/[^\x00-\x7F]/g, "")
+            .replaceAll(":", "")
+            .replaceAll("]", "")
+            .replaceAll("[", "")
+            .replaceAll(")", "")
+            .replaceAll("(", "")
+        );
+      }
+
     } catch (error) {
       console.warn("[TRANSLATOR] - Failed to translate for:", element.innerHTML, error);
     }
