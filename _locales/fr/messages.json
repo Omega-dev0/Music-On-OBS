@@ -1,0 +1,248 @@
+{
+  "extensionName": {
+    "message": "Music on stream"
+  },
+  "updateName": {
+    "message": "2.2 - Refonte"
+  },
+  "testLink": {
+    "message": "LOL"
+  },
+  "Instance": {
+    "message": "Instance"
+  },
+  "Behaviour": {
+    "message": "Paramètres"
+  },
+  "Overlay": {
+    "message": "Overlay"
+  },
+  "Integration": {
+    "message": "Intégration"
+  },
+  "Instance_settings": {
+    "message": "Paramètres de l'instance"
+  },
+  "Create_an_instance": {
+    "message": "Créer une instance"
+  },
+  "Instance_token": {
+    "message": "Token de l'instance"
+  },
+  "Instance_link": {
+    "message": "Lien de l'instance"
+  },
+  "Create_new_instance": {
+    "message": "Créer une nouvelle instance"
+  },
+  "Copy_instance_link": {
+    "message": "Copier le lien d'overlay de l'instance"
+  },
+  "Load_an_instance": {
+    "message": "Charger une instance"
+  },
+  "Loading_a_token_will_destroy_the_previous_instance": {
+    "message": "⚠️Charger un token détruira l'instance précédente"
+  },
+  "Load_instance_from_token": {
+    "message": "Charger une instance depuis un token"
+  },
+  "Behaviour_settings": {
+    "message": "Paramètres du comportement"
+  },
+  "Display_overlay_when_paused": {
+    "message": "Afficher l'overlay en pause"
+  },
+  "The_overlay_will_disappear_if_you_pause_the_music_instead_of_displaying_a_pause_message": {
+    "message": "L'overlay disparaîtra si vous mettez la musique en pause au lieu d'afficher un message de pause"
+  },
+  "Smart_tab_change": {
+    "message": "Changement intelligent de l'onglet"
+  },
+  "The_extension_will_try_to_always_be_listening_on_an_active_tab_instead_of_waiting_for_a_manual_change": {
+    "message": "L'extension essayera toujours d'écouter un onglet actif au lieu d'attendre un changement manuel"
+  },
+  "Overlay_settings": {
+    "message": "Paramètres d'overlay"
+  },
+  "Integration_settings": {
+    "message": "Paramètres d'intégration"
+  },
+  "Bot_messages": {
+    "message": "Messages du bot"
+  },
+  "Default_message": {
+    "message": "Message par défaut"
+  },
+  "Paused_message": {
+    "message": "Message en pause"
+  },
+  "Error_message": {
+    "message": "Message d'erreur"
+  },
+  "Copy_Nightbot_command": {
+    "message": "Copier la commande Nightbot"
+  },
+  "Copy_Stream_elements_command": {
+    "message": "Copier la commande Stream elements"
+  },
+  "Start": {
+    "message": "Démarrer"
+  },
+  "Stop": {
+    "message": "Arrêter"
+  },
+  "Active_listener": {
+    "message": "Scanner actif"
+  },
+  "Status": {
+    "message": "Statut"
+  },
+  "Active": {
+    "message": "Actif"
+  },
+  "Inactive": {
+    "message": "Inactif"
+  },
+  "Paused": {
+    "message": "En pause"
+  },
+  "Copy_token": {
+    "message": "Copier le token"
+  },
+  "Dynamic_values": {
+    "message": "Valeurs dynamiques"
+  },
+  "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
+    "message": "Vous pouvez utiliser des valeurs dynamiques pour insérer des données dans la réponse du bot :"
+  },
+  "__SONG___The_current_song_name": {
+    "message": "[SONG]: Le nom de la chanson actuelle"
+  },
+  "__SUBTITLE___The_current_song_chapter_or_song_author": {
+    "message": "[SUBTITLE]: Le chapitre actuel de la chanson ou l'auteur de la chanson"
+  },
+  "__LINK___The_URL_of_the_current_listening_tab": {
+    "message": "[LINK]: L'URL de l'onglet d'écoute actuel"
+  },
+  "__TIME___The_current_song_progression_might_not_be_always_available": {
+    "message": "[TIME]: La progression actuelle de la chanson (peut ne pas toujours être disponible)"
+  },
+  "__DURATION___The_current_song_duration_might_not_be_always_available": {
+    "message": "[DURATION]: La durée actuelle de la chanson (peut ne pas toujours être disponible)"
+  },
+  "API_authentification": {
+    "message": "Authentification de l'API"
+  },
+  "Spotify_API": {
+    "message": "API Spotify"
+  },
+  "Logout": {
+    "message": "Déconnexion"
+  },
+  "Login": {
+    "message": "Connexion"
+  },
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state": {
+    "message": "Le scanner détectera si la musique est en pause en fonction de l'horodatage et déclenchera un état de pause"
+  },
+  "Detect_pause": {
+    "message": "Détecter la pause"
+  },
+  "Listening_to": {
+    "message": "Écoute de"
+  },
+  "Background_settings": {
+    "message": "Paramètres d'arrière-plan"
+  },
+  "Primary_gradient_color": {
+    "message": "Couleur de dégradé primaire"
+  },
+  "Secondary_gradient_color": {
+    "message": "Couleur de dégradé secondaire"
+  },
+  "Display_the_song_cover": {
+    "message": "Afficher la cover de la chanson"
+  },
+  "Use_cover_as_content_background": {
+    "message": "Utiliser la cover comme arrière-plan du contenu"
+  },
+  "Title_color": {
+    "message": "Couleur du titre"
+  },
+  "Display_title": {
+    "message": "Afficher le titre"
+  },
+  "Display_subtitle": {
+    "message": "Afficher le sous-titre"
+  },
+  "Subtitle_color": {
+    "message": "Couleur du sous-titre"
+  },
+  "Progress_bar_color": {
+    "message": "Couleur de la barre de progression"
+  },
+  "Progress_bar_background_color": {
+    "message": "Couleur de fond de la barre de progression"
+  },
+  "Display_progress_bar": {
+    "message": "Afficher la barre de progression"
+  },
+  "Text_settings": {
+    "message": "Paramètres de texte"
+  },
+  "Progress_bar_settings": {
+    "message": "Paramètres de la barre de progression"
+  },
+  "Overlay_style": {
+    "message": "Style de l'overlay"
+  },
+  "Whether_or_not_the_overlay_will_display_the_songs_art": {
+    "message": "Si l'overlay affichera la cover de la chanson"
+  },
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box": {
+    "message": "Si l'overlay tente ou non d'utiliser les couleurs / l'image de l'art de la chanson comme arrière-plan pour le fond du contenu"
+  },
+  "About": {
+    "message": "À propos"
+  },
+  "Supported_platforms": {
+    "message": "Plateformes prises en charge"
+  },
+  "how_to_install": {
+    "message": "1) - Créez une instance <br>2) - Copiez le lien d'overlay <br>3) - Allez dans OBS ou Streamlabs et créez une source de navigateur <br>4) - Collez le lien de l'overlay dans l'URL de la source <br>5) - Définissez la largeur sur 800px et la hauteur sur 400px <br><br>L'overlay par défaut devrait apparaître, cet overlay se mettra à jour pendant l'écoute des onglets"
+  },
+  "Installing_the_overlay": {
+    "message": "Installation de l'overlay"
+  },
+  "FAQA1": {
+    "message": "Si vous rencontrez un problème avec un onglet qui ne met pas à jour l'overlay, la meilleure façon de le résoudre est de recharger l'onglet (peut-être plusieurs fois). Si cela ne fonctionne pas, vérifiez que le lien dans la source de navigateur est correct et en dernier recours, vous pouvez réactiver l'extension."
+  },
+  "FAQQ1": {
+    "message": "J'écoute un onglet mais l'overlay ne se met pas à jour, que puis-je faire ?"
+  },
+  "FAQA2": {
+    "message": "En raison de raisons techniques, il est impossible de lire les couleurs à partir des pochettes d'albums de plateformes telles que YouTube et YouTube Music. Il est également impossible de récupérer les pochettes de certaines plateformes telles que Deezer ou Epidemic Sound."
+  },
+  "FAQQ2": {
+    "message": "Certaines plateformes n'ont pas de dégradé coloré mais utilisent plutôt la pochette comme arrière-plan du contenu, pourquoi ?"
+  },
+  "FAQ": {
+    "message": "FAQ"
+  },
+  "Like_the_extension_Share_and_star_it": {
+    "message": "Vous aimez l'extension ? Partagez-la et mettez une étoile !"
+  },
+  "DISPLAY_PAUSE_EXPLANATIONS": {
+    "message": "L'overlay disparaîtra si vous mettez la musique en pause au lieu d'afficher un message de pause"
+  },
+  "DETECT_PAUSE_EXPLANATIONS": {
+    "message": "Le scanner détectera si la musique est en pause en fonction de l'horodatage et déclenchera un état de pause"
+  },
+  "Send_suggestions_and_report_issues_on_the_": {
+    "message": "Envoyez des suggestions et signalez des problèmes sur "
+  },
+  "_or_on_": {
+    "message": " ou sur le "
+  }
+}

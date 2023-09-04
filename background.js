@@ -1,5 +1,5 @@
-const serverURL = "http://127.0.0.1:4011";
-const serverURL2 = "http://127.0.0.1:4013";
+const serverURL = "http://127.0.0.1:6011";
+const serverURL2 = "http://127.0.0.1:6013";
 var socket;
 
 //IMPORTS
@@ -35,17 +35,17 @@ chrome.runtime.onInstalled.addListener(async () => {
         serverURL: serverURL,
         serverURL2: serverURL2,
       },
-      behaviour: {
+      behaviour: extensionSettings == undefined ? {
         displayPause: false,
         // smartSwitch: false,
         detectPause: true,
-      },
-      integration: {
+      } : extensionSettings.behaviour,
+      integration: extensionSettings == undefined ? {
         defaultMessage: "Current song: [__LINK__]",
         pausedMessage: "The music is currently paused",
         errorMessage: "Unable to get current song name!",
-      },
-      overlay: {
+      } : extensionSettings.integration,
+      overlay: extensionSettings == undefined ? {
         primaryColor: "#b94901",
         secondaryColor: "#0013ff",
         titleColor: "#FFFFFF",
@@ -58,7 +58,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         displayCoverOnContent: true,
         progressBarColor: "#334484",
         progressBarBackgroundColor: "#121111",
-      },
+      }: extensionSettings.overlay,
     },
   });
 
@@ -81,6 +81,10 @@ async function syncServer() {
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
+
+  if(extensionSettings.behaviour.detectPause == false){
+    extensionState.paused = false
+  }
   if (extensionState.stopped == true) {
     chrome.action.setIcon({
       path: {
@@ -135,6 +139,8 @@ function getPlatformFromURL(url){
     "soundcloud.com":"soundcloud",
     "music.youtube.com":"youtube music",
     "epidemicsound.com":"epidemic sound",
+    "www.deezer.com":"deezer",
+    "play.pretzel.rocks":"pretzel"
   }
 
   return platforms[new URL(url).host]
@@ -172,7 +178,7 @@ async function updateAvailableScanners(){
 
   //ADDING NEW TABS (backup)
   let matchingTabs = await chrome.tabs.query({
-    url: ["https://www.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://music.youtube.com/*", "https://*.epidemicsound.com/*"],
+    url: ["https://www.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://music.youtube.com/*", "https://*.epidemicsound.com/*","https://www.deezer.com/*","https://play.pretzel.rocks/*"],
   });
 
   for (tab of matchingTabs) {

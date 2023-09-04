@@ -20,23 +20,23 @@
     <br />
     <div class="sidebar-element sidebar-selected" id="instance-button">
       <img class="icon prevent-select" src="../../images/icons/instance.svg"><a class="sidebar-link prevent-select  "
-        translated>Instance</a>
+        translated data="Instance">Instance</a>
     </div>
     <div class="sidebar-element" id="behaviour-button">
       <img class="icon prevent-select" src="../../images/icons/behaviour.svg"><a class="sidebar-link prevent-select"
-        translated>Behaviour</a>
+        translated data="Behaviour">Behaviour</a>
     </div>
     <div class="sidebar-element" id="overlay-button">
       <img class="icon prevent-select" src="../../images/icons/overlay.svg"><a class="sidebar-link prevent-select"
-        translated>Overlay</a>
+        translated data="Overlay">Overlay</a>
     </div>
     <div class="sidebar-element" id="integration-button">
       <img class="icon prevent-select" src="../../images/icons/integration.svg"><a class="sidebar-link prevent-select"
-        translated>Integration</a>
+        translated data="Integration">Integration</a>
     </div>
     <div class="sidebar-element" id="about-button">
       <img class="icon prevent-select" src="../../images/icons/about.svg"><a class="sidebar-link prevent-select"
-        translated>About</a>
+        translated data="About">About</a>
     </div>
   </div>
   <div class="content">
@@ -52,6 +52,12 @@
         <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
         <button class="button blue" translated id="copyInstanceLink">Copy instance link</button><br />
       </div>
+      <div class="box">
+        <h3 style="flex-basis: 100%" translated>Installing the overlay</h3>
+        <label translated>how to install</label>
+        <br>
+        <label translated>Send suggestions and report issues on the </label><a href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
+      </div>
       <!--
           SPOTIFY SECRET SETTING
         <div class="box">
@@ -66,15 +72,13 @@
       <div style="flex-basis: 100%">
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="displayPause" /><label
             class="prevent-select" translated>Display overlay when paused</label></div>
-        <label class="subtitle" translated>The overlay will disappear if you pause the music instead of displaying a
-          pause message</label>
+        <label class="subtitle" translated>DISPLAY_PAUSE_EXPLANATIONS</label>
       </div>
       <div class="divider"></div>
       <div style="flex-basis: 100%; margin-top: 1.5rem">
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="detectPause" /><label
             class="prevent-select" translated>Detect pause</label></div>
-        <label class="subtitle" translated>The scanner will detect if the music is paused based on the timestamp and
-          trigger a pause state</label>
+        <label class="subtitle" translated>DETECT_PAUSE_EXPLANATIONS</label>
       </div>
       <!--
         <div class="divider"></div>
@@ -161,8 +165,22 @@
         <img class="icon" src="../../images/platformIcons/soundcloud.webp" style="height: 5vh; width: auto;">
         <img class="icon" src="../../images/platformIcons/spotify.webp" style="height: 5vh; width: auto;">
         <img class="icon" src="../../images/platformIcons/YouTube.svg" style="height: 5vh; width: auto;">
-        <img class="icon" src="../../images/platformIcons/Youtube_Music_icon.svg" style="height: 5vh; width: auto;"><br>
+        <img class="icon" src="../../images/platformIcons/Youtube_Music_icon.svg" style="height: 5vh; width: auto;">
+        <img class="icon" src="../../images/platformIcons/deezer.png" style="height: 5vh; width: auto;">
+        <img class="icon" src="../../images/platformIcons/Pretzel.webp" style="height: 5vh; width: auto;"><br>
         <img class="icon" src="../../images/platformIcons/Epidemic_Sound.svg" style="height: 5vh; width: auto;">
+      </div>
+      <div class="box">
+        <h3 translated>Like_the_extension_Share_and_star_it</h3><br>
+        <a target=”_blank” href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1"><img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Google_Chrome_Web_Store_icon_2015.svg" style="height: 10vh; width: auto; "></a>
+        <a  target=”_blank” href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fmusic-on-stream%2Fgmhgoccodihlkbhpfkonoglnbjdbmgpl%3Fhl%3Den-GB%26authuser%3D1&hashtags=MusicOnStream"><img class="icon" src="https://cdn.cms-twdigitalassets.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.2560.png" style="height: 10vh; width: auto;"></a>
+      </div>
+      <div class="box">
+        <h3 translated>FAQ</h3>
+        <h4 translated>FAQQ1</h4>
+        <h5 translated>FAQA1</h5>
+        <h4 translated>FAQQ2</h4>
+        <h5 translated>FAQA2</h5>
       </div>
     </div>
   </div>

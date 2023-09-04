@@ -9,14 +9,14 @@
   "author": "Omega77073",
   "short_name": "OBS Music",
   "description": "Display your music on your stream",
-  "homepage_url":"https://omega-2.gitbook.io/music-on-stream-docs/",
+  "homepage_url": "https://omega-2.gitbook.io/music-on-stream-docs/",
 
   "background": {
     "service_worker": "background.js"
   },
 
-  "permissions": ["storage","identity","tabs"],
-  "host_permissions": ["https://*.youtube.com/*","https://open.spotify.com/*","https://*.soundcloud.com/*","https://play.pretzel.rocks/*","https://*.epidemicsound.com/*"],
+  "permissions": ["storage", "identity", "tabs"],
+  "host_permissions": ["https://*.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://play.pretzel.rocks/*", "https://*.epidemicsound.com/*"],
 
   "action": {
     "default_popup": "/interface/popup/index.html",
@@ -58,6 +58,10 @@
     {
       "matches": ["https://www.deezer.com/*"],
       "js": ["/scanners/deezer.js"]
+    },
+    {
+      "matches": ["https://play.pretzel.rocks/*"],
+      "js": ["/scanners/pretzel.js"]
     }
   ],
 

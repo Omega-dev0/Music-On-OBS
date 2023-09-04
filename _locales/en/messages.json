@@ -208,5 +208,43 @@
   },
   "Supported_platforms":{
     "message": "Supported platforms"
+  },
+  "how_to_install":{
+    "message": "1) - Create an instance <br>2) - Copy the overlay link <br>3) - Head to OBS or streamlabs and create a browser source <br>4) - Paste the overlay link into the source URL <br>5) - Set the width to 800px and height to 400px <br><br>The default overlay should appear, this overlay will update while listening to tabs"
+  },
+  "Installing_the_overlay":{
+    "message":"Installing the overlay"
+  },
+  "FAQA1":{
+    "message":"If you encounter any issue with a tab not updating the overlay, the best way to solve it is to reload the tab (maybe multiple times). If that does not work, check that the link in the browser source is correct and as a last ressort you can re-enablee the extension."
+  },
+  "FAQQ1":{
+    "message":"I am listening to a tab but the overlay is not updating, what can I do?"
+  },
+  "FAQA2":{
+    "message":"Due to technical reasons, it is impossible to read colours from cover arts from platforms such as Youtube and youtube music. It's also impossible to fetch covers from some platforms such as deezer or epidemic sound."
+  },
+  "FAQQ2":{
+    "message":"Some platforms do not have the colored gradient but instead the cover as content background, why is that?"
+  },
+  "FAQ":{
+    "message":"FAQ"
+  },
+  "Like_the_extension_Share_and_star_it":{
+    "message":"Like the extension? Share and star it!"
+  },
+  "DISPLAY_PAUSE_EXPLANATIONS":{
+    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+  },
+  "DETECT_PAUSE_EXPLANATIONS":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Send_suggestions_and_report_issues_on_the_":{
+    "message":"Send suggestions and report issues on the "
+  },
+  "_or_on_":{
+    "message":" or on "
   }
+
+
 }

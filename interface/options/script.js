@@ -3,6 +3,7 @@ let extensionOAUTH;
 let extensionState;
 
 function showContainer(id) {
+  console.log(id)
   for (let i = 0; i < document.getElementsByClassName("container").length; i++) {
     container = document.getElementsByClassName("container")[i];
     if (container.id != id) {
@@ -36,7 +37,7 @@ window.addEventListener("DOMContentLoaded", async function () {
   for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
     let div = document.getElementsByClassName("sidebar-element")[i];
     div.addEventListener("click", () => {
-      showContainer(div.children[1].innerHTML);
+      showContainer(div.children[1].getAttribute("data"));
     });
   }
 
@@ -82,8 +83,9 @@ function translator() {
           .replaceAll(")", "")
           .replaceAll("(", "")
       );
+      console.log(element.innerHTML, translation)
       element.innerHTML = translation
-
+      
       if (element.title != "") {
         element.title = chrome.i18n.getMessage(
           element.title

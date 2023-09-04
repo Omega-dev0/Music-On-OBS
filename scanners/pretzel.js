@@ -9,7 +9,7 @@ let TAB_ID;
 let snapshot;
 let port
 
-const platform = "deezer"
+const platform = "pretzel"
 
 
 let registered = {};
@@ -58,13 +58,15 @@ function update(forceUpdate) {
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
+
+
   chrome.storage.local.set({
     "extension-scanner-state": {
       paused: data.paused,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress, ":"),
-      currentLength: getTimeFromTimeString(data.duration, ":"),
+      currentTime: getTimeFromTimeString(data.progress,":"),
+      currentLength: getTimeFromTimeString(data.duration,":"),
       url: data.url,
       cover: data.cover,
     },
@@ -83,16 +85,29 @@ function update(forceUpdate) {
 
 //GETS DATA FROM PAGE
 function getData() {
-  return {
-    url: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).href,
-    subtitle: document.querySelectorAll(".track-title > div > div > div .track-link").item(1).innerHTML,
-    title: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).innerHTML,
-    cover: "",
-    progress: document.querySelector(".slider-counter-current").innerHTML,
-    duration: document.querySelector(".slider-counter-max").innerHTML,
-    paused: (document.querySelectorAll(".player-controls > .svg-icon-group > li").item(2).querySelector("button").ariaLabel == "Play")
+  let cover = document.querySelector("[data-testid='track-artwork']")?.src
+  let title = document.querySelector(`[data-testid="title"]`).innerHTML
+  let chapter =  document.querySelector(`a[data-testid="artist"]`) ? document.querySelector(`a[data-testid="artist"]`).innerHTML : document.querySelector(`a[data-testid="album"]`).innerHTML
+  let url = document.querySelector('[data-testid="track-info"] > a').href
+
+  let duration = document.querySelector('[data-testid="track-time-total"]').innerHTML;
+  let progress = document.querySelector('[data-testid="track-time-elapsed"]').innerHTML;
+  if (document.querySelector("[data-testid=pause-button]")) {
+    paused = false
+  } else {
+    paused = true
   }
+  return {
+    url: url,
+    subtitle: chapter,
+    title: title,
+    cover: cover,
+    progress: progress,
+    duration: duration,
+    paused: paused,
+  };
 }
+
 //MAKES SURE DATA FROM DB IS UP TO DATE
 chrome.storage.onChanged.addListener(async (object, areaName) => {
   if (areaName != "local") {
