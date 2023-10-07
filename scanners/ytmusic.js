@@ -57,12 +57,13 @@ function update(forceUpdate) {
     return; // ALREADY UPDATED
   }
 
+  let ct = getTimeFromTimeString(data.progress, ":")
   chrome.storage.local.set({
     "extension-scanner-state": {
-      paused: data.paused,
+      paused: ct > 0 ? data.paused : false,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress, ":"),
+      currentTime: ct,
       currentLength: getTimeFromTimeString(data.duration, ":"),
       url: data.url,
       cover: data.cover,
@@ -87,7 +88,7 @@ function getData() {
     cover: new URL(document.querySelector(".image.style-scope.ytmusic-player-bar").src).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar").src.replace("w60-h60","w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar").src.split("?sqp")[0],
     progress: document.querySelector(`.time-info`).innerHTML.split(" / ")[0].replace("\n    ",""),
     duration: document.querySelector(`.time-info`).innerHTML.split(" / ")[1].replace("\n  ",""),
-    paused: !(document.querySelector("#play-pause-button").ariaLabel == "Pause"),
+    paused: (document.querySelector("#play-pause-button").ariaLabel == "Play"),
   };
 }
 
