@@ -93,13 +93,14 @@ async function update() {
     soundcloud: "#bf7b2e",
     "epidemic sound": "#363433",
     "youtube music": "#363433",
-    "deezer":"#1d7833",
-    "pretzel":"#4287f5"
+    "deezer": "#1d7833",
+    "pretzel": "#4287f5"
   };
 
-  if (extensionState.scanners && extensionState.scanners.length > 0) {
+  let scanners = extensionState.scanners
+  if (scanners) {
     options += `<option value="none" style="background-color:#1f1d1d;">None</option>`;
-    for (let listener of extensionState.scanners) {
+    for (let listener of scanners) {
       options += `<option value="${listener.id}" style="background-color:${platformColours[listener.platform]};">${fitStringToWidth(`${listener.title}`, 170)}</option>`;
     }
   }
@@ -115,11 +116,11 @@ async function update() {
   }
 }
 
-function updateSelectColor(){
+function updateSelectColor() {
   let select = document.getElementById("listenerSelect")
-  for(let option of select.querySelectorAll("option")){
+  for (let option of select.querySelectorAll("option")) {
     console.log(option.innerHTML, option.value, select.value)
-    if(option.value == select.value){
+    if (option.value == select.value) {
       select.style.backgroundColor = option.style.backgroundColor
     }
   }

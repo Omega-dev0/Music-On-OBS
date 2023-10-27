@@ -1,9 +1,10 @@
-const serverURL = "http://127.0.0.1:6011";
-const serverURL2 = "http://127.0.0.1:6013";
+//const serverURL = "http://127.0.0.1:6011";
+//const serverURL2 = "http://127.0.0.1:6013";
 var socket;
 
 //IMPORTS
-
+const serverURL = "http://129.151.87.197:6011";
+const serverURL2 = "http://129.151.87.197:6013";
 
 //ADD SETTING
 chrome.runtime.onInstalled.addListener(async () => {
@@ -26,6 +27,13 @@ chrome.runtime.onInstalled.addListener(async () => {
       cover: "",
     },
   });
+  let spotifyState = (await chrome.storage.local.get("spotifyState"))["spotifyState"];
+  chrome.storage.local.set({
+    "spotifyState": {
+      spotifyToken: spotifyState == undefined ? "" : spotifyState.spotifyToken,
+      spotifyTokenExpiry: spotifyState == undefined ?  0 : spotifyState.spotifyTokenExpiry,
+    },
+  });
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
   chrome.storage.local.set({
@@ -34,6 +42,9 @@ chrome.runtime.onInstalled.addListener(async () => {
         privateToken: extensionSettings == undefined ? "" : extensionSettings.instance.privateToken,
         serverURL: serverURL,
         serverURL2: serverURL2,
+        spotifyId: extensionSettings == undefined ? "" : extensionSettings.instance.spotifyId,
+        spotifyAppToken: extensionSettings == undefined ? "" : extensionSettings.instance.spotifyAppToken,
+        spotifyRefreshToken: extensionSettings == undefined ? "" : extensionSettings.instance.spotifyRefreshToken,
       },
       behaviour: extensionSettings == undefined ? {
         displayPause: false,
@@ -58,7 +69,7 @@ chrome.runtime.onInstalled.addListener(async () => {
         displayCoverOnContent: true,
         progressBarColor: "#334484",
         progressBarBackgroundColor: "#121111",
-      }: extensionSettings.overlay,
+      } : extensionSettings.overlay,
     },
   });
 
@@ -82,8 +93,9 @@ async function syncServer() {
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
 
-  if(extensionSettings.behaviour.detectPause == false){
+  if (extensionSettings.behaviour.detectPause == false) {
     extensionState.paused = false
+    extensionScannerState.paused = false
   }
   if (extensionState.stopped == true) {
     chrome.action.setIcon({
@@ -119,12 +131,12 @@ async function syncServer() {
     extensionSettings: extensionSettings,
     extensionState: extensionState,
   };
-
-  if(JSON.stringify(data) == JSON.stringify(snapshot)){
+  data.extensionState.scanners = []
+  if (JSON.stringify(data) == JSON.stringify(snapshot)) {
     return
   }
 
-  contactServer("sync-server", data).then((res)=>{
+  contactServer("sync-server", data).then((res) => {
     snapshot = data
   })
 }
@@ -132,15 +144,15 @@ async function syncServer() {
 //HANDLE NON EXISTING TABS
 
 
-function getPlatformFromURL(url){
+function getPlatformFromURL(url) {
   let platforms = {
-    "www.youtube.com":"youtube",
-    "open.spotify.com":"spotify",
-    "soundcloud.com":"soundcloud",
-    "music.youtube.com":"youtube music",
-    "epidemicsound.com":"epidemic sound",
-    "www.deezer.com":"deezer",
-    "play.pretzel.rocks":"pretzel"
+    "www.youtube.com": "youtube",
+    "open.spotify.com": "spotify",
+    "soundcloud.com": "soundcloud",
+    "music.youtube.com": "youtube music",
+    "epidemicsound.com": "epidemic sound",
+    "www.deezer.com": "deezer",
+    "play.pretzel.rocks": "pretzel"
   }
 
   return platforms[new URL(url).host]
@@ -157,12 +169,15 @@ async function onLaunch() {
       selectedScanner: "none",
     },
   });
+
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  console.log(extensionSettings)
 }
 
 //HANDLING LISTENERS BEING CLOSED
-async function updateAvailableScanners(){
+async function updateAvailableScanners() {
   let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   //CLEARING OUT OUTDATED TABS
   let nl = [];
   for (let scanner of extensionState.scanners) {
@@ -178,7 +193,7 @@ async function updateAvailableScanners(){
 
   //ADDING NEW TABS (backup)
   let matchingTabs = await chrome.tabs.query({
-    url: ["https://www.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://music.youtube.com/*", "https://*.epidemicsound.com/*","https://www.deezer.com/*","https://play.pretzel.rocks/*"],
+    url: ["https://www.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://music.youtube.com/*", "https://*.epidemicsound.com/*", "https://www.deezer.com/*", "https://play.pretzel.rocks/*"],
   });
 
   for (tab of matchingTabs) {
@@ -192,21 +207,29 @@ async function updateAvailableScanners(){
         id: tab.id,
         platform: getPlatformFromURL(tab.url),
       })
-    }else{
+    } else {
       let index = nl
-      .map(function (e) {
-        return e.id;
-      })
-      .indexOf(tab.id);
+        .map(function (e) {
+          return e.id;
+        })
+        .indexOf(tab.id);
 
-    if (index >= 0) {
-      nl[index] = {
-        title:  tab.title,
-        id: tab.id,
-        platform: getPlatformFromURL(tab.url),
-      };
+      if (index >= 0) {
+        nl[index] = {
+          title: tab.title,
+          id: tab.id,
+          platform: getPlatformFromURL(tab.url),
+        };
+      }
     }
-    }
+  }
+
+  if (extensionSettings.spotifyId != "" && extensionSettings.spotifyAppToken != "" && extensionSettings.spotifyRefreshToken != "") {
+    nl.push({
+      id: "SPOTIFY-API",
+      platform: "spotify",
+      title: "Spotify API"
+    })
   }
 
   chrome.storage.local.set({
@@ -237,19 +260,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     },
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-      console.log("BEFORE", extensionState.scanners.length);
       let scanners = extensionState.scanners;
 
       scanners = extensionState.scanners.filter((x) => {
         return x.id != sender.tab.id;
       });
-      console.log("FILTER", scanners.length);
       scanners.push({
         title: message.data.title,
         id: sender.tab.id,
         platform: message.data.platform,
       });
-      console.log("AFTER", scanners.length);
       chrome.storage.local.set({
         "extension-state": {
           stopped: extensionState.stopped,
@@ -294,7 +314,7 @@ chrome.runtime.onConnect.addListener(function (port) {
 });
 
 chrome.storage.onChanged.addListener(async (object, areaName) => {
-  console.log("Change detected:", object);
+  //console.log("Change detected:", object);
   //syncServer()
 });
 
@@ -336,6 +356,13 @@ try {
 } catch (e) {
   console.error("SOCKET.IO DID NOT LOAD OR CONNECT!!!!!! EVERYTHING IS LOST (almost try to reload the extension and if the error persists send to the dev the error below and make sure to let them know it's PANIK time)");
   console.log(e);
+}
+
+try {
+  importScripts("spotify-api.js");
+}catch(e){
+  console.error("Importing the spotify api module failed")
+  console.log(e)
 }
 
 console.log("Hey I'm a background worker");

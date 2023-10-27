@@ -75,7 +75,7 @@ function update(forceUpdate) {
   if (!snapshot) {
     sendMessage({ key: "sync-server" });
   } else {
-    if (snapshot != data) {
+    if (JSON.stringify(snapshot) != JSON.stringify(data)) {
       sendMessage({ key: "sync-server" });
     }
   }

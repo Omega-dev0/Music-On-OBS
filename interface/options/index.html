@@ -58,6 +58,16 @@
         <br>
         <label translated>Send suggestions and report issues on the </label><a href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
       </div>
+      <div class="box">
+        <h3 style="flex-basis: 100%">Spotify API setup</h3>
+        <label>Client ID</label><br />
+        <input class="input-locked" type="text" id="spotifyId" /><br />
+        <br>
+        <label>Client secret</label><br />
+        <input class="input-locked" type="password" id="spotifyToken" /><br />
+        <button class="button blue" id="save">Save</button><button class="button blue" id="spotifyLogin">Log-in</button><br />
+        <label id="spotifyStatus">Status: Not logged in</label>
+      </div>
       <!--
           SPOTIFY SECRET SETTING
         <div class="box">
@@ -127,6 +137,7 @@
           <select style="width: 90%; margin-left: 5%;" id="styleSelection" saveTrigger>
             <option value="default">Default</option>
             <option value="transparent">Transparent</option>
+            <option value="classic">Classic</option>
           </select>
         </div>
       </div>

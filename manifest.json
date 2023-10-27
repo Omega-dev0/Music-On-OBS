@@ -33,6 +33,13 @@
     "page": "/interface/options/index.html",
     "open_in_tab": true
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["/interface/spotifyAuth/index.html"],
+      "matches": ["https://accounts.spotify.com/*"],
+      "extension_ids": []
+    }
+  ],
 
   "content_scripts": [
     {
