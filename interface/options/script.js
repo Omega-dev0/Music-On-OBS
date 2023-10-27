@@ -88,6 +88,14 @@ window.addEventListener("DOMContentLoaded", async function () {
     window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${instance.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`,"_blank")
 
   });
+  document.getElementById("spotifyLogout").addEventListener("click", async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"]; 
+    extensionSettings.instance.spotifyRefreshToken = ""
+    chrome.storage.local.set({
+      "extension-settings": extensionSettings
+    })
+    document.getElementById("spotifyStatus").innerHTML = "Status: Not logged in"
+  });
 
 
   document.getElementById("createNewInstance").addEventListener("click", createNewInstance);

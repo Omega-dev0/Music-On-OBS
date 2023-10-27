@@ -17,7 +17,7 @@ let timeout = 1500
 
 
 setInterval(() => {
-    if (extensionState.selectedScanner == TAB_ID && extensionState.stopped == false) { getCurrentSong() }
+    if (extensionState.selectedScanner == TAB_ID && extensionState.stopped == false && extensionSettings.instance.spotifyRefreshToken != "") { getCurrentSong() }
 }, timeout)
 
 
@@ -52,12 +52,12 @@ async function getCurrentSong() {
             chrome.storage.local.set({
                 "spotifyState": {
                     spotifyToken: token,
-                    spotifyTokenExpiry: Date.now() + 3600
+                    spotifyTokenExpiry: Date.now() + 2000 * 1000
                 },
             });
             spotifyState = {
                 spotifyToken: token,
-                spotifyTokenExpiry: Date.now() + 3600
+                spotifyTokenExpiry: Date.now() + 2000 * 1000
             }
         } catch (e) {
             console.warn("Spotify token refresh failed!", e)

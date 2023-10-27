@@ -224,13 +224,6 @@ async function updateAvailableScanners() {
     }
   }
 
-  if (extensionSettings.spotifyId != "" && extensionSettings.spotifyAppToken != "" && extensionSettings.spotifyRefreshToken != "") {
-    nl.push({
-      id: "SPOTIFY-API",
-      platform: "spotify",
-      title: "Spotify API"
-    })
-  }
 
   chrome.storage.local.set({
     "extension-state": {

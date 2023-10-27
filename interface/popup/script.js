@@ -98,6 +98,20 @@ async function update() {
   };
 
   let scanners = extensionState.scanners
+  console.log(extensionSettings.spotifyId != "", extensionSettings.spotifyAppToken != "", extensionSettings.spotifyRefreshToken != "", scanners.filter((x) => x.id == "SPOTIFY-API").length == 0)
+  if (extensionSettings.spotifyId != "" && extensionSettings.spotifyAppToken != "" && extensionSettings.spotifyRefreshToken != "") {
+    if (scanners.filter((x) => x.id == "SPOTIFY-API").length == 0) {
+      scanners.push({
+        id: "SPOTIFY-API",
+        platform: "spotify",
+        title: "Spotify API"
+      })
+    }
+  } else {
+    scanners = scanners.filter((x) => {
+      x.id != "SPOTIFY-API"
+    })
+  }
   if (scanners) {
     options += `<option value="none" style="background-color:#1f1d1d;">None</option>`;
     for (let listener of scanners) {
