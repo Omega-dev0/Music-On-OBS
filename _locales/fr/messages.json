@@ -244,5 +244,35 @@
   },
   "_or_on_": {
     "message": " ou sur le "
+  },
+  "how_to_install_spotify_1": {
+    "message": "1) - Rendez-vous sur <a href='https://developer.spotify.com/'>Spotify for developers</a> et connectez-vous avec votre compte Spotify <br>2) - Accédez au <a href='https://developer.spotify.com/dashboard'>Tableau de bord</a> et créez une application <br>3) - Nommez l'application (le nom n'a pas d'importance) et définissez l'URI de redirection comme suit : <br>"
+  },
+  "how_to_install_spotify_2": {
+    "message": "4) - Sélectionnez l'API Web et enregistrez l'application <br>5) - Ouvrez les paramètres et copiez l'identifiant client (client ID) et le secret client (client secret) dans les champs <br>6) - Cliquez sur le bouton de connexion pour lier votre compte<br><br>Vous devriez voir l'option Spotify API dans la liste des scanners dans la fenêtre contextuelle de l'extension."
+  },
+  "Connecting_the_spotify_API": {
+    "message": "Connexion à l'API Spotify"
+  },
+  "Save": {
+    "message": "Enregistrer"
+  },
+  "Log_in": {
+    "message": "Se connecter"
+  },
+  "Log_out": {
+    "message": "Se déconnecter"
+  },
+  "Client_secret": {
+    "message": "Secret du client"
+  },
+  "Client_ID": {
+    "message": "Identifiant du client"
+  },
+  "Spotify_API_setup": {
+    "message": "Configuration de l'API Spotify"
+  },
+  "integration_explanations": {
+    "message": "L'extension peut être configurée pour répondre à une commande Nightbot, vous n'avez pas besoin de mettre à jour la commande Nightbot à chaque fois que vous apportez une modification.<br><br> Pour commencer, créez une nouvelle commande personnalisée dans votre tableau de bord Nightbot et collez la chaîne de commande personnalisée fournie ci-dessous dans le champ de message."
   }
 }

@@ -52,21 +52,35 @@
         <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
         <button class="button blue" translated id="copyInstanceLink">Copy instance link</button><br />
       </div>
+
+      <div class="box">
+        <h3 style="flex-basis: 100%" translated>Spotify API setup</h3>
+        <label translated>Client ID</label><br />
+        <input class="input-locked" type="text" id="spotifyId" /><br />
+        <br>
+        <label translated>Client secret</label><br />
+        <input class="input-locked" type="password" id="spotifyToken" /><br />
+        <button class="button blue" id="save" translated>Save</button><button class="button blue" id="spotifyLogin"
+          translated>Log in</button><button class="button red" id="spotifyLogout" translated>Log out</button><br />
+        <label id="spotifyStatus">Status: Not logged in</label>
+      </div>
+      <div class="box">
+        <h3 style="flex-basis: 100%" translated>Detailled documentation</h3>
+        
+      </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Installing the overlay</h3>
         <label translated>how to install</label>
         <br>
-        <label translated>Send suggestions and report issues on the </label><a href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
+        <label translated>Send suggestions and report issues on the </label><a
+          href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome
+          web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
       </div>
       <div class="box">
-        <h3 style="flex-basis: 100%">Spotify API setup</h3>
-        <label>Client ID</label><br />
-        <input class="input-locked" type="text" id="spotifyId" /><br />
-        <br>
-        <label>Client secret</label><br />
-        <input class="input-locked" type="password" id="spotifyToken" /><br />
-        <button class="button blue" id="save">Save</button><button class="button blue" id="spotifyLogin">Log-in</button><button class="button red" id="spotifyLogout">Log-out</button><br />
-        <label id="spotifyStatus">Status: Not logged in</label>
+        <h3 style="flex-basis: 100%" translated>Connecting the spotify API</h3>
+        <label translated>how to install spotify 1</label>
+        <label id="spotifyRedirectURI"></label><br>
+        <label translated>how to install spotify 2</label>
       </div>
       <!--
           SPOTIFY SECRET SETTING
@@ -102,13 +116,18 @@
       <h1 style="flex-basis: 100%" translated>Overlay</h1>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Background settings</h3>
-        <input type="color" id="overlayPrimaryColor" saveTrigger><label translated class="large-label" >Primary gradient color</label><br>
-        <input type="color" id="overlaySecondaryColor" saveTrigger><label translated class="large-label">Secondary gradient color</label>
+        <input type="color" id="overlayPrimaryColor" saveTrigger><label translated class="large-label">Primary gradient
+          color</label><br>
+        <input type="color" id="overlaySecondaryColor" saveTrigger><label translated class="large-label">Secondary
+          gradient color</label>
         <br><br>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUseCover" /><label
-            class="prevent-select" translated title="Whether or not the overlay will display the songs art">Display the song cover</label></div>
+            class="prevent-select" translated title="Whether or not the overlay will display the songs art">Display the
+            song cover</label></div>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUserCoverAsContent" /><label
-            class="prevent-select" translated title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box">Use cover as content background</label></div>
+            class="prevent-select" translated
+            title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box">Use
+            cover as content background</label></div>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Text settings</h3>
@@ -117,13 +136,15 @@
             class="prevent-select" translated>Display title</label></div>
         <br>
         <br>
-        <input type="color" id="overlaySubtitleColor" saveTrigger><label translated class="large-label">Subtitle color</label>
+        <input type="color" id="overlaySubtitleColor" saveTrigger><label translated class="large-label">Subtitle
+          color</label>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label
             class="prevent-select" translated>Display subtitle</label></div>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Progress bar settings</h3>
-        <input type="color" id="overlayProgressBarColor" saveTrigger><label translated class="large-label">Progress bar color</label><br>
+        <input type="color" id="overlayProgressBarColor" saveTrigger><label translated class="large-label">Progress bar
+          color</label><br>
         <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger><label translated
           class="large-label">Progress bar background color</label><br>
         <br>
@@ -144,6 +165,7 @@
     </div>
     <div class="container" id="Integration" style="display: none">
       <h1 style="flex-basis: 100%" translated>Integration</h1>
+      <label translated>integration_explanations</label>
       <div class="box">
         <h3 translated>Bot messages</h3>
         <label translated>Default message</label><br />
@@ -183,8 +205,15 @@
       </div>
       <div class="box">
         <h3 translated>Like_the_extension_Share_and_star_it</h3><br>
-        <a target=”_blank” href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1"><img class="icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Google_Chrome_Web_Store_icon_2015.svg" style="height: 10vh; width: auto; "></a>
-        <a  target=”_blank” href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fmusic-on-stream%2Fgmhgoccodihlkbhpfkonoglnbjdbmgpl%3Fhl%3Den-GB%26authuser%3D1&hashtags=MusicOnStream"><img class="icon" src="https://cdn.cms-twdigitalassets.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.2560.png" style="height: 10vh; width: auto;"></a>
+        <a target=”_blank”
+          href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1"><img
+            class="icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Google_Chrome_Web_Store_icon_2015.svg"
+            style="height: 10vh; width: auto; "></a>
+        <a target=”_blank”
+          href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fmusic-on-stream%2Fgmhgoccodihlkbhpfkonoglnbjdbmgpl%3Fhl%3Den-GB%26authuser%3D1&hashtags=MusicOnStream"><img
+            class="icon"
+            src="https://cdn.cms-twdigitalassets.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.2560.png"
+            style="height: 10vh; width: auto;"></a>
       </div>
       <div class="box">
         <h3 translated>FAQ</h3>

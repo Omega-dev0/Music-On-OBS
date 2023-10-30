@@ -244,6 +244,36 @@
   },
   "_or_on_":{
     "message":" or on "
+  },
+  "how_to_install_spotify_1":{
+    "message": "1) - Head to <a href='https://developer.spotify.com/'>Spotify for developers</a> and login with your spotify account <br>2) - Head to the <a href='https://developer.spotify.com/dashboard'>Dashboard </a> and create an app <br>3) - Name the app (the name does not matter) and set the redirect URI to: <br>"
+  },
+  "how_to_install_spotify_2":{
+    "message": "4) - Select Web API and save the app <br>5) - Open the settings and copy the client ID and the client secret into the fields<br>6) - Click the login button to link your account<br><br>You should see the Spotify API option in the scanners list in the extension's popup"
+  },
+  "Connecting_the_spotify_API":{
+    "message": "Connecting the spotify API"
+  },
+  "Save":{
+    "message": "Save"
+  },
+  "Log_in":{
+    "message": "Log-in"
+  },
+  "Log_out":{
+    "message": "Log-out"
+  },
+  "Client_secret":{
+    "message": "Client secret"
+  },
+  "Client_ID":{
+    "message": "Client ID"
+  },
+  "Spotify_API_setup":{
+    "message": "Spotify API setup"
+  },
+  "integration_explanations":{
+    "message":"The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
   }
 
 

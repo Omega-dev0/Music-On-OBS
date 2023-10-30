@@ -16,7 +16,10 @@ let timeout = 1500
 
 
 
-setInterval(() => {
+setInterval(async () => {
+    if(!extensionState){
+        extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    }
     if (extensionState.selectedScanner == TAB_ID && extensionState.stopped == false && extensionSettings.instance.spotifyRefreshToken != "") { getCurrentSong() }
 }, timeout)
 

@@ -23,6 +23,16 @@ function showContainer(id) {
   }
 }
 
+
+async function checkLoginStatus(){
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  if(extensionSettings.instance.spotifyId !="" && extensionSettings.instance.spotifyAppToken!=""){
+    document.getElementById("spotifyLogin").removeAttribute("customDisable")
+  }else{
+    document.getElementById("spotifyLogin").setAttribute("customDisable",true)
+  }
+}
+
 window.addEventListener("DOMContentLoaded", async function () {
   //Checkbox title clickable bind
   for (let i = 0; i < document.getElementsByClassName("checkbox-container").length; i++) {
@@ -85,11 +95,15 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
 
     let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
-    window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${instance.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`,"_blank")
+    window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${instance.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
 
   });
+
+  document.getElementById("spotifyId").addEventListener("change", checkLoginStatus)
+  document.getElementById("spotifyToken").addEventListener("change", checkLoginStatus)
+
   document.getElementById("spotifyLogout").addEventListener("click", async () => {
-    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"]; 
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     extensionSettings.instance.spotifyRefreshToken = ""
     chrome.storage.local.set({
       "extension-settings": extensionSettings
@@ -241,9 +255,13 @@ async function loadSettings() {
   dsv("spotifyId", extensionSettings.instance.spotifyId)
   dsv("spotifyToken", extensionSettings.instance.spotifyAppToken)
 
-  if(extensionSettings.instance.spotifyRefreshToken != ""){
+  if (extensionSettings.instance.spotifyRefreshToken != "") {
     document.getElementById("spotifyStatus").innerHTML = "Status: Logged in"
   }
+
+  let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+  document.getElementById("spotifyRedirectURI").innerHTML = redirect_url
+  checkLoginStatus()
 }
 
 function update() {
@@ -271,6 +289,19 @@ function update() {
     dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
     dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
     dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor);
+
+  dsv("spotifyId", extensionSettings.instance.spotifyId)
+  dsv("spotifyToken", extensionSettings.instance.spotifyAppToken)
+
+  if (extensionSettings.instance.spotifyRefreshToken != "") {
+    document.getElementById("spotifyStatus").innerHTML = "Status: Logged in"
+  }else{
+    document.getElementById("spotifyStatus").innerHTML = "Status: Not logged in"
+  }
+
+  let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+  document.getElementById("spotifyRedirectURI").innerHTML = redirect_url
+  checkLoginStatus()
 }
 
 
