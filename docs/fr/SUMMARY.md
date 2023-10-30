@@ -8,6 +8,7 @@
 * [Premiers pas](guides/premiers-pas.md)
 * [Personnalisation](guides/personnalisation.md)
 * [Intégration](guides/integration.md)
+* [Spotify API](guides/spotify-api.md)
 
 ## Extras
 
