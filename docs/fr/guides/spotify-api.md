@@ -1,6 +1,6 @@
 ---
 description: >-
-  Cette page décrit le processus pour configurer la source de l'API Spotify, qui vous permet de connecter l'application Spotify Desktop ou l'application mobile à l'extension
+  Cette page décrit comment connecter l'extension à l'application Spotify
 ---
 
 # API Spotify
