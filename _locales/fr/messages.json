@@ -274,5 +274,11 @@
   },
   "integration_explanations": {
     "message": "L'extension peut être configurée pour répondre à une commande Nightbot, vous n'avez pas besoin de mettre à jour la commande Nightbot à chaque fois que vous apportez une modification.<br><br> Pour commencer, créez une nouvelle commande personnalisée dans votre tableau de bord Nightbot et collez la chaîne de commande personnalisée fournie ci-dessous dans le champ de message."
+  },
+  "Detailled_documentation": {
+    "message": "Documentation détaillée"
+  },
+  "find_more_docs": {
+    "message": "Trouvez plus de documentation sur le <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
   }
 }

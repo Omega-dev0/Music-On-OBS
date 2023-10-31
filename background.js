@@ -224,7 +224,6 @@ async function updateAvailableScanners() {
     }
   }
 
-
   chrome.storage.local.set({
     "extension-state": {
       stopped: extensionState.stopped,

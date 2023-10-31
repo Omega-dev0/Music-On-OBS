@@ -165,7 +165,7 @@ function getData() {
     duration: isLive == true ? "live" : videoElement.duration,
     paused: videoElement.paused,
   };
-}éé
+}
 
 //MAKES SURE DATA FROM DB IS UP TO DATE
 chrome.storage.onChanged.addListener(async (object, areaName) => {

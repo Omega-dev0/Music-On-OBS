@@ -98,8 +98,7 @@ async function update() {
   };
 
   let scanners = extensionState.scanners
-  console.log(extensionSettings.spotifyId != "", extensionSettings.spotifyAppToken != "", extensionSettings.spotifyRefreshToken != "", scanners.filter((x) => x.id == "SPOTIFY-API").length == 0)
-  if (extensionSettings.spotifyId != "" && extensionSettings.spotifyAppToken != "" && extensionSettings.spotifyRefreshToken != "") {
+  if (extensionSettings.instance.spotifyId != "" && extensionSettings.instance.spotifyAppToken != "" && extensionSettings.instance.spotifyRefreshToken != "") {
     if (scanners.filter((x) => x.id == "SPOTIFY-API").length == 0) {
       scanners.push({
         id: "SPOTIFY-API",
@@ -109,7 +108,7 @@ async function update() {
     }
   } else {
     scanners = scanners.filter((x) => {
-      x.id != "SPOTIFY-API"
+      return x.id != "SPOTIFY-API"
     })
   }
   if (scanners) {

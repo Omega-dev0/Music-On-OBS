@@ -66,15 +66,15 @@
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Detailled documentation</h3>
-        
+        <label translated>find_more_docs</label><br>
+        <label translated>Send suggestions and report issues on the </label><a
+          href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome
+          web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Installing the overlay</h3>
         <label translated>how to install</label>
         <br>
-        <label translated>Send suggestions and report issues on the </label><a
-          href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1">Chrome
-          web store</a><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Connecting the spotify API</h3>
@@ -116,18 +116,14 @@
       <h1 style="flex-basis: 100%" translated>Overlay</h1>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Background settings</h3>
-        <input type="color" id="overlayPrimaryColor" saveTrigger><label translated class="large-label">Primary gradient
-          color</label><br>
-        <input type="color" id="overlaySecondaryColor" saveTrigger><label translated class="large-label">Secondary
-          gradient color</label>
+        <input type="color" id="overlayPrimaryColor" saveTrigger><label translated class="large-label">Primary gradient color</label><br>
+        <input type="color" id="overlaySecondaryColor" saveTrigger><label translated class="large-label">Secondary gradient color</label>
         <br><br>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUseCover" /><label
-            class="prevent-select" translated title="Whether or not the overlay will display the songs art">Display the
-            song cover</label></div>
+            class="prevent-select" translated title="Whether or not the overlay will display the songs art">Display the song cover</label></div>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUserCoverAsContent" /><label
             class="prevent-select" translated
-            title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box">Use
-            cover as content background</label></div>
+            title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box">Use cover as content background</label></div>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Text settings</h3>
@@ -136,15 +132,13 @@
             class="prevent-select" translated>Display title</label></div>
         <br>
         <br>
-        <input type="color" id="overlaySubtitleColor" saveTrigger><label translated class="large-label">Subtitle
-          color</label>
+        <input type="color" id="overlaySubtitleColor" saveTrigger><label translated class="large-label">Subtitle color</label>
         <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label
             class="prevent-select" translated>Display subtitle</label></div>
       </div>
       <div class="box">
         <h3 style="flex-basis: 100%" translated>Progress bar settings</h3>
-        <input type="color" id="overlayProgressBarColor" saveTrigger><label translated class="large-label">Progress bar
-          color</label><br>
+        <input type="color" id="overlayProgressBarColor" saveTrigger><label translated class="large-label">Progress bar color</label><br>
         <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger><label translated
           class="large-label">Progress bar background color</label><br>
         <br>
@@ -159,6 +153,7 @@
             <option value="default">Default</option>
             <option value="transparent">Transparent</option>
             <option value="classic">Classic</option>
+            <option value="legacy">Legacy</option>
           </select>
         </div>
       </div>

@@ -274,6 +274,12 @@
   },
   "integration_explanations":{
     "message":"The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
+  },
+  "Detailled_documentation":{
+    "message":"Detailled documentation"
+  },
+  "find_more_docs":{
+    "message":"Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
   }
 
 

@@ -87,8 +87,8 @@ function getData() {
   return {
     url: document.querySelector(`a[aria-label="track page"]`).href,
     subtitle: document.querySelector(`a[aria-label="creatives"]`).innerHTML,
-    title: (document.querySelectorAll(".src-mainapp-components-___ScrollingLabel__label___BxH7N").item(0) || document.querySelector(`a[aria-label="track page"]`)).innerHTML,
-    cover: "",
+    title: (document.querySelector('[class^="src-mainapp-player-components-___ScrollingLabel__label___"]')    || document.querySelector(`a[aria-label="track page"]`)).innerHTML,
+    cover: "https://www.epidemicsound.com/blog/content/images/2021/03/ES-logo-new-new-png.png",
     progress: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(0) || document.querySelector(".src-mainapp-player-components-___PlayerBar__elapsedTime___p-yYQ")).innerHTML,
     duration: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(1) || document.querySelector(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span")).innerHTML,
     paused: !(document.querySelector(`.src-mainapp-player-components-___PlaybackControls__button___NXk1B.src-mainapp-player-components-___PlaybackControls__playPauseButton___UXa8w`).title == "Pause"),
