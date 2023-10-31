@@ -116,9 +116,9 @@ window.addEventListener("DOMContentLoaded", async function () {
 
 
   //Integration commands
-  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-  document.getElementById("nightbotCommandCopy").addEventListener("click", () => {
-
+  
+  document.getElementById("nightbotCommandCopy").addEventListener("click",async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     let cmd = `$(eval const api = $(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}&format=json); if(api.error || api.url == "undefined"){"${extensionSettings.integration.errorMessage}"}else{api.m}; )`
     navigator.clipboard.writeText(cmd);
     alert("Command copied, be careful to not show it!");
