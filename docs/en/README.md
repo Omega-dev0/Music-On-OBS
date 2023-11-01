@@ -1,8 +1,8 @@
 # Introduction
 
-<figure><img src=".gitbook/assets/Capture.JPG" alt=""><figcaption><p>Example of some overlays</p></figcaption></figure>
+<figure><img src=".gitbook/assets/OverlaysNew overlays.png" alt=""><figcaption><p>Example of some overlays</p></figcaption></figure>
 
-**Music on Stream** is a chrome extension that allows you to display the music you are playing directly onto your stream.
+**Music on Stream** is a Chrome extension that allows you to display the music you are playing directly onto your stream.
 
 Using a customizable browser source, create an overlay that fits into your stream and in any scene
 
