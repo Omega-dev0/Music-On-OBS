@@ -52,9 +52,9 @@ chrome.runtime.onInstalled.addListener(async () => {
         detectPause: true,
       } : extensionSettings.behaviour,
       integration: extensionSettings == undefined ? {
-        defaultMessage: "Current song: [__LINK__]",
-        pausedMessage: "The music is currently paused",
-        errorMessage: "Unable to get current song name!",
+        defaultMessage: chrome.i18n.getMessage("defaultIntegrationMessage") || "Current song: [__LINK__]",
+        pausedMessage: chrome.i18n.getMessage("pausedIntegrationMessage") || "The music is currently paused",
+        errorMessage: chrome.i18n.getMessage("errorIntegrationMessage") || "Unable to get current song name!",
       } : extensionSettings.integration,
       overlay: extensionSettings == undefined ? {
         primaryColor: "#b94901",

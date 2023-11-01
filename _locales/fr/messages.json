@@ -280,5 +280,14 @@
   },
   "find_more_docs": {
     "message": "Trouvez plus de documentation sur le <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  },
+  "defaultIntegrationMessage":{
+    "message":"Musique: [__LINK__]"
+  },
+  "errorIntegrationMessage":{
+    "message":"La musique est en pause"
+  },
+  "pausedIntegrationMessage":{
+    "message":"Oops, une erreur est survenue!"
   }
 }

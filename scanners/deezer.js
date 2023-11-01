@@ -87,7 +87,7 @@ function getData() {
     url: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).href,
     subtitle: document.querySelectorAll(".track-title > div > div > div .track-link").item(1).innerHTML,
     title: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).innerHTML,
-    cover: "https://play-lh.googleusercontent.com/Z1yPp6_xnv5-XUvCxujCzg-aY3OBgvS1LyFfdh4NO6il7Qrn5eELa-upajeuWs9lSq-T",
+    cover: navigator.mediaSession.metadata?.artwork[0].src || "https://play-lh.googleusercontent.com/Z1yPp6_xnv5-XUvCxujCzg-aY3OBgvS1LyFfdh4NO6il7Qrn5eELa-upajeuWs9lSq-T",
     progress: document.querySelector(".slider-counter-current").innerHTML,
     duration: document.querySelector(".slider-counter-max").innerHTML,
     paused: (document.querySelectorAll(".player-controls > .svg-icon-group > li").item(2).querySelector("button").ariaLabel == "Play")

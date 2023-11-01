@@ -280,6 +280,15 @@
   },
   "find_more_docs":{
     "message":"Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  },
+  "defaultIntegrationMessage":{
+    "message":"Current song: [__LINK__]"
+  },
+  "errorIntegrationMessage":{
+    "message":"The music is currently paused"
+  },
+  "pausedIntegrationMessage":{
+    "message":"Unable to get current song name!"
   }
 
 
