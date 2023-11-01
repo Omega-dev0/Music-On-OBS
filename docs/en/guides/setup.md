@@ -21,7 +21,7 @@ Do not share your instance token as it allows to send information to your instan
 
 Right click the extension logo and press **Options**
 
-![](<../.gitbook/assets/image (2).png>)
+![](<../.gitbook/assets/image (2) (1).png>)
 
 Once you hit the **Create Instance** button you should see the **Token** and the **Overlay Link** fields filled. The **Token** field shows your instance's token while the **Overlay Link** field shows an url to your overlay webpage.
 
@@ -33,7 +33,7 @@ You can get a new instance at any time by clicking again the **Create Instance**
 
 First create a new Browser Source
 
-![](<../.gitbook/assets/image (4).png>)
+![](<../.gitbook/assets/image (4) (1).png>)
 
 Now configure the **Browser Source** with this configuration
 

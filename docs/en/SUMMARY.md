@@ -9,6 +9,7 @@
 * [Personalization](guides/personalization.md)
 * [Integration](guides/integration.md)
 * [Spotify API](guides/spotify-api.md)
+* [Security and confidentiality](guides/security-and-confidentiality.md)
 
 ## Extras
 
