@@ -1,24 +1,45 @@
 let extensionSettings;
 let extensionOAUTH;
-let extensionState
+let extensionState;
 
-window.addEventListener("DOMContentLoaded", function () {
-  function showContainer(id) {
-    for (let i = 0; i < document.getElementsByClassName("container").length; i++) {
-      container = document.getElementsByClassName("container")[i];
-      if (container.id != id) {
-        container.style = "display: none;";
-      } else {
-        container.style = "display: flex;";
-      }
+function showContainer(id) {
+  console.log(id)
+  for (let i = 0; i < document.getElementsByClassName("container").length; i++) {
+    container = document.getElementsByClassName("container")[i];
+    if (container.id != id) {
+      container.style = "display: none;";
+    } else {
+      container.style = "display: flex;";
     }
   }
+  id = id.toLowerCase() + "-button";
+  for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
+    container = document.getElementsByClassName("sidebar-element")[i];
+    if (container.id != id) {
+      container.classList.remove("sidebar-selected");
+    } else {
+      container.classList.add("sidebar-selected");
+    }
+  }
+}
 
+
+async function checkLoginStatus(){
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  if(extensionSettings.instance.spotifyId !="" && extensionSettings.instance.spotifyAppToken!=""){
+    document.getElementById("spotifyLogin").removeAttribute("customDisable")
+  }else{
+    document.getElementById("spotifyLogin").setAttribute("customDisable",true)
+  }
+}
+
+window.addEventListener("DOMContentLoaded", async function () {
   //Checkbox title clickable bind
   for (let i = 0; i < document.getElementsByClassName("checkbox-container").length; i++) {
     let div = document.getElementsByClassName("checkbox-container")[i];
     div.children[1].addEventListener("click", () => {
       div.children[0].checked = !div.children[0].checked;
+      saveSettings();
     });
   }
 
@@ -26,7 +47,7 @@ window.addEventListener("DOMContentLoaded", function () {
   for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
     let div = document.getElementsByClassName("sidebar-element")[i];
     div.addEventListener("click", () => {
-      showContainer(div.children[0].innerHTML);
+      showContainer(div.children[1].getAttribute("data"));
     });
   }
 
@@ -39,53 +60,77 @@ window.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  //SPOTIFY OAUTH
-  document.getElementById("spotifyAPI").addEventListener("click", () => {
-    chrome.runtime.sendMessage({ key: "spotify-login" }, (res) => {
-      if (res.status == false) {
-        console.warn("SPOTIFY LOGIN ERROR", res);
-      }
-    });
+  document.getElementById("copyInstanceLink").addEventListener("click", () => {
+    navigator.clipboard.writeText(document.getElementById("instanceLink").value);
+    alert("Link copied, be careful!");
   });
 
-  document.getElementById("spotifyAPILogout").addEventListener("click", () => {
-    chrome.runtime.sendMessage({ key: "spotify-logout" }, (res) => {
-      if (res.status == false) {
-        console.warn("SPOTIFY LOGIN ERROR", res);
-      }else{
-        if(extensionState.selectedScanner == "spotifyAPI"){
-          chrome.storage.local.set({
-            "extension-state": {
-              stopped: true,
-              scanners: extensionState.scanners,
-              selectedScanner: extensionState.selectedScanner,
-            },
-          });
 
-          chrome.storage.local.set({
-            "extension-scanner-state": {
-              paused: false,
-              title: "Default title",
-              subtitle: "Default subtitle",
-              currentTime: 0,
-              currentLength: 0,
-              url: "",
-              cover: "",
-            },
-          });
+  //Save button for spotify
+  document.getElementById("save").addEventListener("click", async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
+    let instance = extensionSettings.instance
+    instance.spotifyId = dv("spotifyId")
+    instance.spotifyAppToken = dv("spotifyToken")
 
-        }
-      }
+    chrome.storage.local.set({
+      "extension-settings": {
+        instance: instance,
+        behaviour: extensionSettings.behaviour,
+        integration: extensionSettings.integration,
+        overlay: extensionSettings.overlay,
+      },
     });
+    alert("Id and secret saved!");
   });
+
+  document.getElementById("spotifyLogin").addEventListener("click", async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+
+    let instance = extensionSettings.instance
+    if (instance.spotifyId == "" || instance.spotifyAppToken == "") {
+      alert("You must set the ID and Secret first ! Find them in your app at https://developer.spotify.com/dashboard");
+      return
+    }
+
+    let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+    window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${instance.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
+
+  });
+
+  document.getElementById("spotifyId").addEventListener("change", checkLoginStatus)
+  document.getElementById("spotifyToken").addEventListener("change", checkLoginStatus)
+
+  document.getElementById("spotifyLogout").addEventListener("click", async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    extensionSettings.instance.spotifyRefreshToken = ""
+    chrome.storage.local.set({
+      "extension-settings": extensionSettings
+    })
+    document.getElementById("spotifyStatus").innerHTML = "Status: Not logged in"
+  });
+
+
+  document.getElementById("createNewInstance").addEventListener("click", createNewInstance);
+
+
+  //Integration commands
+  
+  document.getElementById("nightbotCommandCopy").addEventListener("click",async () => {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    let cmd = `$(eval const api = $(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}&format=json); if(api.error || api.url == "undefined"){"${extensionSettings.integration.errorMessage}"}else{api.m}; )`
+    navigator.clipboard.writeText(cmd);
+    alert("Command copied, be careful to not show it!");
+  });
+
+  loadSettings();
 });
-
 function translator() {
   let elements = document.querySelectorAll("[translated]");
   elements.forEach((element) => {
     try {
-      element.innerHTML = chrome.i18n.getMessage(
+      let translation = chrome.i18n.getMessage(
         element.innerHTML
           .replaceAll(" ", "_")
           .replace(/[^\x00-\x7F]/g, "")
@@ -95,6 +140,22 @@ function translator() {
           .replaceAll(")", "")
           .replaceAll("(", "")
       );
+      console.log(element.innerHTML, translation)
+      element.innerHTML = translation
+
+      if (element.title != "") {
+        element.title = chrome.i18n.getMessage(
+          element.title
+            .replaceAll(" ", "_")
+            .replace(/[^\x00-\x7F]/g, "")
+            .replaceAll(":", "")
+            .replaceAll("]", "")
+            .replaceAll("[", "")
+            .replaceAll(")", "")
+            .replaceAll("(", "")
+        );
+      }
+
     } catch (error) {
       console.warn("[TRANSLATOR] - Failed to translate for:", element.innerHTML, error);
     }
@@ -124,7 +185,7 @@ async function saveSettings() {
     behaviour: {
       displayPause: dv("displayPause"),
       detectPause: dv("detectPause"),
-      smartSwitch: dv("smartSwitch"),
+      // smartSwitch: dv("smartSwitch"),
     },
     integration: {
       defaultMessage: dv("defaultMessage"),
@@ -132,12 +193,21 @@ async function saveSettings() {
       errorMessage: dv("errorMessage"),
     },
     overlay: {
-      primaryColor: "",
-      secondaryColor: "",
-      style: "",
+      primaryColor: dv("overlayPrimaryColor"),
+      secondaryColor: dv("overlaySecondaryColor"),
+      titleColor: dv("overlayTitleColor"),
+      subtitleColor: dv("overlaySubtitleColor"),
+      style: dv("styleSelection"),
+      displayTitle: dv("overlayDisplayTitle"),
+      displaySubtitle: dv("overlayDisplaySubtitle"),
+      displayProgress: dv("overlayDisplayProgressBar"),
+      displayCover: dv("overlayUseCover"),
+      displayCoverOnContent: dv("overlayUserCoverAsContent"),
+      progressBarColor: dv("overlayProgressBarColor"),
+      progressBarBackgroundColor: dv("overlayProgressBarBackgroundColor"),
     },
   };
-  extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
   chrome.storage.local.set({
     "extension-settings": {
       instance: extensionSettings.instance,
@@ -147,62 +217,94 @@ async function saveSettings() {
     },
   });
 
-  //chrome.runtime.sendMessage({ key: "sync-server" });
+  chrome.runtime.sendMessage({ key: "sync-server" });
+}
+
+function createNewInstance() {
+  console.log("Creating new instance");
+  chrome.runtime.sendMessage({ key: "instance-create", payload: { token: "" } });
 }
 
 async function loadSettings() {
-  extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-  extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
+  let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
   dsv("instanceToken", extensionSettings.instance.privateToken);
-  dsv("instanceLink", extensionSettings.instance.publicToken);
+  dsv("instanceLink", extensionSettings.instance.privateToken == "" ? "" : `${extensionSettings.instance.serverURL2}/overlay?token=${extensionSettings.instance.privateToken}`);
 
   dsv("detectPause", extensionSettings.behaviour.detectPause);
   dsv("displayPause", extensionSettings.behaviour.displayPause);
-  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
-
-  dsv("displayPause", extensionSettings.behaviour.displayPause);
-  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
+  dsv("styleSelection", extensionSettings.overlay.style);
+  //dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 
   dsv("defaultMessage", extensionSettings.integration.defaultMessage);
   dsv("pausedMessage", extensionSettings.integration.pausedMessage);
   dsv("errorMessage", extensionSettings.integration.errorMessage);
 
-  if (extensionOAUTH.spotify.loggedIn == true) {
-    document.getElementById("spotifyAPI").setAttribute("customDisable", "");
-    document.getElementById("spotifyAPILogout").removeAttribute("customDisable");
-  } else {
-    document.getElementById("spotifyAPILogout").setAttribute("customDisable", "");
-    document.getElementById("spotifyAPI").removeAttribute("customDisable");
+  dsv("overlayPrimaryColor", extensionSettings.overlay.primaryColor),
+    dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
+    dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
+    dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
+    dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
+    dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
+    dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
+    dsv("overlayUseCover", extensionSettings.overlay.displayCover),
+    dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
+    dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
+    dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor);
+
+  dsv("spotifyId", extensionSettings.instance.spotifyId)
+  dsv("spotifyToken", extensionSettings.instance.spotifyAppToken)
+
+  if (extensionSettings.instance.spotifyRefreshToken != "") {
+    document.getElementById("spotifyStatus").innerHTML = "Status: Logged in"
   }
-  //TODO ADD OVERLAY
+
+  let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+  document.getElementById("spotifyRedirectURI").innerHTML = redirect_url
+  checkLoginStatus()
 }
 
 function update() {
-  console.log("update")
+  console.log("update");
   dsv("instanceToken", extensionSettings.instance.privateToken);
-  dsv("instanceLink", extensionSettings.instance.publicToken);
+  dsv("instanceLink", extensionSettings.instance.privateToken == "" ? "" : `${extensionSettings.instance.serverURL2}/overlay?token=${extensionSettings.instance.privateToken}`);
 
   dsv("detectPause", extensionSettings.behaviour.detectPause);
   dsv("displayPause", extensionSettings.behaviour.displayPause);
-  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
-
-  dsv("displayPause", extensionSettings.behaviour.displayPause);
-  dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
+  dsv("styleSelection", extensionSettings.overlay.style);
+  //dsv("smartSwitch", extensionSettings.behaviour.smartSwitch);
 
   dsv("defaultMessage", extensionSettings.integration.defaultMessage);
   dsv("pausedMessage", extensionSettings.integration.pausedMessage);
   dsv("errorMessage", extensionSettings.integration.errorMessage);
 
-  if (extensionOAUTH.spotify.loggedIn == true) {
-    document.getElementById("spotifyAPI").setAttribute("customDisable", "");
-    document.getElementById("spotifyAPILogout").removeAttribute("customDisable");
-  } else {
-    document.getElementById("spotifyAPILogout").setAttribute("customDisable", "");
-    document.getElementById("spotifyAPI").removeAttribute("customDisable");
+  dsv("overlayPrimaryColor", extensionSettings.overlay.primaryColor),
+    dsv("overlaySecondaryColor", extensionSettings.overlay.secondaryColor),
+    dsv("overlayTitleColor", extensionSettings.overlay.titleColor),
+    dsv("overlaySubtitleColor", extensionSettings.overlay.subtitleColor),
+    dsv("overlayDisplayTitle", extensionSettings.overlay.displayTitle),
+    dsv("overlayDisplaySubtitle", extensionSettings.overlay.displaySubtitle),
+    dsv("overlayDisplayProgressBar", extensionSettings.overlay.displayProgress),
+    dsv("overlayUseCover", extensionSettings.overlay.displayCover),
+    dsv("overlayUserCoverAsContent", extensionSettings.overlay.displayCoverOnContent),
+    dsv("overlayProgressBarColor", extensionSettings.overlay.progressBarColor),
+    dsv("overlayProgressBarBackgroundColor", extensionSettings.overlay.progressBarBackgroundColor);
+
+  dsv("spotifyId", extensionSettings.instance.spotifyId)
+  dsv("spotifyToken", extensionSettings.instance.spotifyAppToken)
+
+  if (extensionSettings.instance.spotifyRefreshToken != "") {
+    document.getElementById("spotifyStatus").innerHTML = "Status: Logged in"
+  }else{
+    document.getElementById("spotifyStatus").innerHTML = "Status: Not logged in"
   }
-  //TODO ADD OVERLAY
+
+  let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+  document.getElementById("spotifyRedirectURI").innerHTML = redirect_url
+  checkLoginStatus()
 }
+
+
 
 chrome.storage.onChanged.addListener(async (object, areaName) => {
   if (areaName != "local") {
@@ -210,15 +312,11 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   }
   if (object["extension-settings"] != undefined) {
     extensionSettings = object["extension-settings"].newValue;
-  }
-  if (object["extension-oauth"] != undefined) {
-    extensionOAUTH = object["extension-oauth"].newValue;
+    update();
   }
   if (object["extension-state"] != undefined) {
     extensionState = object["extension-state"].newValue;
   }
-  update();
 });
 
 //SPOTIFY OAUTH END
-loadSettings();

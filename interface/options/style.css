@@ -32,7 +32,7 @@ body {
 }
 
 .sidebar {
-  background-color: #292c2e;
+  background-color: #171717;
   height: 100vh;
   width: 16vw;
 }
@@ -42,7 +42,6 @@ h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-size: 4vw;
-  text-decoration: underline solid 2px;
   text-underline-offset: 0.1em;
 }
 
@@ -60,37 +59,34 @@ h1 {
 }
 
 .sidebar-element {
-  background-color: #292c2e;
-  border-radius: 3px;
+  background-color: #4613be00;
+  border-radius: 9px;
   height: 2.5vh;
-  width: 16vw;
+  width: 14vw;
   display: flex;
   align-items: start;
   height: 3rem;
   vertical-align: middle;
   margin: 1vh 0;
   cursor: pointer;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
-.sidebar-element:hover {
-  background-color: #5b5c5c;
+.sidebar-selected {
+  background-color: #4713BE;
 }
+
 
 .sidebar-link {
-  color: #bababa;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: 700;
-  font-size: 1.5vw;
+  color: #FFFFFF;
+  font-family: 'Urbanist';
+  font-weight:600;
+  font-size: 28px;
   transition: color 200ms linear;
-  padding: 0.2vw 2.5vw;
-  margin: auto 0;
+  margin:auto
 }
 
-.sidebar-link:hover {
-  color: #ffffff;
-  font-weight: 750;
-  transition: color 200ms linear;
-}
 
 .container {
   margin-left: 1vw;
@@ -119,13 +115,15 @@ h1 {
 
 .box {
   padding: 1vw;
-  background-color: #292c2e;
-  border-radius: 15px;
+  background-color: #252525;
+  border-radius: 22px;
   width: fit-content;
-  margin-right: 1.5vw;
+  margin: .75vw;
+  border: #000000 1px solid;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-label {
+label,a {
   color: white;
   font-weight: 750;
   font-family: Arial, Helvetica, sans-serif;
@@ -142,6 +140,24 @@ h3 {
   margin-bottom: 1rem;
 }
 
+h4 {
+  color: white;
+  font-weight: 750;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0px;
+  font-size: 1.4vw;
+  margin-bottom: 1rem;
+}
+
+h5 {
+  color: white;
+  font-weight: 750;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0px;
+  font-size: 0.7vw;
+  margin-bottom: 1rem;
+}
+
 .warning {
   color: rgba(255, 255, 255, 0.829);
   background-color: #a7233965;
@@ -151,11 +167,11 @@ h3 {
 }
 
 .input-locked {
-  background-color: #1e2022;
+  background-color: #3C3C3C;
   margin: 0px;
   outline: 0px;
   box-shadow: none;
-  border: none;
+  border: 1px white solid;
   color: white;
   width: 20vw;
   border-radius: 3px;
@@ -228,7 +244,7 @@ h3 {
   height: 1.05rem;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  background-color: #a600ff;
+  background-color: #009473;
   border-radius: 0.15rem;
 }
 
@@ -236,8 +252,40 @@ h3 {
   transform: scale(1);
 }
 
+input[type="color"] {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.15rem;
+  border: none;
+  margin-left: 4px;
+  margin-right: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+input[type="color"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid;
+  pointer-events: none;
+}
+
+
 .checkbox-container > label {
   cursor: pointer;
+  display: inline;
+  line-height: 1.25em;
+  vertical-align: top;
+  clear: both;
+  padding-left: 1px;
+  font-size: 1.5vw;
+}
+
+.large-label {
   display: inline;
   line-height: 1.25em;
   vertical-align: top;
@@ -253,6 +301,7 @@ h3 {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   font-size: 1vw;
+  color:#A8A8A8
 }
 
 .prevent-select {
@@ -267,4 +316,34 @@ button[customDisable]{
 }
 button[customDisable]:hover{
   background-color: #6b686c;
+}
+
+.divider{
+  width: 80%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.575);
+  margin-top: 20px;
+}
+
+
+
+
+
+
+
+select{
+  width: 225px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  text-align: center;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-size: 13px;
+  color:black;
+  font-weight: bold;
+}
+
+option{
+  color:black;
+  font-family: 'Open Sans', 'Helvetica Neue', 'Segoe UI', 'Calibri', 'Arial', sans-serif;
+  font-weight: 500;
 }

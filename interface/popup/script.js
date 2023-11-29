@@ -10,7 +10,6 @@ function translator() {
 }
 
 let extensionSettings;
-let extensionOAUTH;
 let extensionState;
 let extensionScannerState;
 
@@ -26,41 +25,41 @@ function getTextWidth(str, className) {
   span.style.padding = "0px";
   document.body.appendChild(span);
   span.innerHTML = _escTag(str);
-  let w = span.offsetWidth
+  let w = span.offsetWidth;
   document.body.removeChild(span);
   return w;
 }
-function fitStringToWidth(str,width,className) {
+function fitStringToWidth(str, width, className) {
   var span = document.createElement("span");
-  if (className) span.className=className;
-  span.style.display='inline';
-  span.style.visibility = 'hidden';
-  span.style.padding = '0px';
+  if (className) span.className = className;
+  span.style.display = "inline";
+  span.style.visibility = "hidden";
+  span.style.padding = "0px";
   document.body.appendChild(span);
   var result = _escTag(str);
   span.innerHTML = result;
   if (span.offsetWidth > width) {
-    var posStart = 0, posMid, posEnd = str.length, posLength;
-    while (posLength = (posEnd - posStart) >> 1) {
+    var posStart = 0,
+      posMid,
+      posEnd = str.length,
+      posLength;
+    while ((posLength = (posEnd - posStart) >> 1)) {
       posMid = posStart + posLength;
-      span.innerHTML = _escTag(str.substring(0,posMid)) + '&hellip;';
-      if ( span.offsetWidth > width ) posEnd = posMid; else posStart=posMid;
+      span.innerHTML = _escTag(str.substring(0, posMid)) + "&hellip;";
+      if (span.offsetWidth > width) posEnd = posMid;
+      else posStart = posMid;
     }
-    result = '<abbr title="' +
-      str.replace("\"","&quot;") + '">' +
-      _escTag(str.substring(0,posStart)) +
-      '&hellip;<\/abbr>';
+    result = '<abbr title="' + str.replace('"', "&quot;") + '">' + _escTag(str.substring(0, posStart)) + "&hellip;</abbr>";
   }
   document.body.removeChild(span);
   return result;
 }
 
-
+//SELECT CUSTOM
 
 async function update() {
-  if (!extensionSettings || !extensionOAUTH || !extensionState || !extensionScannerState) {
+  if (!extensionSettings || !extensionState || !extensionScannerState) {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-    extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
     extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
   }
@@ -87,29 +86,63 @@ async function update() {
 
   //SCANNERS LIST
   let options = "";
-  if (extensionState.scanners && extensionState.scanners.length > 0) {
-    for (let listener of extensionState.scanners) {
-      options += `<option value="${listener.id}">${fitStringToWidth(listener.title,170)}</option>`;
+
+  let platformColours = {
+    youtube: "#bf2e2e",
+    spotify: "#2ebf52",
+    soundcloud: "#bf7b2e",
+    "epidemic sound": "#363433",
+    "youtube music": "#363433",
+    "deezer": "#1d7833",
+    "pretzel": "#4287f5"
+  };
+
+  let scanners = extensionState.scanners
+  if (extensionSettings.instance.spotifyId != "" && extensionSettings.instance.spotifyAppToken != "" && extensionSettings.instance.spotifyRefreshToken != "") {
+    if (scanners.filter((x) => x.id == "SPOTIFY-API").length == 0) {
+      scanners.push({
+        id: "SPOTIFY-API",
+        platform: "spotify",
+        title: "Spotify API"
+      })
+    }
+  } else {
+    scanners = scanners.filter((x) => {
+      return x.id != "SPOTIFY-API"
+    })
+  }
+  if (scanners) {
+    options += `<option value="none" style="background-color:#1f1d1d;">None</option>`;
+    for (let listener of scanners) {
+      options += `<option value="${listener.id}" style="background-color:${platformColours[listener.platform]};">${fitStringToWidth(`${listener.title}`, 170)}</option>`;
     }
   }
-  if (extensionOAUTH.spotify.loggedIn == true) {
-    options += `<option value="spotifyAPI">Spotify API</option>`;
-  }
-  options += `<option value="none">None</option>`;
+
   document.getElementById("listenerSelect").innerHTML = options;
 
-  if(extensionState.scanners.filter(x=>x.id == extensionState.selectedScanner).length > 0 || extensionState.selectedScanner == "spotifyAPI"){
-    document.getElementById("listenerSelect").value = extensionState.selectedScanner
-  }else{
-    document.getElementById("listenerSelect").value = "none"
+  if (extensionState.scanners.filter((x) => x.id == extensionState.selectedScanner).length > 0) {
+    document.getElementById("listenerSelect").value = extensionState.selectedScanner;
+    updateSelectColor()
+  } else {
+    document.getElementById("listenerSelect").value = "none";
+    updateSelectColor()
   }
-  
+}
+
+function updateSelectColor() {
+  let select = document.getElementById("listenerSelect")
+  for (let option of select.querySelectorAll("option")) {
+    console.log(option.innerHTML, option.value, select.value)
+    if (option.value == select.value) {
+      select.style.backgroundColor = option.style.backgroundColor
+    }
+  }
 }
 
 function e() {
   document.getElementById("listenerSelect").addEventListener("change", async () => {
     let value = document.getElementById("listenerSelect").value;
-
+    updateSelectColor()
     //let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
 
     chrome.storage.local.set({
@@ -123,13 +156,8 @@ function e() {
 
   document.getElementById("start").addEventListener("click", async () => {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-    extensionOAUTH = (await chrome.storage.local.get("extension-oauth"))["extension-oauth"];
     extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
-    console.log(extensionOAUTH.spotify.loggedIn, document.getElementById("listenerSelect").value);
-    if (extensionOAUTH.spotify.loggedIn == false && document.getElementById("listenerSelect").value == "spotifyAPI") {
-      return;
-    }
     chrome.storage.local.set({
       "extension-state": {
         stopped: false,
@@ -147,17 +175,18 @@ function e() {
         selectedScanner: document.getElementById("listenerSelect").value,
       },
     });
-  });
-
-  document.getElementById("listenerSelect").addEventListener("change", async () => {
-    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     chrome.storage.local.set({
-      "extension-state": {
-        stopped: extensionState.stopped,
-        scanners: extensionState.scanners,
-        selectedScanner: document.getElementById("listenerSelect").value,
+      "extension-scanner-state": {
+        paused: true,
+        title: "Extension stopped",
+        subtitle: "",
+        currentTime: 0,
+        currentLength: 0,
+        url: "",
+        cover: "",
       },
     });
+    chrome.runtime.sendMessage({ key: "sync-server" });
   });
 }
 
@@ -173,9 +202,6 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   }
   if (object["extension-settings"] != undefined) {
     extensionSettings = object["extension-settings"].newValue;
-  }
-  if (object["extension-oauth"] != undefined) {
-    extensionOAUTH = object["extension-oauth"].newValue;
   }
   if (object["extension-state"] != undefined) {
     extensionState = object["extension-state"].newValue;

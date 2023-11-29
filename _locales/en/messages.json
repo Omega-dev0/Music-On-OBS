@@ -35,8 +35,8 @@
   "Create_new_instance": {
     "message": "Create new instance"
   },
-  "Copy_link": {
-    "message": "Copy link"
+  "Copy_instance_link": {
+    "message": "Copy instance overlay link"
   },
   "Load_an_instance": {
     "message": "Load an instance"
@@ -151,5 +151,145 @@
   },
   "Listening_to":{
     "message":"Listening to"
+  },
+  "Background_settings":{
+    "message":"Background settings"
+  },
+  "Primary_gradient_color":{
+    "message":"Primary gradient color"
+  },
+  "Secondary_gradient_color":{
+    "message":"Secondary gradient color"
+  },
+  "Display_the_song_cover":{
+    "message":"Display the song cover"
+  },
+ "Use_cover_as_content_background":{
+    "message":"Use cover as content background"
+  },
+  "Title_color":{
+    "message":"Title color"
+  },
+  "Display_title":{
+    "message":"Display title"
+  },
+  "Display_subtitle":{
+    "message":"Display subtitle"
+  },
+  "Subtitle_color":{
+    "message":"Subtitle color"
+  },
+  "Progress_bar_color":{
+    "message":"Progress bar color"
+  },
+  "Progress_bar_background_color":{
+    "message":"Progress bar background color"
+  },
+  "Display_progress_bar":{
+    "message":"Display progress bar"
+  },
+  "Text_settings":{
+    "message":"Text settings"
+  },
+  "Progress_bar_settings":{
+    "message":"Progress bar settings"
+  },
+  "Overlay_style":{
+    "message":"Overlay style"
+  },
+  "Whether_or_not_the_overlay_will_display_the_songs_art":{
+    "message":"Whether or not the overlay will display the song's art"
+  },
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box":{
+    "message":"Whether or not the overlay should try to use the song's art colors / image as the background for the content box"
+  },
+  "About":{
+    "message":"About"
+  },
+  "Supported_platforms":{
+    "message": "Supported platforms"
+  },
+  "how_to_install":{
+    "message": "1) - Create an instance <br>2) - Copy the overlay link <br>3) - Head to OBS or streamlabs and create a browser source <br>4) - Paste the overlay link into the source URL <br>5) - Set the width to 800px and height to 400px <br><br>The default overlay should appear, this overlay will update while listening to tabs"
+  },
+  "Installing_the_overlay":{
+    "message":"Installing the overlay"
+  },
+  "FAQA1":{
+    "message":"If you encounter any issue with a tab not updating the overlay, the best way to solve it is to reload the tab (maybe multiple times). If that does not work, check that the link in the browser source is correct and as a last ressort you can re-enablee the extension."
+  },
+  "FAQQ1":{
+    "message":"I am listening to a tab but the overlay is not updating, what can I do?"
+  },
+  "FAQA2":{
+    "message":"Due to technical reasons, it is impossible to read colours from cover arts from platforms such as Youtube and youtube music. It's also impossible to fetch covers from some platforms such as deezer or epidemic sound."
+  },
+  "FAQQ2":{
+    "message":"Some platforms do not have the colored gradient but instead the cover as content background, why is that?"
+  },
+  "FAQ":{
+    "message":"FAQ"
+  },
+  "Like_the_extension_Share_and_star_it":{
+    "message":"Like the extension? Share and star it!"
+  },
+  "DISPLAY_PAUSE_EXPLANATIONS":{
+    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+  },
+  "DETECT_PAUSE_EXPLANATIONS":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Send_suggestions_and_report_issues_on_the_":{
+    "message":"Send suggestions and report issues on the "
+  },
+  "_or_on_":{
+    "message":" or on "
+  },
+  "how_to_install_spotify_1":{
+    "message": "1) - Head to <a href='https://developer.spotify.com/'>Spotify for developers</a> and login with your spotify account <br>2) - Head to the <a href='https://developer.spotify.com/dashboard'>Dashboard </a> and create an app <br>3) - Name the app (the name does not matter) and set the redirect URI to: <br>"
+  },
+  "how_to_install_spotify_2":{
+    "message": "4) - Select Web API and save the app <br>5) - Open the settings and copy the client ID and the client secret into the fields<br>6) - Click the login button to link your account<br><br>You should see the Spotify API option in the scanners list in the extension's popup"
+  },
+  "Connecting_the_spotify_API":{
+    "message": "Connecting the spotify API"
+  },
+  "Save":{
+    "message": "Save"
+  },
+  "Log_in":{
+    "message": "Log-in"
+  },
+  "Log_out":{
+    "message": "Log-out"
+  },
+  "Client_secret":{
+    "message": "Client secret"
+  },
+  "Client_ID":{
+    "message": "Client ID"
+  },
+  "Spotify_API_setup":{
+    "message": "Spotify API setup"
+  },
+  "integration_explanations":{
+    "message":"The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
+  },
+  "Detailled_documentation":{
+    "message":"Detailled documentation"
+  },
+  "find_more_docs":{
+    "message":"Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  },
+  "defaultIntegrationMessage":{
+    "message":"Current song: [__LINK__]"
+  },
+  "errorIntegrationMessage":{
+    "message":"The music is currently paused"
+  },
+  "pausedIntegrationMessage":{
+    "message":"Unable to get current song name!"
   }
+
+
 }

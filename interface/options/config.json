@@ -1,0 +1,78 @@
+{
+    "default":{
+        "groups":[
+            {
+                "title":"Progress bar settings",
+                "settings":[
+                    {
+                        "title":"Display the progress bar",
+                        "description":"Wether or not a progress bar should be displayed",
+                        "defaultValue": true,
+                        "type":"checkbox",
+                        "key":"displayProgressBar"
+                    },
+                    {
+                        "title":"Progress bar color",
+                        "description":"The color of the progress bar",
+                        "defaultValue": "#2B5983",
+                        "type":"color",
+                        "key":"ProgressBarColor"
+                    },
+                    {
+                        "title":"Progress bar background color",
+                        "description":"The color of the background of the progress bar",
+                        "defaultValue": "#393030",
+                        "type":"color",
+                        "key":"ProgressBarBackgroundColor"
+                    }
+                ]
+            },
+            {
+                "title":"Content block settings",
+                "settings":[
+                    {
+                        "title":"Use the cover as a background",
+                        "description":"If disabled the background will be a gradient",
+                        "defaultValue": false,
+                        "type":"checkbox"
+                    },
+                    {
+                        "title":"Background color 1",
+                        "description":"Only visible if the use cover setting is disabled",
+                        "defaultValue": "#b94901",
+                        "type":"color"
+                    },
+                    {
+                        "title":"Background color 2",
+                        "description":"Only visible if the use cover setting is disabled",
+                        "defaultValue": "#0013ff",
+                        "type":"color"
+                    }
+                ]
+            },
+            {
+                "title":"Image block settings",
+                "settings":[
+                    {
+                        "title":"Use the cover as a background",
+                        "description":"If disabled the background will be a gradient",
+                        "defaultValue": true,
+                        "type":"checkbox"
+                    },
+                    {
+                        "title":"Background color 1",
+                        "description":"Only visible if the use cover setting is disabled",
+                        "defaultValue": "#b94901",
+                        "type":"color"
+                    },
+                    {
+                        "title":"Background color 2",
+                        "description":"Only visible if the use cover setting is disabled",
+                        "defaultValue": "#0013ff",
+                        "type":"color"
+                    }
+                ]
+            }
+        ]
+    }
+}
