@@ -1,5 +1,6 @@
 //const serverURL = "http://127.0.0.1:6011";
 //const serverURL2 = "http://127.0.0.1:6013";
+//made by omega77073
 var socket;
 
 //IMPORTS
