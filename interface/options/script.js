@@ -158,7 +158,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     let cmd = `$(eval const api = $(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}&format=json); if(api.error || api.url == "undefined"){"${extensionSettings.integration.errorMessage}"}else{api.m}; )`
     fallbackCopyTextToClipboard(cmd)
   })
-
+  loadSettings();
 });
 function translator() {
   let elements = document.querySelectorAll("[translated]");
