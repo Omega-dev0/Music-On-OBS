@@ -24,14 +24,51 @@ function showContainer(id) {
 }
 
 
-async function checkLoginStatus(){
+async function checkLoginStatus() {
   let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-  if(extensionSettings.instance.spotifyId !="" && extensionSettings.instance.spotifyAppToken!=""){
+  if (extensionSettings.instance.spotifyId != "" && extensionSettings.instance.spotifyAppToken != "") {
     document.getElementById("spotifyLogin").removeAttribute("customDisable")
-  }else{
-    document.getElementById("spotifyLogin").setAttribute("customDisable",true)
+  } else {
+    document.getElementById("spotifyLogin").setAttribute("customDisable", true)
   }
 }
+
+
+function fallbackCopyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+
+  // Avoid scrolling to bottom
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    var successful = document.execCommand('copy');
+    var msg = successful ? 'successful' : 'unsuccessful';
+    console.log('Fallback: Copying text command was ' + msg);
+  } catch (err) {
+    console.error('Fallback: Oops, unable to copy', err);
+  }
+
+  document.body.removeChild(textArea);
+}
+function copyTextToClipboard(text) {
+  if (!navigator.clipboard) {
+    fallbackCopyTextToClipboard(text);
+    return;
+  }
+  navigator.clipboard.writeText(text).then(function () {
+    console.log('Async: Copying to clipboard was successful!');
+  }, function (err) {
+    console.error('Async: Could not copy text: ', err);
+  });
+}
+
 
 window.addEventListener("DOMContentLoaded", async function () {
   //Checkbox title clickable bind
@@ -116,15 +153,12 @@ window.addEventListener("DOMContentLoaded", async function () {
 
 
   //Integration commands
-  
-  document.getElementById("nightbotCommandCopy").addEventListener("click",async () => {
+  document.getElementById("nightbotCommandCopy").addEventListener("click", async () => {
     let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     let cmd = `$(eval const api = $(urlfetch ${extensionSettings.instance.serverURL2}/integration?token=${extensionSettings.instance.privateToken}&format=json); if(api.error || api.url == "undefined"){"${extensionSettings.integration.errorMessage}"}else{api.m}; )`
-    navigator.clipboard.writeText(cmd);
-    alert("Command copied, be careful to not show it!");
-  });
+    fallbackCopyTextToClipboard(cmd)
+  })
 
-  loadSettings();
 });
 function translator() {
   let elements = document.querySelectorAll("[translated]");
@@ -295,7 +329,7 @@ function update() {
 
   if (extensionSettings.instance.spotifyRefreshToken != "") {
     document.getElementById("spotifyStatus").innerHTML = "Status: Logged in"
-  }else{
+  } else {
     document.getElementById("spotifyStatus").innerHTML = "Status: Not logged in"
   }
 
