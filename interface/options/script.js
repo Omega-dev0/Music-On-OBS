@@ -174,7 +174,6 @@ function translator() {
           .replaceAll(")", "")
           .replaceAll("(", "")
       );
-      console.log(element.innerHTML, translation)
       element.innerHTML = translation
 
       if (element.title != "") {
