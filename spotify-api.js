@@ -20,6 +20,9 @@ setInterval(async () => {
     if(!extensionState){
         extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     }
+    if(!extensionSettings){
+        extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    }
     if (extensionState.selectedScanner == TAB_ID && extensionState.stopped == false && extensionSettings.instance.spotifyRefreshToken != "") { getCurrentSong() }
 }, timeout)
 
