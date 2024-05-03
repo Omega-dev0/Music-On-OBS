@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "2.2.1.1",
+  "version": "2.2.1.2",
   "version_name": "2.2 - Revamp",
 
   "default_locale": "en",
