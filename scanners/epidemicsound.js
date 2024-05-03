@@ -89,9 +89,9 @@ function getData() {
     subtitle: document.querySelector(`a[aria-label="creatives"]`).innerHTML,
     title: (document.querySelector('[class^="src-mainapp-player-components-___ScrollingLabel__label___"]')    || document.querySelector(`a[aria-label="track page"]`)).innerHTML,
     cover: "https://www.epidemicsound.com/blog/content/images/2021/03/ES-logo-new-new-png.png",
-    progress: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(0) || document.querySelector(".src-mainapp-player-components-___PlayerBar__elapsedTime___p-yYQ")).innerHTML,
-    duration: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(1) || document.querySelector(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span")).innerHTML,
-    paused: !(document.querySelector(`.src-mainapp-player-components-___PlaybackControls__button___NXk1B.src-mainapp-player-components-___PlaybackControls__playPauseButton___UXa8w`).title == "Pause"),
+    progress: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(0) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(0)).innerHTML,
+    duration: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(1) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(1)).innerHTML,
+    paused: document.querySelector('button[aria-label="Pause"][id]') == null,
   };
 }
 

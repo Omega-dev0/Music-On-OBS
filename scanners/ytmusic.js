@@ -82,7 +82,7 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelectorAll(".ytmusic-player-bar >.yt-simple-endpoint.yt-formatted-string").item(1)?.href.replace(/list=[^&]*&/g, '') || "No url found",
+    url: document.querySelectorAll(".ytmusic-player-bar >.yt-simple-endpoint.yt-formatted-string").item(1)?.href.replace(/list=[^&]*&/g, '') || document.location.href,
     subtitle: navigator.mediaSession.metadata?.artist || "Not subtitle found",
     title: navigator.mediaSession.metadata?.title || "Not title found",
     cover: new URL(document.querySelector(".image.style-scope.ytmusic-player-bar").src).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar").src.replace("w60-h60","w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar").src.split("?sqp")[0],

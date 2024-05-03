@@ -132,6 +132,7 @@ async function syncServer() {
     extensionState: extensionState,
   };
   data.extensionState.scanners = []
+  data.instance = {}
   if (JSON.stringify(data) == JSON.stringify(snapshot)) {
     return
   }

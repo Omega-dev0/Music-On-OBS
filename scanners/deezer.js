@@ -84,13 +84,13 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).href,
-    subtitle: document.querySelectorAll(".track-title > div > div > div .track-link").item(1).innerHTML,
-    title: document.querySelectorAll(".track-title > div > div > div .track-link").item(0).innerHTML,
+    url: document.querySelectorAll("p[data-testid='item_title'] > a").item(0).href,
+    subtitle: navigator.mediaSession.metadata.artist,
+    title: navigator.mediaSession.metadata.title,
     cover: navigator.mediaSession.metadata?.artwork[0].src || "https://play-lh.googleusercontent.com/Z1yPp6_xnv5-XUvCxujCzg-aY3OBgvS1LyFfdh4NO6il7Qrn5eELa-upajeuWs9lSq-T",
-    progress: document.querySelector(".slider-counter-current").innerHTML,
-    duration: document.querySelector(".slider-counter-max").innerHTML,
-    paused: (document.querySelectorAll(".player-controls > .svg-icon-group > li").item(2).querySelector("button").ariaLabel == "Play")
+    progress: document.querySelector("p[data-testid='elapsed_time']").innerHTML,
+    duration: document.querySelector("p[data-testid='remaining_time']").innerHTML,
+    paused: document.querySelector("button[data-testid='play_button_pause']") == null
   }
 }
 //MAKES SURE DATA FROM DB IS UP TO DATE
