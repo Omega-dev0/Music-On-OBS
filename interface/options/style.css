@@ -64,13 +64,17 @@ h1 {
   height: 2.5vh;
   width: 14vw;
   display: flex;
-  align-items: start;
+  align-items: center;
   height: 3rem;
   vertical-align: middle;
-  margin: 1vh 0;
+  
   cursor: pointer;
   margin-left: 1vw;
   margin-right: 1vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
 
 .sidebar-selected {
@@ -84,7 +88,7 @@ h1 {
   font-weight:600;
   font-size: 28px;
   transition: color 200ms linear;
-  margin:auto
+  margin: 0 auto;
 }
 
 
