@@ -95,8 +95,16 @@ async function syncServer() {
 
   if (extensionSettings.behaviour.detectPause == false) {
     extensionState.paused = false
-    extensionScannerState.paused = false
+    extensionScannerState.paused = extensionScannerState.paused == undefined ? undefined : extensionScannerState.paused
   }
+
+  //ERROR WARNING
+  for(key of Object.keys(extensionScannerState)){
+    if(extensionScannerState[key] == undefined){
+     console.warn(`Undefined data in the scanner data: ${key}`, extensionScannerState, extensionState, extensionSettings)
+    }
+  }
+
   if (extensionState.stopped == true) {
     chrome.action.setIcon({
       path: {
@@ -254,7 +262,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     "listener-register": async () => {
       let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
       let scanners = extensionState.scanners;
-
+      console.log("Registering listener", message.data);
       scanners = extensionState.scanners.filter((x) => {
         return x.id != sender.tab.id;
       });
@@ -317,6 +325,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
   }
   if (object["extension-state"] != undefined) {
     extensionState = object["extension-state"].newValue;
+    console.log("State changed", extensionState)
   }
   if (object["extension-scanner-state"] != undefined) {
     extensionScannerState = object["extension-scanner-state"].newValue;

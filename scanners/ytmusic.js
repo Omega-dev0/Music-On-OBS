@@ -13,6 +13,7 @@ const platform = "youtube music"
 
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -23,7 +24,7 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-function sendMessage(msg){
+function sendMessage(msg) {
   chrome.runtime.sendMessage(msg)
 }
 
@@ -52,7 +53,13 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -81,14 +88,15 @@ function update(forceUpdate) {
 
 //GETS DATA FROM PAGE
 function getData() {
+  let coverElement = document.querySelector(".image.style-scope.ytmusic-player-bar")?.src
   return {
     url: document.querySelectorAll(".ytmusic-player-bar >.yt-simple-endpoint.yt-formatted-string").item(1)?.href.replace(/list=[^&]*&/g, '') || document.location.href,
-    subtitle: navigator.mediaSession.metadata?.artist || "Not subtitle found",
-    title: navigator.mediaSession.metadata?.title || "Not title found",
-    cover: new URL(document.querySelector(".image.style-scope.ytmusic-player-bar").src).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar").src.replace("w60-h60","w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar").src.split("?sqp")[0],
-    progress: document.querySelector(`.time-info`).innerHTML.split(" / ")[0].replace("\n    ",""),
-    duration: document.querySelector(`.time-info`).innerHTML.split(" / ")[1].replace("\n  ",""),
-    paused: (document.querySelector("#play-pause-button").ariaLabel == "Play"),
+    subtitle: navigator.mediaSession.metadata?.artist,
+    title: navigator.mediaSession.metadata?.title,
+    cover: coverElement == undefined ? undefined : (new URL(coverElement).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.replace("w60-h60", "w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.split("?sqp")[0]),
+    progress: document.querySelector(`.time-info`)?.innerHTML.split(" / ")[0]?.replace("\n    ", ""),
+    duration: document.querySelector(`.time-info`)?.innerHTML.split(" / ")[1]?.replace("\n  ", ""),
+    paused: document.querySelector("#play-pause-button")?.ariaLabel == undefined ? undefined : (document.querySelector("#play-pause-button")?.ariaLabel == "Play"),
   };
 }
 
@@ -103,8 +111,8 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
       allowed = true;
       update(true);
     } else {
-        allowed = false;
-      }
+      allowed = false;
+    }
   }
   if (object["extension-settings"] != undefined) {
     extensionSettings = object["extension-settings"].newValue;

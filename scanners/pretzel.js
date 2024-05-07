@@ -15,6 +15,7 @@ const platform = "pretzel"
 let registered = {};
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -54,7 +55,13 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -65,8 +72,8 @@ function update(forceUpdate) {
       paused: data.paused,
       title: data.title,
       subtitle: data.subtitle,
-      currentTime: getTimeFromTimeString(data.progress,":"),
-      currentLength: getTimeFromTimeString(data.duration,":"),
+      currentTime: getTimeFromTimeString(data.progress, ":"),
+      currentLength: getTimeFromTimeString(data.duration, ":"),
       url: data.url,
       cover: data.cover,
     },
@@ -86,12 +93,12 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   let cover = document.querySelector("[data-testid='track-artwork']")?.src
-  let title = document.querySelector(`[data-testid="title"]`).innerHTML
-  let chapter =  document.querySelector(`a[data-testid="artist"]`) ? document.querySelector(`a[data-testid="artist"]`).innerHTML : document.querySelector(`a[data-testid="album"]`).innerHTML
-  let url = document.querySelector('[data-testid="track-info"] > a').href
+  let title = document.querySelector(`[data-testid="title"]`)?.innerHTML
+  let chapter = document.querySelector(`a[data-testid="artist"]`) ? document.querySelector(`a[data-testid="artist"]`)?.innerHTML : document.querySelector(`a[data-testid="album"]`)?.innerHTML
+  let url = document.querySelector('[data-testid="track-info"] > a')?.href
 
-  let duration = document.querySelector('[data-testid="track-time-total"]').innerHTML;
-  let progress = document.querySelector('[data-testid="track-time-elapsed"]').innerHTML;
+  let duration = document.querySelector('[data-testid="track-time-total"]')?.innerHTML;
+  let progress = document.querySelector('[data-testid="track-time-elapsed"]')?.innerHTML;
   if (document.querySelector("[data-testid=pause-button]")) {
     paused = false
   } else {

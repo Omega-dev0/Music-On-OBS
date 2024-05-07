@@ -15,6 +15,7 @@ const platform = "deezer"
 let registered = {};
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -54,7 +55,13 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -84,12 +91,12 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelectorAll("p[data-testid='item_title'] > a").item(0).href,
-    subtitle: navigator.mediaSession.metadata.artist,
-    title: navigator.mediaSession.metadata.title,
+    url: document.querySelectorAll("p[data-testid='item_title'] > a")?.item(0).href,
+    subtitle: navigator.mediaSession.metadata?.artist,
+    title: navigator.mediaSession.metadata?.title,
     cover: navigator.mediaSession.metadata?.artwork[0].src || "https://play-lh.googleusercontent.com/Z1yPp6_xnv5-XUvCxujCzg-aY3OBgvS1LyFfdh4NO6il7Qrn5eELa-upajeuWs9lSq-T",
-    progress: document.querySelector("p[data-testid='elapsed_time']").innerHTML,
-    duration: document.querySelector("p[data-testid='remaining_time']").innerHTML,
+    progress: document.querySelector("p[data-testid='elapsed_time']")?.innerHTML,
+    duration: document.querySelector("p[data-testid='remaining_time']")?.innerHTML,
     paused: document.querySelector("button[data-testid='play_button_pause']") == null
   }
 }

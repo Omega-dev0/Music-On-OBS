@@ -15,6 +15,7 @@ const platform = "epidemic sound";
 
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -25,7 +26,7 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-function sendMessage(msg){
+function sendMessage(msg) {
   chrome.runtime.sendMessage(msg)
 }
 
@@ -56,11 +57,16 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
-  console.log("update", data, snapshot, data == snapshot);
   chrome.storage.local.set({
     "extension-scanner-state": {
       paused: data.paused,
@@ -85,12 +91,12 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelector(`a[aria-label="track page"]`).href,
-    subtitle: document.querySelector(`a[aria-label="creatives"]`).innerHTML,
-    title: (document.querySelector('[class^="src-mainapp-player-components-___ScrollingLabel__label___"]')    || document.querySelector(`a[aria-label="track page"]`)).innerHTML,
+    url: document.querySelector(`a[aria-label="track page"]`)?.href,
+    subtitle: document.querySelector(`a[aria-label="creatives"]`)?.innerHTML,
+    title: (document.querySelector('[class^="src-mainapp-player-components-___ScrollingLabel__label___"]') || document.querySelector(`a[aria-label="track page"]`))?.innerHTML,
     cover: "https://www.epidemicsound.com/blog/content/images/2021/03/ES-logo-new-new-png.png",
-    progress: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(0) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(0)).innerHTML,
-    duration: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(1) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(1)).innerHTML,
+    progress: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(0) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(0))?.innerHTML,
+    duration: (document.querySelectorAll(".src-mainapp-player-components-___LineProgressBar__duration___63Q0W > span").item(1) || document.querySelectorAll(".src-mainapp-player-components-___PlayerBar__waveformWrapper___BInpA > span").item(1))?.innerHTML,
     paused: document.querySelector('button[aria-label="Pause"][id]') == null,
   };
 }

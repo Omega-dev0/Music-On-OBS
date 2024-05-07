@@ -16,6 +16,7 @@ const platform = "spotify"
 
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -26,7 +27,7 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-function sendMessage(msg){
+function sendMessage(msg) {
   chrome.runtime.sendMessage(msg)
 }
 
@@ -55,7 +56,13 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -83,14 +90,15 @@ function update(forceUpdate) {
 
 //GETS DATA FROM PAGE
 function getData() {
+  let paused = document.querySelector(`button[data-testid="control-button-playpause"]`)?.ariaLabel
   return {
-    url: document.querySelector(`a[data-testid="context-item-link"]`).href,
-    subtitle: (document.querySelector(`a[data-testid="context-item-info-artist"]`) ||  document.querySelector(`a[data-testid="context-item-info-show"]`)).innerHTML,
-    title: document.querySelector(`a[data-testid="context-item-link"]`).innerHTML,
-    cover: document.querySelector(`img[data-testid="cover-art-image"]`).src.replace("4851","1e02"),
-    progress: document.querySelector(`div[data-testid="playback-position"]`).innerHTML,
-    duration: document.querySelector(`div[data-testid="playback-duration"]`).innerHTML,
-    paused: !(document.querySelector(`button[data-testid="control-button-playpause"]`).ariaLabel == "Pause"),
+    url: document.querySelector(`a[data-testid="context-item-link"]`)?.href,
+    subtitle: (document.querySelector(`a[data-testid="context-item-info-artist"]`) || document.querySelector(`a[data-testid="context-item-info-show"]`))?.innerHTML,
+    title: document.querySelector(`a[data-testid="context-item-link"]`)?.innerHTML,
+    cover: document.querySelector(`img[data-testid="cover-art-image"]`)?.src.replace("4851", "1e02"),
+    progress: document.querySelector(`div[data-testid="playback-position"]`)?.innerHTML,
+    duration: document.querySelector(`div[data-testid="playback-duration"]`)?.innerHTML,
+    paused: paused == undefined ? undefined : !(paused == "Pause"),
   };
 }
 

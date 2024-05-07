@@ -15,6 +15,7 @@ const platform = "soundcloud"
 let registered = {};
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -25,7 +26,7 @@ function getTimeFromTimeString(str, divider) {
   }
 }
 
-function sendMessage(msg){
+function sendMessage(msg) {
   chrome.runtime.sendMessage(msg)
 }
 
@@ -54,7 +55,13 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -84,13 +91,13 @@ function update(forceUpdate) {
 //GETS DATA FROM PAGE
 function getData() {
   return {
-    url: document.querySelector(".playbackSoundBadge__titleLink").href,
-    subtitle: document.querySelector(".playbackSoundBadge__lightLink").innerHTML,
-    title: document.querySelector(".playbackSoundBadge__titleLink").getAttribute("title"),
-    cover: document.querySelector(".playbackSoundBadge__avatar > .sc-artwork > span").style.backgroundImage.replaceAll("50x50", "200x200").replace('url("', "").replace('")', ""),
-    progress: document.querySelector(".playbackTimeline__timePassed > span[aria-hidden='true']").innerHTML,
-    duration: document.querySelector(".playbackTimeline__duration > span[aria-hidden='true']").innerHTML,
-    paused: !document.querySelector(".playControl ").classList.contains("playing"),
+    url: document.querySelector(".playbackSoundBadge__titleLink")?.href,
+    subtitle: document.querySelector(".playbackSoundBadge__lightLink")?.innerHTML,
+    title: document.querySelector(".playbackSoundBadge__titleLink")?.getAttribute("title"),
+    cover: document.querySelector(".playbackSoundBadge__avatar > .sc-artwork > span")?.style.backgroundImage.replaceAll("50x50", "200x200").replace('url("', "").replace('")', ""),
+    progress: document.querySelector(".playbackTimeline__timePassed > span[aria-hidden='true']")?.innerHTML,
+    duration: document.querySelector(".playbackTimeline__duration > span[aria-hidden='true']")?.innerHTML,
+    paused: document.querySelector(".playControl ")?.classList.contains("playing") == undefined ? undefined : !document.querySelector(".playControl ")?.classList.contains("playing"),
   };
 }
 

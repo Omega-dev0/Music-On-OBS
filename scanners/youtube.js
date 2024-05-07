@@ -15,6 +15,7 @@ let descChapters = {};
 let commentChapters = {};
 //UTILITY
 function getTimeFromTimeString(str, divider) {
+  if (str == undefined) { return undefined }
   let split = str.split(divider);
   if (split.length == 1) {
     return parseInt(str);
@@ -42,15 +43,15 @@ function removeNonLetterBeforeFirstLetter(inputString) {
   // Find the index of the first letter character
   let firstLetterIndex = -1;
   for (let i = 0; i < inputString.length; i++) {
-      if (/[a-zA-Z]/.test(inputString[i])) {
-          firstLetterIndex = i;
-          break;
-      }
+    if (/[a-zA-Z]/.test(inputString[i])) {
+      firstLetterIndex = i;
+      break;
+    }
   }
 
   // If no letter is found, return the original string
   if (firstLetterIndex === -1) {
-      return inputString;
+    return inputString;
   }
 
   // Remove non-letter characters before the first letter
@@ -75,7 +76,7 @@ function getChapterFromList(time) {
 
 
 
-function sendMessage(msg){
+function sendMessage(msg) {
   chrome.runtime.sendMessage(msg)
 }
 
@@ -84,7 +85,7 @@ async function onLaunch() {
   extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
   extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
 
-  
+
 
   //GET TAB
   let res = await chrome.runtime.sendMessage({ key: "listener-register", data: { platform: platform, title: document.title } });
@@ -106,7 +107,16 @@ function update(forceUpdate) {
   if (allowed != true) {
     return;
   }
-  data = getData();
+  if(window.location.href == 'https://www.youtube.com/'){
+    return; // ON HOMEPAGE
+  }
+  try {
+    data = getData();
+  } catch (e) {
+    data = snapshot
+    console.warn(`MOS - Failed to fetch data for current song!`)
+    console.warn(e)
+  }
   if (JSON.stringify(data) == JSON.stringify(snapshot) && forceUpdate != true) {
     return; // ALREADY UPDATED
   }
@@ -151,10 +161,10 @@ function getData() {
   } else if (Object.keys(chapterList).length > 0) {
     chapter = getChapterFromList(progress);
   } else {
-    chapter =  document.querySelector("#upload-info >#channel-name > #container > #text-container > #text > a").innerHTML;
+    chapter = document.querySelector("#upload-info >#channel-name > #container > #text-container > #text > a").innerHTML;
   }
 
-  let isLive =  document.querySelector(".ytp-live-badge")!= undefined ? getComputedStyle(document.querySelector(".ytp-live-badge")).display != 'none' :false
+  let isLive = document.querySelector(".ytp-live-badge") != undefined ? getComputedStyle(document.querySelector(".ytp-live-badge")).display != 'none' : false
 
   return {
     url: window.location.href.split("&ab_channel=")[0],
