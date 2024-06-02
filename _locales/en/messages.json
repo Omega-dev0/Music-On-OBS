@@ -1,0 +1,309 @@
+{
+  "extensionName": {
+    "message": "Music on Stream"
+  },
+  "updateName": {
+    "message": "2.2 - Revamp"
+  },
+  "testLink": {
+    "message": "LOL"
+  },
+  "Instance": {
+    "message": "Instance"
+  },
+  "Behaviour": {
+    "message": "Behaviour"
+  },
+  "Overlay": {
+    "message": "Overlay"
+  },
+  "Integration": {
+    "message": "Integration"
+  },
+  "Instance_settings": {
+    "message": "Instance settings"
+  },
+  "Create_an_instance": {
+    "message": "Create an instance"
+  },
+  "Instance_token": {
+    "message": "Instance token"
+  },
+  "Instance_link": {
+    "message": "Instance link"
+  },
+  "Create_new_instance": {
+    "message": "Create new instance"
+  },
+  "Copy_instance_link": {
+    "message": "Copy instance overlay link"
+  },
+  "Load_an_instance": {
+    "message": "Load an instance"
+  },
+  "Loading_a_token_will_destroy_the_previous_instance": {
+    "message": "⚠️Loading a token will destroy the previous instance"
+  },
+  "Load_instance_from_token": {
+    "message": "Load instance from token"
+  },
+  "Behaviour_settings": {
+    "message": "Behaviour settings"
+  },
+  "Display_overlay_when_paused": {
+    "message": "Display overlay when paused"
+  },
+  "The_overlay_will_disappear_if_you_pause_the_music_instead_of_displaying_a_pause_message": {
+    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+  },
+  "Smart_tab_change": {
+    "message": "Smart tab change"
+  },
+  "The_extension_will_try_to_always_be_listening_on_an_active_tab_instead_of_waiting_for_a_manual_change": {
+    "message": "The extension will try to always be listening on an active tab instead of waiting for a manual change"
+  },
+  "Overlay_settings": {
+    "message": "Overlay settings"
+  },
+  "Integration_settings": {
+    "message": "Integration settings"
+  },
+  "Bot_messages": {
+    "message": "Bot messages"
+  },
+  "Default_message": {
+    "message": "Default message"
+  },
+  "Paused_message": {
+    "message": "Paused message"
+  },
+  "Error_message": {
+    "message": "Error message"
+  },
+  "Copy_Nightbot_command": {
+    "message": "Copy Nightbot command"
+  },
+  "Copy_BotRix_command": {
+    "message": "Copy BotRix command"
+  },
+  "Copy_Stream_elements_command": {
+    "message": "Copy Stream elements command"
+  },
+  "Start": {
+    "message": "Start"
+  },
+  "Stop": {
+    "message": "Stop"
+  },
+  "Active_listener":{
+    "message":"Active listener"
+  },
+  "Status": {
+    "message": "Status"
+  },
+  "Active": {
+    "message": "Active"
+  },
+  "Inactive": {
+    "message": "Inactive"
+  },
+  "Paused": {
+    "message": "Paused"
+  },
+  "Copy_token": {
+    "message": "Copy token"
+  },
+  "Dynamic_values": {
+    "message": "Dynamic values"
+  },
+  "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
+    "message": "You can use dynamic values to insert data into the bot answer:"
+  },
+  "__SONG___The_current_song_name": {
+    "message": "[__SONG__]: The current song name"
+  },
+  "__SUBTITLE___The_current_song_chapter_or_song_author": {
+    "message": "[__SUBTITLE__]: The current song chapter or song author"
+  },
+  "__LINK___The_URL_of_the_current_listening_tab": {
+    "message": "[__LINK__]: The URL of the current listening tab"
+  },
+  "__TIME___The_current_song_progression_might_not_be_always_available": {
+    "message": "[__TIME__]: The current song progression (might not be always available)"
+  },
+  "__DURATION___The_current_song_duration_might_not_be_always_available": {
+    "message": "[__DURATION__]: The current song duration (might not be always available)"
+  },
+  "API_authentification":{
+    "message":"API authentification"
+  },
+  "Spotify_API":{
+    "message":"Spotify API"
+  },
+  "Logout":{
+    "message":"Logout"
+  },
+  "Login":{
+    "message":"Login"
+  },
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Detect_pause":{
+    "message":"Detect pause"
+  },
+  "Listening_to":{
+    "message":"Listening to"
+  },
+  "Background_settings":{
+    "message":"Background settings"
+  },
+  "Primary_gradient_color":{
+    "message":"Primary gradient color"
+  },
+  "Secondary_gradient_color":{
+    "message":"Secondary gradient color"
+  },
+  "Display_the_song_cover":{
+    "message":"Display the song cover"
+  },
+ "Use_cover_as_content_background":{
+    "message":"Use cover as content background"
+  },
+  "Title_color":{
+    "message":"Title color"
+  },
+  "Display_title":{
+    "message":"Display title"
+  },
+  "Display_subtitle":{
+    "message":"Display subtitle"
+  },
+  "Subtitle_color":{
+    "message":"Subtitle color"
+  },
+  "Progress_bar_color":{
+    "message":"Progress bar color"
+  },
+  "Progress_bar_background_color":{
+    "message":"Progress bar background color"
+  },
+  "Display_progress_bar":{
+    "message":"Display progress bar"
+  },
+  "Text_settings":{
+    "message":"Text settings"
+  },
+  "Progress_bar_settings":{
+    "message":"Progress bar settings"
+  },
+  "Overlay_style":{
+    "message":"Overlay style"
+  },
+  "Whether_or_not_the_overlay_will_display_the_songs_art":{
+    "message":"Whether or not the overlay will display the song's art"
+  },
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box":{
+    "message":"Whether or not the overlay should try to use the song's art colors / image as the background for the content box"
+  },
+  "About":{
+    "message":"About"
+  },
+  "Supported_platforms":{
+    "message": "Supported platforms"
+  },
+  "how_to_install":{
+    "message": "1) - Create an instance <br>2) - Copy the overlay link <br>3) - Head to OBS or streamlabs and create a browser source <br>4) - Paste the overlay link into the source URL <br>5) - Set the width to 800px and height to 400px <br><br>The default overlay should appear, this overlay will update while listening to tabs"
+  },
+  "Installing_the_overlay":{
+    "message":"Installing the overlay"
+  },
+  "FAQA1":{
+    "message":"If you encounter any issue with a tab not updating the overlay, the best way to solve it is to reload the tab (maybe multiple times). If that does not work, check that the link in the browser source is correct and as a last ressort you can re-enablee the extension."
+  },
+  "FAQQ1":{
+    "message":"I am listening to a tab but the overlay is not updating, what can I do?"
+  },
+  "FAQA2":{
+    "message":"Due to technical reasons, it is impossible to read colours from cover arts from platforms such as Youtube and youtube music. It's also impossible to fetch covers from some platforms such as deezer or epidemic sound."
+  },
+  "FAQQ2":{
+    "message":"Some platforms do not have the colored gradient but instead the cover as content background, why is that?"
+  },
+  "FAQ":{
+    "message":"FAQ"
+  },
+  "Like_the_extension_Share_and_star_it":{
+    "message":"Like the extension? Share and star it!"
+  },
+  "DISPLAY_PAUSE_EXPLANATIONS":{
+    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+  },
+  "DETECT_PAUSE_EXPLANATIONS":{
+    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  },
+  "Send_suggestions_and_report_issues_on_the_":{
+    "message":"Send suggestions and report issues on the "
+  },
+  "_or_on_":{
+    "message":" or on "
+  },
+  "how_to_install_spotify_1":{
+    "message": "1) - Head to <a href='https://developer.spotify.com/'>Spotify for developers</a> and login with your spotify account <br>2) - Head to the <a href='https://developer.spotify.com/dashboard'>Dashboard </a> and create an app <br>3) - Name the app (the name does not matter) and set the redirect URI to: <br>"
+  },
+  "how_to_install_spotify_2":{
+    "message": "4) - Select Web API and save the app <br>5) - Open the settings and copy the client ID and the client secret into the fields<br>6) - Click the login button to link your account<br><br>You should see the Spotify API option in the scanners list in the extension's popup"
+  },
+  "Connecting_the_spotify_API":{
+    "message": "Connecting the spotify API"
+  },
+  "Save":{
+    "message": "Save"
+  },
+  "Log_in":{
+    "message": "Log-in"
+  },
+  "Log_out":{
+    "message": "Log-out"
+  },
+  "Client_secret":{
+    "message": "Client secret"
+  },
+  "Client_ID":{
+    "message": "Client ID"
+  },
+  "Spotify_API_setup":{
+    "message": "Spotify API setup"
+  },
+  "integration_explanations":{
+    "message":"The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
+  },
+  "Detailled_documentation":{
+    "message":"Detailled documentation"
+  },
+  "find_more_docs":{
+    "message":"Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  },
+  "defaultIntegrationMessage":{
+    "message":"Current song: [__LINK__]"
+  },
+  "errorIntegrationMessage":{
+    "message":"The music is currently paused"
+  },
+  "pausedIntegrationMessage":{
+    "message":"Unable to get current song name!"
+  },
+  "Font":{
+    "message":"Font"
+  },
+  "Only_display_on_song_change":{
+    "message":"Only display on song change"
+  },
+  "DISPLAY_SONG_CHANGE_EXPLANATIONS":{
+    "message":"The overlay will appear when the song changes then disapear after a few seconds"
+  },
+  "Quick_guides":{
+    "message":"Quick guides"
+  }
+
+}
