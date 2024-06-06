@@ -352,3 +352,25 @@ body {
     font-weight: 500;
   }
   
+  .popup{
+    position: fixed;
+    top: 30vh;
+    left: 30vw;
+    width: 35vw;
+    height: 35vh;
+    padding: 2vw;
+    margin: 2px;
+    background-color: #131313;
+    display: block;
+    justify-content: center;
+    border-radius: 10px;
+    align-items: center;
+    z-index: 100;
+    border: 3px solid #272727;
+  }
+
+
+  .closeButton {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
