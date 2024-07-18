@@ -1,6 +1,12 @@
 
 const imports = ["modules/socket.io.js", "init.js", "modules/socketManager.js", "scanners/spotifyAPI.js"]
 importScripts("settings.js")
+try {
+    importScripts("socktet.io.js");
+} catch (e) {
+    console.warn("Failed to import socket.io", e)
+    
+}
 let extensionScannerState
 let extensionState
 let extensionSettings
@@ -8,14 +14,14 @@ let spotifyAPIState
 
 const manifestData = chrome.runtime.getManifest();
 
-const extensionReady =  new EventTarget()
+const extensionReady = new EventTarget()
 
 //-----------SCANNERS HANDLING----------
 async function updateScannersList() {
     let scanners = extensionState.scanners;
     //removing outdated scanners
     scanners = scanners.filter(async (scanner) => {
-        if(tabLessScanners.includes(scanner.tabId)){
+        if (tabLessScanners.includes(scanner.tabId)) {
             return true
         }
         try {
@@ -96,7 +102,7 @@ async function updateLogo() {
 
 //---------------MESSAGING--------------
 
-async function updateScanner(senderTabId, title, platform){
+async function updateScanner(senderTabId, title, platform) {
     console.log("Updating scanner", senderTabId, title, platform)
     let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     let scanners = extensionState.scanners;
@@ -185,22 +191,22 @@ importAllImports()
 
 let promises = []
 
-promises.push(new Promise(async (resolve,reject) => {
+promises.push(new Promise(async (resolve, reject) => {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     resolve();
 }))
 
-promises.push(new Promise(async (resolve,reject) => {
+promises.push(new Promise(async (resolve, reject) => {
     extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
     resolve();
 }))
 
-promises.push(new Promise(async (resolve,reject) => {
+promises.push(new Promise(async (resolve, reject) => {
     extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     resolve();
 }))
 
-promises.push(new Promise(async (resolve,reject) => {
+promises.push(new Promise(async (resolve, reject) => {
     spotifyAPI = (await chrome.storage.local.get("spotifyAPI-settings"))["spotifyAPI-settings"];
     resolve();
 }))

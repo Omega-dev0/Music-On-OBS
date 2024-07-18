@@ -12,12 +12,12 @@
 
   <body>
     <!-- POPUPS -->
-    <div class="popup" id="commandPopup" style="display: flex; flex-direction: column; align-items: center; justify-content: start">
+    <div class="popup" id="commandPopup" style="display: none; flex-direction: column; align-items: center; justify-content: start">
       <div style="display: flex; flex-direction: row; width: 100%">
         <h3 translated style="margin-right: auto">Copy the integration command</h3>
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 0.5rem">
-        <h4>Preview</h4>
+        <h4 translated>Preview</h4>
       </div>
       <div
         style="
@@ -32,20 +32,20 @@
           overflow-x: clip;
         "
       >
-        <p style="color: rgb(216, 216, 216); margin-left: 15px; text-overflow: clip; text-wrap: nowrap; width: 100%">
+        <p style="color: rgb(216, 216, 216); margin-left: 15px; margin-right: 15px; text-overflow:clip; text-wrap: wrap; width: 90%;" id="integrationPopupPreview">
           Current song: https://www.youtube.com/watch?v=6n3pFFPSlW4
         </p>
         <br />
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
-        <button class="button blue" translated id="">Nightbot</button> <button class="button blue" translated id="">BotRix</button
-        ><button class="button blue" translated id="">StreamElements</button>
+        <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button> <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button
+        ><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: end; align-items: center; margin-top: auto">
-        <button class="button red" translated id="">Close</button>
+        <button class="button red" id="integrationPopupClose">Close</button>
       </div>
     </div>
-
+    
     <!-- CONTENT -->
     <div class="sidebar">
       <div style="display: flex; align-content: center; align-items: center">
@@ -86,22 +86,22 @@
         <br />
         <div class="box">
           <h3 translated>Create an instance</h3>
-          <label translated>Instance token</label><br />
-          <input class="input-locked" type="password" readonly id="publicToken" /><br />
+          <label translated>Token</label><br />
+          <input class="input-locked" type="text" readonly id="privateToken" /><br /><br/>
           <label translated>Instance link</label><br />
-          <input class="input-locked" type="text" readonly id="instanceLink" /><br />
+          <input class="input-locked" type="text" readonly id="instanceLink" /><br /><br/>
           <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
-          <button class="button blue" translated id="copyInstanceLink">Copy instance link</button><br />
+          <button class="button blue" translated id="copyInstanceLink">Copy instance link</button>
         </div>
 
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Spotify API setup</h3>
           <label translated>Client ID</label><br />
-          <input class="input-locked" type="text" id="spotifyId" /><br />
+          <input class="input-locked" saveTrigger type="text" id="spotifyId" /><br />
           <br />
-          <label translated>Client secret</label><br />
-          <input class="input-locked" type="password" id="spotifyAppToken" /><br />
-          <button class="button blue" id="save" translated>Save</button><button class="button blue" id="spotifyLogin" translated>Log in</button
+          <label translated >Client secret</label><br />
+          <input class="input-locked" saveTrigger type="password" id="spotifyAppToken" /><br />
+          <button class="button blue" id="spotifyLogin" translated>Log in</button
           ><button class="button red" id="spotifyLogout" translated>Log out</button><br />
           <label id="spotifyStatus">Status: Not logged in</label>
         </div>
@@ -253,8 +253,7 @@
           <label translated>Error message</label><br />
           <input class="input-locked" type="text" value="Unable to get current song name!" saveTrigger id="errorMessage" /><br />
           <label></label><br />
-          <button class="button blue" translated id="nightbotCommandCopy">Copy Nightbot command</button><br />
-          <button class="button blue" translated id="botrixCommandCopy">Copy BotRix command</button><br />
+          <button class="button blue" translated id="integrationCommandCopy">Copy custom command</button><br />
         </div>
         <div class="box">
           <h3 translated>Dynamic values</h3>

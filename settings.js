@@ -1,13 +1,13 @@
 extensionConfig = {}
 
-extensionConfig.serverHost = "http://129.151.87.197"
-extensionConfig.serverPort = 6011
+extensionConfig.serverHost = "http://m.omegadev.xyz"
+extensionConfig.serverPort = ""
 
 extensionConfig.debugServerHost = "http://127.0.0.1"
-extensionConfig.debugServerPort = 6011
+extensionConfig.debugServerPort = ":6011"
 extensionConfig.debug = true
 extensionConfig.fakeServerConnection = true
-extensionConfig.serverAdress = extensionConfig.debug ? `${extensionConfig.debugServerHost}:${extensionConfig.debugServerPort}` : `${extensionConfig.serverHost}:${extensionConfig.serverPort}`
+extensionConfig.serverAdress = extensionConfig.debug ? `${extensionConfig.debugServerHost}${extensionConfig.debugServerPort}` : `${extensionConfig.serverHost}${extensionConfig.serverPort}`
 
 extensionConfig.scanners = [
     {
@@ -31,4 +31,6 @@ function logger(...args) {
         console.log(...args)
     }
 }
+
+chrome.storage.local.set({"extensionConfig": extensionConfig})
 

@@ -2,32 +2,73 @@ let extensionScannerState
 let extensionState
 let extensionSettings
 let spotifyAPIState
-//------------------DATA BINDS----------
-const DataBinds = {
-    "extensionSettings":{
-        "instance": {
-            "privateToken": "",
-            "publicToken": document.getElementById("publicToken"),
-        },
-        "spotifyAPI": {
-            "spotifyId": document.getElementById("spotifyId"),
-            "spotifyAppToken": document.getElementById("spotifyAppToken"),
-            "spotifyRefreshToken": "",
-        },
-        "behaviour": {
-            "displayPause": document.getElementById("displayPause"),
-            "detectPause": document.getElementById("detectPause"),
-        },
-        "integration": {
-            "defaultMessage": document.getElementById("defaultMessage"),
-            "pausedMessage": document.getElementById("pausedMessage"),
-            "errorMessage": document.getElementById("errorMessage"),
-        },
-    }
-}
+let extensionConfig
+let DataBinds
 
-function saveSettings() {
-    
+//------------------DATA BINDS----------
+function defineDataBinds() {
+    DataBinds = {
+        "extensionSettings": {
+            "instance": {
+                "privateToken": {
+                    save: false,
+                    load: true,
+                    element: null
+                },
+                "publicToken": {
+                    save: false,
+                    load: true,
+                    element: document.getElementById("publicToken")
+                },
+            },
+            "spotifyAPI": {
+                "spotifyId": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("spotifyId")
+                },
+                "spotifyAppToken": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("spotifyAppToken")
+                },
+                "spotifyRefreshToken": {
+                    save: false,
+                    load: true,
+                    element: null
+                },
+            },
+            "behaviour": {
+                "displayPause": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("displayPause")
+                },
+                "detectPause": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("detectPause")
+                },
+            },
+            "integration": {
+                "defaultMessage": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("defaultMessage")
+                },
+                "pausedMessage": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("pausedMessage")
+                },
+                "errorMessage": {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("errorMessage")
+                },
+            },
+        }
+    }
 }
 
 //------------CONTAINER SWITCHING-------
@@ -52,6 +93,39 @@ function showContainer(id) {
 }
 
 //---------------SPOTIFY AUTH-----------
+function checkSpotifyCredentialsStatus() {
+    if (extensionSettings.spotifyAPI.spotifyId != "" && extensionSettings.spotifyAPI.spotifyAppToken != "") {
+        //Available
+        document.getElementById("spotifyLogin").removeAttribute("customDisable")
+    } else {
+        //Unavailable
+        document.getElementById("spotifyLogin").setAttribute("customDisable", true)
+    }
+}
+function startSpotifyLoginProcedure() {
+    if (extensionSettings.spotifyAPI.spotifyId == "" || extensionSettings.spotifyAPI.spotifyAppToken == "") {
+        alert(chrome.i18n.getMessage("spotifyCredentialsMissing"));
+        return
+    }
+
+    let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+    window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${extensionSettings.spotifyAPI.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
+}
+function checkSpotifyLoggedStatus() {
+    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "") {
+        document.getElementById("spotifyStatus").innerHTML = chrome.i18n.getMessage("spotifyNotLogged");
+        document.getElementById("spotifyLogin").removeAttribute("customDisable")
+        document.getElementById("spotifyLogout").setAttribute("customDisable", true)
+    } else {
+        document.getElementById("spotifyStatus").innerHTML = chrome.i18n.getMessage("spotifyLogged");
+        document.getElementById("spotifyLogout").removeAttribute("customDisable")
+        document.getElementById("spotifyLogin").setAttribute("customDisable", true)
+    }
+}
+function spotifyLogOut() {
+    extensionSettings.spotifyAPI.spotifyRefreshToken = ""
+    chrome.storage.local.set({ "extension-settings": extensionSettings });
+}
 
 //-------------------BINDS--------------
 function bindEvents() {
@@ -81,6 +155,45 @@ function bindEvents() {
         });
     }
 
+    //copy integration command popup display
+    document.getElementById("integrationCommandCopy").addEventListener("click", () => {
+        if (!isInstanceValid()) { return }
+        //create preview
+        let message = document.getElementById("defaultMessage").value
+        message = message.replaceAll("[__SONG__]", "Billie Jean")
+        message = message.replaceAll("[__SUBTITLE__]", "Michael Jackson")
+        message = message.replaceAll("[__LINK__]", "https://www.youtube.com/watch?v=Zi_XLOBDo_Y")
+        message = message.replaceAll("[__TIME__]", "1:34")
+        message = message.replaceAll("[__DURATION__]", "2:14")
+        document.getElementById("integrationPopupPreview").innerHTML = message
+        document.getElementById("commandPopup").style.display = "flex";
+    });
+
+    //integration popup binds
+
+    //close
+    document.getElementById("integrationPopupClose").addEventListener("click", () => {
+        document.getElementById("commandPopup").style.display = "none";
+    });
+
+    //copy nighbot
+    document.getElementById("integrationPopupNightbotCopy").addEventListener("click", () => {
+        copyTextToClipboard(getNightbotCommand())
+    })
+
+    document.getElementById("spotifyLogin").addEventListener("click", () => {
+        startSpotifyLoginProcedure()
+    })
+}
+function checkInstanceStatus() {
+    if (!isInstanceValid()) {
+        //DISABLE SOME STUFF
+        document.getElementById("integrationCommandCopy").setAttribute("customDisable", true)
+        document.getElementById("copyInstanceLink").setAttribute("customDisable", true)
+    } else {
+        document.getElementById("integrationCommandCopy").removeAttribute("customDisable")
+        document.getElementById("copyInstanceLink").removeAttribute("customDisable")
+    }
 }
 
 //----------------UTILITIES-------------
@@ -110,13 +223,40 @@ function fallbackCopyTextToClipboard(text) {
 function copyTextToClipboard(text) {
     if (!navigator.clipboard) {
         fallbackCopyTextToClipboard(text);
+        alert(chrome.i18n.getMessage("textCopiedToClipboard"));
         return;
     }
     navigator.clipboard.writeText(text).then(function () {
-        console.log('Async: Copying to clipboard was successful!');
+        alert(chrome.i18n.getMessage("textCopiedToClipboard"));
     }, function (err) {
         console.error('Async: Could not copy text: ', err);
     });
+}
+function getElementValue(doc) {
+    if (doc.type == "checkbox") {
+        return doc.checked;
+    } else {
+        return doc.value;
+    }
+}
+function setElementValue(doc, value) {
+    if (doc.type == "checkbox") {
+        doc.checked = value;
+    } else {
+        doc.value = value;
+    }
+}
+function getBaseURL(route, additionnalArgs) {
+    let url = `${extensionConfig.serverAdress}/${route}?token=${extensionSettings.instance.publicToken}`
+    let args = additionnalArgs.join("&")
+    if (args == undefined) {
+        return url
+    }
+    url += "&" + args
+    return url
+}
+function isInstanceValid() {
+    return extensionSettings.instance.privateToken == "" ? false : true
 }
 
 //--------------LOCALIZATION------------
@@ -134,6 +274,10 @@ function translator() {
                     .replaceAll(")", "")
                     .replaceAll("(", "")
             );
+            if (translation == "") {
+                element.classList.add("untranslated");
+                return
+            };
             element.innerHTML = translation
 
             if (element.title != "") {
@@ -155,6 +299,20 @@ function translator() {
     });
 }
 
+//----------INTEGRATION COMMANDS--------
+function getNightbotCommand() {
+    let command = `$(eval const api = $(urlfetch ${getBaseURL("integration", ["format=json"])}); if(api.error || api.url == "undefined"){"Unable to get current song name!"}else{api.m}; )`
+    return command
+}
+function getStreamlabsCommand() {
+    let command = `$(customapi ${getBaseURL("integration")})`
+    return command
+}
+function botRixCommand() {
+    let command = `fetch[${getBaseURL("integration")}]`
+    return command
+}
+
 //------------STORAGE UPDATES-----------
 chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (areaName != "local") {
@@ -168,6 +326,9 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     }
     if (object["extension-settings"] != undefined) {
         extensionSettings = object["extension-settings"].newValue;
+        checkSpotifyLoggedStatus()
+        checkSpotifyCredentialsStatus()
+        checkInstanceStatus()
     }
     if (object["spotifyAPI-state"] != undefined) {
         spotifyAPIState = object["spotifyAPI-state"].newValue;
@@ -176,6 +337,45 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
 });
 
 //---------------ON LAUNCH--------------
+
+function saveSettings() {
+    console.log("Saving settings")
+
+    //extension settings
+    for (let categorie in DataBinds.extensionSettings) {
+        console.log(">>>", categorie, DataBinds.extensionSettings[categorie])
+        for (let key in DataBinds.extensionSettings[categorie]) {
+            //console.log(key, DataBinds.extensionSettings[categorie][key])
+            let doc = DataBinds.extensionSettings[categorie][key];
+            if (doc.save == false) continue;
+            if (doc.element == null) continue;
+            console.log(categorie, key, getElementValue(doc.element))
+            extensionSettings[categorie][key] = getElementValue(doc.element)
+        }
+    }
+    console.log(extensionSettings)
+    chrome.storage.local.set({ "extension-settings": extensionSettings });
+}
+function loadSettings() {
+    console.log("Loading settings")
+
+    //extension settings
+    for (let categorie in DataBinds.extensionSettings) {
+        for (let key in DataBinds.extensionSettings[categorie]) {
+            let doc = DataBinds.extensionSettings[categorie][key];
+            if (doc.load == false) continue;
+            if (doc.element == null) continue;
+            if (extensionSettings[categorie][key] == undefined) {
+                setElementValue(doc.element, "")
+            } else {
+                setElementValue(doc.element, extensionSettings[categorie][key])
+                doc.element.setAttribute("correctlyLoaded", true)
+            }
+
+        }
+    }
+    console.log(extensionSettings)
+}
 
 let promises = []
 
@@ -199,10 +399,21 @@ promises.push(new Promise(async (resolve, reject) => {
     resolve();
 }))
 
+promises.push(new Promise(async (resolve, reject) => {
+    extensionConfig = (await chrome.storage.local.get("extensionConfig"))["extensionConfig"];
+    resolve();
+}))
+
 Promise.all(promises).then(() => {
     console.log("Background worker ready")
 })
 
 document.addEventListener("DOMContentLoaded", () => {
+    defineDataBinds()
     translator()
+    loadSettings()
+    bindEvents()
+    checkInstanceStatus()
+    checkSpotifyLoggedStatus()
+    checkSpotifyCredentialsStatus()
 });

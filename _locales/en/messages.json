@@ -304,6 +304,18 @@
   },
   "Quick_guides":{
     "message":"Quick guides"
+  },
+  "spotifyCredentialsMissing":{
+    "message":"You must set the ID and Secret first ! Find them in your app at https://developer.spotify.com/dashboard"
+  },
+  "spotifyNotLogged":{
+    "message":"Status: Not logged in"
+  },
+  "spotifyLogged":{
+    "message":"Status: Logged in"
+  },
+  "textCopiedToClipboard":{
+    "message":"Text copied to clipboard"
   }
 
 }

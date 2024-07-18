@@ -374,3 +374,7 @@ body {
     width: 2.5rem;
     height: 2.5rem;
   }
+
+  .untranslated {
+      background-color: aqua;
+  }

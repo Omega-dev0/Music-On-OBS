@@ -6,7 +6,6 @@ let socket = null;
  * Connects to the server using socket.io.
  */
 async function connectToServer() {
-    importScripts("socktet.io.js");
     if(extensionConfig.fakeServerConnection){
         console.warn("[SOCKET] Fake server connection enabled")
         return
