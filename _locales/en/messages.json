@@ -316,6 +316,9 @@
   },
   "textCopiedToClipboard":{
     "message":"Text copied to clipboard"
+  },
+  "spotifyAlreadyLogged":{
+    "message":"You are already logged in"
   }
 
 }

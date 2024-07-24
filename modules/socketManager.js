@@ -1,13 +1,19 @@
 
 let socket = null;
-
+let hasWarned = false;
 
 /**
  * Connects to the server using socket.io.
  */
 async function connectToServer() {
     if(extensionConfig.fakeServerConnection){
+        if(hasWarned) return
         console.warn("[SOCKET] Fake server connection enabled")
+        hasWarned = true
+        return
+    }
+    if(io == undefined){
+        console.warn("[SOCKET] Socket IO failed to load, skipping connection")
         return
     }
 

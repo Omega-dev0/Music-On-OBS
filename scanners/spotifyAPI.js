@@ -5,6 +5,9 @@ function isAuthentificated() {
     if (extensionSettings.spotifyAPI.spotifyAppToken == undefined || extensionSettings.spotifyAPI.spotifyId == undefined || extensionSettings.spotifyAPI.spotifyRefreshToken == undefined) {
         return false
     }
+    if (extensionSettings.spotifyAPI.spotifyAppToken == "" || extensionSettings.spotifyAPI.spotifyId == "" || extensionSettings.spotifyAPI.spotifyRefreshToken == "") {
+        return false
+    }
     return true
 }
 
@@ -159,6 +162,7 @@ extensionReady.addEventListener("ready", async () => {
         }
     })
     setInterval(async () => {
+
         SCANNER.update(await SpotifygetData());
     }, SCANNER.refreshInterval);
 

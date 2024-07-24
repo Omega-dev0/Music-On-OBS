@@ -1,5 +1,7 @@
 
 //-------------------- SCANNER CLASS ----------------
+
+
 class Scanner {
     constructor(platform, tabId) {
         this.platform = platform;
@@ -13,10 +15,31 @@ class Scanner {
 
         //Tab title changed
         new MutationObserver(function (mutations) {
-            chrome.runtime.sendMessage({ key: "update-scanner", data: { platform: platform, title: document.title} });
+            chrome.runtime.sendMessage({ key: "update-scanner", data: { platform: platform, title: document.title } });
         }).observe(document.querySelector("title"), { subtree: true, characterData: true, childList: true });
 
         this.updateScannerInfo();
+    }
+
+    async hasErrors(data) {
+        if (data == undefined) {
+            return {
+                hasErrors: false
+            }
+        }
+        let fields = ["url", "title", "subtitle", "cover", "progress", "duration"];
+        for (let field of fields) {
+            if (data[field] == undefined) {
+                return {
+                    hasErrors: true,
+                    field: field,
+                    platform: this.platform,
+                };
+            }
+        }
+        return {
+            hasErrors: false
+        }
     }
 
     async update(data) {
@@ -27,14 +50,14 @@ class Scanner {
         await this.updateIfAllowed();
         if (!this.allowed) { return }
 
-        if(data.currentTime != undefined){
-            if(data.currentTime.includes(":")){
+        if (data.currentTime != undefined) {
+            if (data.currentTime.includes(":")) {
                 data.currentTime = getTimeFromTimeString(data.currentTime, ":")
             }
         }
 
-        if(data.currentLength != undefined){
-            if(data.currentLength.includes(":")){
+        if (data.currentLength != undefined) {
+            if (data.currentLength.includes(":")) {
                 data.currentLength = getTimeFromTimeString(data.currentLength, ":")
             }
         }
@@ -56,25 +79,24 @@ class Scanner {
 
     async updateIfAllowed() {
         let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-        console.log(extensionState)
-        if (extensionState.stopped == true) { 
-            this.allowed = false;
-            return false 
-        }
-        if (this.tabId == undefined) { 
+        if (extensionState.stopped == true) {
             this.allowed = false;
             return false
-         }
+        }
+        if (this.tabId == undefined) {
+            this.allowed = false;
+            return false
+        }
 
-        for(let check of this.additionalAllowedChecks){
-            if(!check(this)){
+        for (let check of this.additionalAllowedChecks) {
+            if (!check(this)) {
                 this.allowed = false;
                 return false;
             }
         }
 
-        let errorDetection = hasErrors(data)
-        if(errorDetection.hasErrors == true){
+        let errorDetection = this.hasErrors(this.data)
+        if (errorDetection.hasErrors == true) {
             chrome.runtime.sendMessage({ key: "scanner-failure-report", data: errorDetection });
         }
 
@@ -90,7 +112,7 @@ class Scanner {
 
     async updateScannerInfo() {
         try {
-            let response = await chrome.runtime.sendMessage({ key: "update-scanner", data: { platform: this.platform, title: document.title} });
+            let response = await chrome.runtime.sendMessage({ key: "update-scanner", data: { platform: this.platform, title: document.title } });
             this.tabId = response.tabId;
             this.settings = response.settings;
             this.registered = true;
@@ -99,30 +121,14 @@ class Scanner {
         }
     }
 
-    setAdditionalAllowedCheck(f){
+    setAdditionalAllowedCheck(f) {
         this.additionalAllowedChecks.push(f);
-    }
-
-    hasErrors(data){
-        let fields = ["url", "title", "subtitle", "cover", "progress", "duration"];
-        for(let field of fields){
-            if(data[field] == undefined){
-                return {
-                    hasErrors: true,
-                    field: field,
-                    platform: this.platform,
-                };
-            }
-        }
-        return {
-            hasErrors: false
-        }
     }
 }
 
 //------------------------ UTILS --------------------
 function updateServer() {
-    
+
 }
 
 function getTimeFromTimeString(str, divider) {

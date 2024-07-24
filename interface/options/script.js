@@ -94,7 +94,7 @@ function showContainer(id) {
 
 //---------------SPOTIFY AUTH-----------
 function checkSpotifyCredentialsStatus() {
-    if (extensionSettings.spotifyAPI.spotifyId != "" && extensionSettings.spotifyAPI.spotifyAppToken != "") {
+    if (extensionSettings.spotifyAPI.spotifyId != "" && extensionSettings.spotifyAPI.spotifyAppToken != "" && extensionSettings.spotifyAPI.spotifyRefreshToken == "") {
         //Available
         document.getElementById("spotifyLogin").removeAttribute("customDisable")
     } else {
@@ -107,19 +107,22 @@ function startSpotifyLoginProcedure() {
         alert(chrome.i18n.getMessage("spotifyCredentialsMissing"));
         return
     }
-
+    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "") {
+        alert(chrome.i18n.getMessage("spotifyAlreadyLogged"));
+        return
+    }
     let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
     window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${extensionSettings.spotifyAPI.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
 }
 function checkSpotifyLoggedStatus() {
     if (extensionSettings.spotifyAPI.spotifyRefreshToken != "") {
-        document.getElementById("spotifyStatus").innerHTML = chrome.i18n.getMessage("spotifyNotLogged");
-        document.getElementById("spotifyLogin").removeAttribute("customDisable")
-        document.getElementById("spotifyLogout").setAttribute("customDisable", true)
-    } else {
         document.getElementById("spotifyStatus").innerHTML = chrome.i18n.getMessage("spotifyLogged");
         document.getElementById("spotifyLogout").removeAttribute("customDisable")
         document.getElementById("spotifyLogin").setAttribute("customDisable", true)
+    } else {
+        document.getElementById("spotifyStatus").innerHTML = chrome.i18n.getMessage("spotifyNotLogged");
+        document.getElementById("spotifyLogin").removeAttribute("customDisable")
+        document.getElementById("spotifyLogout").setAttribute("customDisable", true)
     }
 }
 function spotifyLogOut() {
@@ -318,6 +321,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (areaName != "local") {
         return;
     }
+    console.log("[STORAGE] Updated", object)
     if (object["extension-state"] != undefined) {
         extensionState = object["extension-state"].newValue;
     }
@@ -349,7 +353,6 @@ function saveSettings() {
             let doc = DataBinds.extensionSettings[categorie][key];
             if (doc.save == false) continue;
             if (doc.element == null) continue;
-            console.log(categorie, key, getElementValue(doc.element))
             extensionSettings[categorie][key] = getElementValue(doc.element)
         }
     }
@@ -406,14 +409,14 @@ promises.push(new Promise(async (resolve, reject) => {
 
 Promise.all(promises).then(() => {
     console.log("Background worker ready")
+    document.addEventListener("DOMContentLoaded", () => {
+        defineDataBinds()
+        translator()
+        loadSettings()
+        bindEvents()
+        checkSpotifyCredentialsStatus()
+        checkInstanceStatus()
+        checkSpotifyLoggedStatus()
+    });
 })
 
-document.addEventListener("DOMContentLoaded", () => {
-    defineDataBinds()
-    translator()
-    loadSettings()
-    bindEvents()
-    checkInstanceStatus()
-    checkSpotifyLoggedStatus()
-    checkSpotifyCredentialsStatus()
-});

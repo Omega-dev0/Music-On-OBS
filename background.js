@@ -1,11 +1,9 @@
-
-const imports = ["modules/socket.io.js", "init.js", "modules/socketManager.js", "scanners/spotifyAPI.js"]
+const imports = ["init.js", "modules/socketManager.js", "scanners/spotifyAPI.js"]
 importScripts("settings.js")
 try {
-    importScripts("socktet.io.js");
+    importScripts("modules/socket.io.js");
 } catch (e) {
-    console.warn("Failed to import socket.io", e)
-    
+    console.error("Failed to import socket.io", e)
 }
 let extensionScannerState
 let extensionState
@@ -15,7 +13,6 @@ let spotifyAPIState
 const manifestData = chrome.runtime.getManifest();
 
 const extensionReady = new EventTarget()
-
 //-----------SCANNERS HANDLING----------
 async function updateScannersList() {
     let scanners = extensionState.scanners;
@@ -172,7 +169,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     }
 
     syncServer()
-    logger("[STORAGE] Updated", extensionState, extensionScannerState, extensionSettings)
+    //logger("[STORAGE] Updated", extensionState, extensionScannerState, extensionSettings)
 });
 
 //---------------IMPORTS----------------
@@ -207,7 +204,7 @@ promises.push(new Promise(async (resolve, reject) => {
 }))
 
 promises.push(new Promise(async (resolve, reject) => {
-    spotifyAPI = (await chrome.storage.local.get("spotifyAPI-settings"))["spotifyAPI-settings"];
+    spotifyAPIState = (await chrome.storage.local.get("spotifyAPI-state"))["spotifyAPI-state"];
     resolve();
 }))
 
