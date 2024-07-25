@@ -46,7 +46,9 @@ async function connectToServer() {
  */
 function emitServerEvent(eventName, payload) {
     if(extensionConfig.fakeServerConnection){
-        console.warn(`[SOCKET] Fake server connection enabled, not sending ${eventName}`)
+        if(hasWarned) return new Promise((resolve, reject) => {resolve()})
+        console.warn("[SOCKET] Fake server connection enabled")
+        hasWarned = true
         return new Promise((resolve, reject) => {resolve()})
     }
     return new Promise((resolve, reject) => {

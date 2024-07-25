@@ -17,6 +17,12 @@ extensionConfig.scanners = [
         color: "#d9431a"
     },
     {
+        platform: "spotifyAPI",
+        name: "Spotify API",
+        host: "",
+        color: "#1DB954"
+    },
+    {
         platform: "none",
         name: "None",
         host: "",

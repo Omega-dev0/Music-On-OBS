@@ -9,6 +9,7 @@ let extensionScannerState
 let extensionState
 let extensionSettings
 let spotifyAPIState
+let READY = false
 
 const manifestData = chrome.runtime.getManifest();
 
@@ -18,7 +19,7 @@ async function updateScannersList() {
     let scanners = extensionState.scanners;
     //removing outdated scanners
     scanners = scanners.filter(async (scanner) => {
-        if (tabLessScanners.includes(scanner.tabId)) {
+        if (extensionConfig.tabLessScanners.includes(scanner.tabId)) {
             return true
         }
         try {
@@ -28,7 +29,14 @@ async function updateScannersList() {
             return false
         }
     });
-
+    console.log("filtered scanners", scanners)
+    chrome.storage.local.set({
+        "extension-state": {
+            stopped: extensionState.stopped,
+            scanners: scanners,
+            selectedScanner: extensionState.selectedScanner,
+        },
+    });
 }
 
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
@@ -41,9 +49,9 @@ chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
 let snapshot = ""
 async function syncServer() {
     let data = {
-        extensionState,
-        extensionScannerState,
-        extensionSettings
+        extensionState: extensionState,
+        extensionScannerState: extensionScannerState,
+        extensionSettings: extensionSettings,
     }
 
     //Data that does not need to our should not be uploaded to the server
@@ -66,8 +74,10 @@ async function syncServer() {
     })
 }
 
+let currentLogo = ""
 async function updateLogo() {
     if (extensionState.stopped == true) {
+        if(currentLogo == "default") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/default/default16.png",
@@ -76,7 +86,9 @@ async function updateLogo() {
                 128: "/images/default/default128.png",
             },
         });
+        currentLogo = "default"
     } else if (extensionScannerState.paused == true) {
+        if(currentLogo == "paused") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/paused/16x16.png",
@@ -85,7 +97,9 @@ async function updateLogo() {
                 128: "/images/paused/128x128.png",
             },
         });
+        currentLogo = "paused"
     } else {
+        if(currentLogo == "playing") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/playing/16x16.png",
@@ -94,6 +108,7 @@ async function updateLogo() {
                 128: "/images/playing/128x128.png",
             },
         });
+        currentLogo = "playing"
     }
 }
 
@@ -103,7 +118,7 @@ async function updateScanner(senderTabId, title, platform) {
     console.log("Updating scanner", senderTabId, title, platform)
     let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     let scanners = extensionState.scanners;
-    console.log(scanners)
+
     scanners = extensionState.scanners.filter((scanner) => {
         return scanner.tabId != senderTabId;
     });
@@ -112,6 +127,7 @@ async function updateScanner(senderTabId, title, platform) {
         tabId: senderTabId,
         platform: platform,
     });
+    console.log(scanners)
     await chrome.storage.local.set({
         "extension-state": {
             stopped: extensionState.stopped,
@@ -157,12 +173,14 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     }
     if (object["extension-state"] != undefined) {
         extensionState = object["extension-state"].newValue;
+        console.log("Updated extension state", extensionState)
     }
     if (object["extension-scanner-state"] != undefined) {
         extensionScannerState = object["extension-scanner-state"].newValue;
     }
     if (object["extension-settings"] != undefined) {
         extensionSettings = object["extension-settings"].newValue;
+        console.log("Updated extension settings", extensionSettings)
     }
     if (object["spotifyAPI-state"] != undefined) {
         spotifyAPIState = object["spotifyAPI-state"].newValue;
@@ -189,26 +207,16 @@ importAllImports()
 let promises = []
 
 promises.push(new Promise(async (resolve, reject) => {
-    extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-    resolve();
-}))
-
-promises.push(new Promise(async (resolve, reject) => {
-    extensionScannerState = (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"];
-    resolve();
-}))
-
-promises.push(new Promise(async (resolve, reject) => {
-    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-    resolve();
-}))
-
-promises.push(new Promise(async (resolve, reject) => {
-    spotifyAPIState = (await chrome.storage.local.get("spotifyAPI-state"))["spotifyAPI-state"];
+    let data = (await chrome.storage.local.get());
+    extensionState = data["extension-state"];
+    extensionScannerState = data["extension-scanner-state"];
+    extensionSettings = data["extension-settings"];
+    spotifyAPIState = data["spotifyAPI-state"];
     resolve();
 }))
 
 Promise.all(promises).then(() => {
     console.log("Background worker ready")
     extensionReady.dispatchEvent(new Event("ready"))
+    READY = true
 })

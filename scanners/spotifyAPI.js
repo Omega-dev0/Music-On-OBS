@@ -1,7 +1,8 @@
 
 
 //------------- Spotify API Manager ----------
-function isAuthentificated() {
+async function isAuthentificated() {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     if (extensionSettings.spotifyAPI.spotifyAppToken == undefined || extensionSettings.spotifyAPI.spotifyId == undefined || extensionSettings.spotifyAPI.spotifyRefreshToken == undefined) {
         return false
     }
@@ -28,6 +29,7 @@ async function checkTokenValidity() {
  * @throws {Error} If failed to obtain a new access token.
  */
 async function getAccesstokenFromRefreshToken() {
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     const endpointUrl = "https://accounts.spotify.com/api/token";
     const data = new URLSearchParams();
     data.append("grant_type", "refresh_token");
@@ -44,7 +46,7 @@ async function getAccesstokenFromRefreshToken() {
 
     let response = await fetch(endpointUrl, requestOptions)
     if (response.status != 200) {
-        throw new Error("Failed to obtain a new access token");
+        throw new Error("Failed to obtain a new access token",response);
     }
     let json = await response.json();
     return json.access_token;
@@ -61,7 +63,7 @@ async function getCurrentPlayingTrack() {
 
     let response = await fetch(endpointUrl, requestOptions)
     if (response.status != 200) {
-        throw new Error("Failed to get spotify track!");
+        throw new Error("Failed to get spotify track!", response);
     }
 
     let json = await response.json();
@@ -77,18 +79,23 @@ class SpotifyScanner {
 
         this.extensionState = {}
         this.refreshInterval = 1000;
-        this.registered = true
+        this.registered = false
         this.settings = extensionConfig;
         this.additionalAllowedChecks = [];
         this.title = title;
+
+        this.updateScannerInfo() 
     }
 
-    async update(data) {
-        this.extensionState = extensionState;
-
+    async update(dataGetter) {
+        let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+        this.extensionState = extensionState
+        if(!this.registered) {
+            await this.updateScannerInfo();
+        }
         this.updateIfAllowed();
         if (!this.allowed) { return }
-
+        let data = await dataGetter();
         logger(this.settings.debug, `[MOS][SCANNER - UPDATE]: (${this.platform})`, this)
         if (JSON.stringify(this.data) == JSON.stringify(data)) { return }
 
@@ -101,8 +108,14 @@ class SpotifyScanner {
     }
 
     updateIfAllowed() {
-        if (this.extensionState.stopped) { return false }
-        if (this.tabId == undefined) { return false }
+        if (this.extensionState.stopped) {
+            this.allowed = false;
+            return false
+        }
+        if (this.tabId == undefined) {
+            this.allowed = false;
+            return false
+        }
 
         for (let check of this.additionalAllowedChecks) {
             if (!check(this)) {
@@ -124,19 +137,25 @@ class SpotifyScanner {
     setAdditionalAllowedCheck(f) {
         this.additionalAllowedChecks.push(f);
     }
+
+    async updateScannerInfo() {
+        if (!await isAuthentificated()) { return {} }
+        
+        await updateScanner(this.tabId, this.title, this.platform)
+        this.registered = true;
+    }
 }
 
 function updateServer() {
-    
+
 }
 
 //----------------- Scanner -----------------
-extensionReady.addEventListener("ready", async () => {
-
+async function spotifyScannerInit(){
     let SCANNER = new SpotifyScanner("spotifyAPI", "spotifyAPI", "Spotify API"); // platform, tabId, title
 
     async function SpotifygetData() {
-        if (!isAuthentificated()) { return {} }
+        if (!await isAuthentificated()) { return {} }
         await checkTokenValidity();
 
         let track = await getCurrentPlayingTrack();
@@ -150,21 +169,19 @@ extensionReady.addEventListener("ready", async () => {
             url: track.item.external_urls.spotify,
             cover: track.item.album.images[0].url,
         }
-
         return data;
     }
 
-    SCANNER.setAdditionalAllowedCheck((scanner) => {
-        if (!isAuthentificated()) {
+    SCANNER.setAdditionalAllowedCheck(async (scanner) => {
+        if (!await isAuthentificated()) {
             return false;
         } else {
             return true;
         }
     })
     setInterval(async () => {
-
-        SCANNER.update(await SpotifygetData());
+        SCANNER.update(SpotifygetData);
     }, SCANNER.refreshInterval);
 
     console.log("Spotify API Scanner started")
-})
+}

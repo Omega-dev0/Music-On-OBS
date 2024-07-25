@@ -42,14 +42,16 @@ class Scanner {
         }
     }
 
-    async update(data) {
+    async update(dataGetter) {
+        let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+        this.extensionState = extensionState
         if (this.registered == false) {
             await this.updateScannerInfo();
         }
         logger(this.settings.debug, `[MOS][SCANNER - UPDATE REQUEST]: (${this.platform}, ${this.tabId}): registered: ${this.registered}, allowed: ${this.allowed}`, this)
         await this.updateIfAllowed();
         if (!this.allowed) { return }
-
+        let data = dataGetter();
         if (data.currentTime != undefined) {
             if (data.currentTime.includes(":")) {
                 data.currentTime = getTimeFromTimeString(data.currentTime, ":")
@@ -78,7 +80,7 @@ class Scanner {
     }
 
     async updateIfAllowed() {
-        let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+        let extensionState = this.extensionState;
         if (extensionState.stopped == true) {
             this.allowed = false;
             return false

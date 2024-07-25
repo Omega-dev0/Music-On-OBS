@@ -20,7 +20,7 @@ async function onLaunch() {
         }
     });
     await connectToServer()
-
+    spotifyScannerInit()
     let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
     logger("[SOCKET] registerClient", extensionSettings.instance.privateToken, extensionSettings.instance.publicToken)
     emitServerEvent("registerClient", {
@@ -87,6 +87,13 @@ const DataSchema = {
                     key: "detectPause"
                 }
             },
+            displayOnlyOnSongChange: {
+                defaultValue: false,
+                legacySwitch: {
+                    category: "behaviour",
+                    key: "displayOnSongChange"
+                }
+            }
         },
         integration: {
             defaultMessage: {
@@ -243,6 +250,7 @@ async function fillSettingsStorage() {
         }
         newFullSetting[namespace] = newSettings
     }
+    console.log(newFullSetting["extension-state"],"newFullSetting",(await chrome.storage.local.get())["extension-state"])
     chrome.storage.local.set(newFullSetting)
 }
 /**
@@ -257,6 +265,7 @@ async function onInstalled() {
             lastSeenPopupVersion: chrome.runtime.getManifest().version,
         }
     });
+    onLaunch();
 }
 
 

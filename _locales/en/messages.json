@@ -237,7 +237,7 @@
     "message":"Like the extension? Share and star it!"
   },
   "DISPLAY_PAUSE_EXPLANATIONS":{
-    "message": "The overlay will disappear if you pause the music instead of displaying a pause message"
+    "message": "The overlay will be greyed out when the music is paused instead of disappearing"
   },
   "DETECT_PAUSE_EXPLANATIONS":{
     "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
@@ -319,6 +319,12 @@
   },
   "spotifyAlreadyLogged":{
     "message":"You are already logged in"
+  },
+  "createAnInstanceFirst":{
+    "message":"Create an instance first!"
+  },
+  "docs":{
+    "message":"Docs"
   }
 
 }

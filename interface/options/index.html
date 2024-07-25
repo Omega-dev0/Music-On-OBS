@@ -41,6 +41,7 @@
         <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button> <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button
         ><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
       </div>
+      <h5 translated style="margin-right: auto">Paste this command into a custom command in your bot dashboard</h5><br>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: end; align-items: center; margin-top: auto">
         <button class="button red" id="integrationPopupClose">Close</button>
       </div>
@@ -79,6 +80,9 @@
       <div class="sidebar-element" id="about-button">
         <img class="icon prevent-select" src="../../images/icons/about.svg" /><a class="sidebar-link prevent-select" translated data="About">About</a>
       </div>
+      <div class="sidebar-element" id="documentation link" outsideLink="true">
+        <img class="icon prevent-select" src="../../images/icons/exitlink.svg" /><a class="sidebar-link prevent-select" translated data="https://mos.omegadev.xyz/">Docs</a>
+      </div>
     </div>
     <div class="content">
       <div class="container" id="Instance" style="display: flex">
@@ -87,7 +91,7 @@
         <div class="box">
           <h3 translated>Create an instance</h3>
           <label translated>Token</label><br />
-          <input class="input-locked" type="text" readonly id="privateToken" /><br /><br/>
+          <input class="input-locked" type="text" readonly id="publicToken" /><br /><br/>
           <label translated>Instance link</label><br />
           <input class="input-locked" type="text" readonly id="instanceLink" /><br /><br/>
           <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
@@ -101,6 +105,9 @@
           <br />
           <label translated >Client secret</label><br />
           <input class="input-locked" saveTrigger type="password" id="spotifyAppToken" /><br />
+          <br />
+          <label translated >Redirect URL</label><br />
+          <input class="input-locked" saveTrigger type="text" id="spotifyRedirectURI"  value="chrome-extension://apdlghnfhbfhpledfgipkeagacgigfkb/interface/spotifyAuth/index.html"/><br />
           <button class="button blue" id="spotifyLogin" translated>Log in</button
           ><button class="button red" id="spotifyLogout" translated>Log out</button><br />
           <label id="spotifyStatus">Status: Not logged in</label>

@@ -17,7 +17,7 @@ function getData() {
 
 
 setInterval(() => {
-    SCANNER.update(getData());
+    SCANNER.update(getData);
 }, SCANNER.refreshInterval);
 
 
@@ -26,7 +26,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
         return;
     }
     if (object["extension-state"] != undefined) {
-        SCANNER.update(getData())
+        SCANNER.update(getData)
     }
 });
 

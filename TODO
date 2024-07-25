@@ -9,3 +9,5 @@ Settings:
 Server:
 - Only transmit changed values
 
+- redo scanner update flow
+-redo scanner storage getters (it sucks)

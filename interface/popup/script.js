@@ -13,7 +13,7 @@ function bindActions() {
     document.getElementById("scannerSelect").addEventListener("change", async () => {
         let value = document.getElementById("scannerSelect").value;
         updateSelectorColor()
-        console.log("Changed", value)
+        console.log("Selected scanner", extensionState)
         chrome.storage.local.set({
             "extension-state": {
                 stopped: extensionState.stopped,
@@ -111,12 +111,12 @@ function setState(state) {
 }
 
 function updateAvailableScanners() {
+    console.log(extensionState,"extensionState")
     let scanners = extensionState.scanners;
     let select = document.getElementById("scannerSelect");
-
     let innerHTML = `<option value="none" style="background-color: #1f1d1d" selected="selected">None</option>`
     for (let scanner of scanners) {
-        console.log(scanner)
+        
         let option = document.createElement("option");
         option.value = scanner.tabId;
         option.innerHTML = fitStringToWidth(scanner.title, 170);
@@ -155,12 +155,11 @@ function translator() {
     elements.forEach((element) => {
         try {
             let translation = chrome.i18n.getMessage(element.innerHTML.replaceAll(" ", "_").replace(/[^\x00-\x7F]/g, ""));
-            console.log(translation)
             if (translation != "") {
                 element.innerHTML = translation;
             }
         } catch (error) {
-            console.log("[TRANSLATOR] - Failed to translate for:", element.innerHTML, error);
+            console.warn("[TRANSLATOR] - Failed to translate for:", element.innerHTML, error);
         }
     });
 }
@@ -209,7 +208,6 @@ function fitStringToWidth(str, width, className) {
 }
 
 function getPlatformConfig(platform) {
-    console.log(platform, extensionConfig.scanners)
     return extensionConfig.scanners.find((scanner) => scanner.platform == platform);
 }
 
@@ -244,21 +242,20 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
 let loaded = false
 
 Promise.all(promises).then(() => {
-    console.log("Data loaded")
-    console.log(extensionScannerState, extensionState)
     if (loaded) {
         update();
+        updateAvailableScanners();
         translator();
         bindActions();
     } else {
         document.addEventListener("DOMContentLoaded", update);
         document.addEventListener("DOMContentLoaded", translator);
         document.addEventListener("DOMContentLoaded", bindActions);
+        document.addEventListener("DOMContentLoaded", updateAvailableScanners);
     }
 })
 
 function update() {
-    console.log("Updating")
     setTitleDisplay(extensionScannerState.title);
     setSubtitleDisplay(extensionScannerState.subtitle);
 

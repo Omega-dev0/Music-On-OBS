@@ -49,6 +49,11 @@ function defineDataBinds() {
                     load: true,
                     element: document.getElementById("detectPause")
                 },
+                "displayOnlyOnSongChange":{
+                    save: true,
+                    load: true,
+                    element: document.getElementById("displaySongChange")
+                }
             },
             "integration": {
                 "defaultMessage": {
@@ -125,9 +130,17 @@ function checkSpotifyLoggedStatus() {
         document.getElementById("spotifyLogout").setAttribute("customDisable", true)
     }
 }
-function spotifyLogOut() {
+async function spotifyLogOut() {
     extensionSettings.spotifyAPI.spotifyRefreshToken = ""
     chrome.storage.local.set({ "extension-settings": extensionSettings });
+    let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    if(extensionState.selectedScanner == "spotifyAPI"){
+        extensionState.selectedScanner = "none"
+        extensionState.scanners = extensionState.scanners.filter((scanner) => {
+            return scanner.platform != "spotifyAPI";
+        });
+        chrome.storage.local.set({ "extension-state": extensionState });
+    }
 }
 
 //-------------------BINDS--------------
@@ -144,7 +157,12 @@ function bindEvents() {
     //Sidebar div clickable bind
     for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
         let div = document.getElementsByClassName("sidebar-element")[i];
+        
         div.addEventListener("click", () => {
+            if(div.getAttribute("outsideLink") == "true"){
+                window.open(div.children[1].getAttribute("data"), "_blank")
+                return
+            }
             showContainer(div.children[1].getAttribute("data"));
         });
     }
@@ -160,7 +178,9 @@ function bindEvents() {
 
     //copy integration command popup display
     document.getElementById("integrationCommandCopy").addEventListener("click", () => {
-        if (!isInstanceValid()) { return }
+        if (!isInstanceValid()) { 
+            alert(chrome.i18n.getMessage("createAnInstanceFirst"));
+            return }
         //create preview
         let message = document.getElementById("defaultMessage").value
         message = message.replaceAll("[__SONG__]", "Billie Jean")
@@ -184,8 +204,20 @@ function bindEvents() {
         copyTextToClipboard(getNightbotCommand())
     })
 
+    document.getElementById("integrationPopupSECopy").addEventListener("click", () => {
+        copyTextToClipboard(getStreamlabsCommand())
+    })
+
+    document.getElementById("integrationPopupBotrixCopy").addEventListener("click", () => {
+        copyTextToClipboard(getBotRixCommand())
+    })
+
     document.getElementById("spotifyLogin").addEventListener("click", () => {
         startSpotifyLoginProcedure()
+    })
+
+    document.getElementById("spotifyLogout").addEventListener("click", () => {
+        spotifyLogOut()
     })
 }
 function checkInstanceStatus() {
@@ -251,10 +283,11 @@ function setElementValue(doc, value) {
 }
 function getBaseURL(route, additionnalArgs) {
     let url = `${extensionConfig.serverAdress}/${route}?token=${extensionSettings.instance.publicToken}`
-    let args = additionnalArgs.join("&")
-    if (args == undefined) {
+    
+    if (additionnalArgs == undefined) {
         return url
     }
+    let args = additionnalArgs.join("&")
     url += "&" + args
     return url
 }
@@ -311,7 +344,7 @@ function getStreamlabsCommand() {
     let command = `$(customapi ${getBaseURL("integration")})`
     return command
 }
-function botRixCommand() {
+function getBotRixCommand() {
     let command = `fetch[${getBaseURL("integration")}]`
     return command
 }
@@ -333,6 +366,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
         checkSpotifyLoggedStatus()
         checkSpotifyCredentialsStatus()
         checkInstanceStatus()
+        loadSettings()
     }
     if (object["spotifyAPI-state"] != undefined) {
         spotifyAPIState = object["spotifyAPI-state"].newValue;
@@ -366,6 +400,7 @@ function loadSettings() {
     for (let categorie in DataBinds.extensionSettings) {
         for (let key in DataBinds.extensionSettings[categorie]) {
             let doc = DataBinds.extensionSettings[categorie][key];
+            console.log(key, doc)
             if (doc.load == false) continue;
             if (doc.element == null) continue;
             if (extensionSettings[categorie][key] == undefined) {
