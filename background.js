@@ -48,10 +48,11 @@ chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
 //-----------------UTILS----------------
 let snapshot = ""
 async function syncServer() {
+
     let data = {
-        extensionState: extensionState,
-        extensionScannerState: extensionScannerState,
-        extensionSettings: extensionSettings,
+        extensionState: extensionState || (await chrome.storage.local.get("extension-state"))["extension-state"],
+        extensionScannerState: extensionScannerState || (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"],
+        extensionSettings: extensionSettings || (await chrome.storage.local.get("extension-settings"))["extension-settings"],
     }
 
     //Data that does not need to our should not be uploaded to the server

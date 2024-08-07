@@ -43,6 +43,7 @@ body {
     font-weight: bold;
     font-size: 4vw;
     text-underline-offset: 0.1em;
+    user-select: none;
   }
   
   .text {
@@ -100,6 +101,11 @@ body {
     -webkit-animation: fadeIn 1.5s ease-in;
     animation: fadeIn 1.5s ease-in;
   }
+
+  .big-container {
+    height: calc(100vh - 12vw);
+    align-items: center;
+  }
   
   @-webkit-keyframes fadeIn {
     from {
@@ -124,6 +130,14 @@ body {
     border-radius: 22px;
     width: fit-content;
     margin: .75vw;
+    border: #000000 1px solid;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .box2 {
+    background-color: #252525;
+    border-radius: 22px;
+    width: fit-content;
     border: #000000 1px solid;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }

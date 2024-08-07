@@ -4,6 +4,7 @@ let extensionSettings
 let spotifyAPIState
 let extensionConfig
 let DataBinds
+let loaded = false
 
 //------------------DATA BINDS----------
 function defineDataBinds() {
@@ -49,7 +50,7 @@ function defineDataBinds() {
                     load: true,
                     element: document.getElementById("detectPause")
                 },
-                "displayOnlyOnSongChange":{
+                "displayOnlyOnSongChange": {
                     save: true,
                     load: true,
                     element: document.getElementById("displaySongChange")
@@ -134,7 +135,7 @@ async function spotifyLogOut() {
     extensionSettings.spotifyAPI.spotifyRefreshToken = ""
     chrome.storage.local.set({ "extension-settings": extensionSettings });
     let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
-    if(extensionState.selectedScanner == "spotifyAPI"){
+    if (extensionState.selectedScanner == "spotifyAPI") {
         extensionState.selectedScanner = "none"
         extensionState.scanners = extensionState.scanners.filter((scanner) => {
             return scanner.platform != "spotifyAPI";
@@ -157,9 +158,9 @@ function bindEvents() {
     //Sidebar div clickable bind
     for (let i = 0; i < document.getElementsByClassName("sidebar-element").length; i++) {
         let div = document.getElementsByClassName("sidebar-element")[i];
-        
+
         div.addEventListener("click", () => {
-            if(div.getAttribute("outsideLink") == "true"){
+            if (div.getAttribute("outsideLink") == "true") {
                 window.open(div.children[1].getAttribute("data"), "_blank")
                 return
             }
@@ -178,9 +179,10 @@ function bindEvents() {
 
     //copy integration command popup display
     document.getElementById("integrationCommandCopy").addEventListener("click", () => {
-        if (!isInstanceValid()) { 
+        if (!isInstanceValid()) {
             alert(chrome.i18n.getMessage("createAnInstanceFirst"));
-            return }
+            return
+        }
         //create preview
         let message = document.getElementById("defaultMessage").value
         message = message.replaceAll("[__SONG__]", "Billie Jean")
@@ -283,7 +285,7 @@ function setElementValue(doc, value) {
 }
 function getBaseURL(route, additionnalArgs) {
     let url = `${extensionConfig.serverAdress}/${route}?token=${extensionSettings.instance.publicToken}`
-    
+
     if (additionnalArgs == undefined) {
         return url
     }
@@ -293,6 +295,16 @@ function getBaseURL(route, additionnalArgs) {
 }
 function isInstanceValid() {
     return extensionSettings.instance.privateToken == "" ? false : true
+}
+function setAboutPage(){
+    let text = document.getElementById("platformsBox").innerHTML
+    for(scanner of extensionConfig.scanners){
+        if(scanner.platform == "none") continue
+        text += `<label>- ${scanner.name}</label><br>`
+    }
+    document.getElementById("platformsBox").innerHTML = text
+    let manifest = chrome.runtime.getManifest()
+    document.getElementById("extensionVersion").innerHTML = `${chrome.i18n.getMessage("extension_version")}: ${manifest.version_name}`
 }
 
 //--------------LOCALIZATION------------
@@ -444,7 +456,8 @@ promises.push(new Promise(async (resolve, reject) => {
 
 Promise.all(promises).then(() => {
     console.log("Background worker ready")
-    document.addEventListener("DOMContentLoaded", () => {
+
+    let init = () => {
         defineDataBinds()
         translator()
         loadSettings()
@@ -452,6 +465,19 @@ Promise.all(promises).then(() => {
         checkSpotifyCredentialsStatus()
         checkInstanceStatus()
         checkSpotifyLoggedStatus()
-    });
+        setAboutPage()
+        showContainer("Overlay")
+    }
+
+    if (loaded) {
+        init()
+    } else {
+        document.addEventListener("DOMContentLoaded", () => {
+            init()
+        })
+    }
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+    loaded = true
+})

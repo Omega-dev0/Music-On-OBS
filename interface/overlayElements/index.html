@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .box {
+      margin: 20px;
+      border: white 1px solid;
+      display: flex;
+      padding: 80px;
+    }
+    :root {
+      --element-width: 300px;
+      --element-height: 15px;
+      --element-rotation: 0deg;
+
+      --element-border-radius: 5px;
+      --element-primary-color: #444444;
+      --element-secondary-color: #1688c8;
+      --element-roundness: 15px;
+
+      --element-font: "Arial";
+      --element-font-size: 20px;
+
+      --element-line-width: 40;
+
+      --progress: 0;
+
+      --transition-time: 0.1s;
+      --transition-style: linear;
+    }
+  </style>
+  <script>
+    let progress = 0;
+    let n = 256; // number of steps
+    let TWO_PI = 3.14159 * 2;
+    let i = 0;
+
+    setInterval(() => {
+      progress += 1;
+      if (progress > 100) progress = 0;
+      document.documentElement.style.setProperty("--progress", progress);
+      let red = 255 * Math.sin((i * TWO_PI) / n + 0);
+      let grn = 255 * Math.sin((i * TWO_PI) / n + TWO_PI / 3);
+      let blu = 255 * Math.sin((i * TWO_PI) / n + (2 * TWO_PI) / 3);
+      document.documentElement.style.setProperty("--element-secondary-color", `rgb(${red}, ${grn}, ${blu})`);
+      i += 1;
+    }, 100);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("height").addEventListener("input", (e) => {
+      document.documentElement.style.setProperty("--element-height", `${e.target.value}px`);
+    });
+
+    document.getElementById("width").addEventListener("input", (e) => {
+      document.documentElement.style.setProperty("--element-width", `${e.target.value}px`);
+    });
+
+    document.getElementById("rotation").addEventListener("input", (e) => {
+      document.documentElement.style.setProperty("--element-rotation", `${e.target.value}deg`);
+    });
+
+    document.documentElement.style.setProperty("--element-rotation", `${document.getElementById("rotation").value}deg`);
+    document.documentElement.style.setProperty("--element-width", `${document.getElementById("width").value}px`);
+    document.documentElement.style.setProperty("--element-height", `${document.getElementById("height").value}px`);
+  })
+  </script>
+  <body style="background-color: rgb(48, 48, 48); display: flex; flex-wrap: wrap">
+    <input type="number" id="height" value="20" />
+    <input type="number" id="width" value="200" />
+    <input type="number" id="rotation" value="0" />
+    <!--- PROGRESS BARS -->
+    <div class="box" id="progressBarLine">
+      <div
+        style="
+          width: var(--element-width);
+          height: var(--element-height);
+          background-color: var(--element-primary-color);
+          border-radius: var(--element-roundness);
+          transform: rotate(var(--element-rotation));
+        "
+      >
+        <div
+          class="progress"
+          style="
+            width: calc(var(--progress) * 1%);
+            height: 100%;
+            background-color: var(--element-secondary-color);
+            border-radius: var(--element-roundness);
+            transition: width var(--transition-time) var(--transition-style);
+          "
+        ></div>
+      </div>
+    </div>
+
+    <!--- PROGRESS BARS -->
+    <div class="box" id="progressBarCircle">
+      <div style="width: var(--element-width); height: var(--element-height); transform: rotate(var(--element-rotation));">
+        <svg
+          viewBox="0 0 250 250"
+          class="circular-progress"
+          preserveAspectRatio="none"
+          height="100%"
+          width="100%"
+          style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); width: 100%; height: 100%"
+        >
+          <circle
+            class="bg"
+            cx="125"
+            cy="125"
+            r="70"
+            fill="none"
+            stroke="var(--element-primary-color)"
+            stroke-width="var(--element-line-width)"
+          ></circle>
+          <circle
+            class="fg"
+            style="
+              transform: rotate(-90deg);
+              transform-origin: 125px 125px;
+              transition: stroke-dasharray var(--transition-time) var(--transition-style);
+            "
+            cx="125"
+            cy="125"
+            r="70"
+            fill="none"
+            stroke="var(--element-secondary-color)"
+            stroke-width="var(--element-line-width)"
+            stroke-dasharray="var(--dash) calc(var(--circumference) - var(--dash))"
+          ></circle>
+        </svg>
+      </div>
+    </div>
+
+    <!--- TEXTS -->
+    <div class="box" id="textbox" baseText="">
+      <label
+        style="
+          background-color: var(--element-secondary-color);
+          color: var(--element-primary-color);
+          font-family: var(--element-font);
+          font-size: var(--element-font-size);
+          height: var(--element-height);
+          width: var(--element-width);
+          transform: rotate(var(--element-rotation));
+        "
+      >
+        Text
+      </label>
+    </div>
+
+    <!--- IMG -->
+    <div class="box" id="image" isCustom=false>
+      <img
+        src="../../images/default/default.svg"
+        style="
+          width: var(--element-width);
+          height: var(--element-height);
+          border-radius: var(--element-roundness);
+          background-color: var(--element-secondary-color);
+          height: var(--element-height);
+          width: var(--element-width);
+          transform: rotate(var(--element-rotation));
+        "
+      />
+    </div>
+  </body>
+</html>

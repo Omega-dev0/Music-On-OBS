@@ -19,6 +19,7 @@
   "host_permissions": [
     "https://www.youtube.com/*",
     "https://open.spotify.com/*",
+    "https://api.spotify.com/*",
     "https://*.soundcloud.com/*",
     "https://music.youtube.com/*",
     "https://*.epidemicsound.com/*",

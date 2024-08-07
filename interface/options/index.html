@@ -7,10 +7,24 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Urbanist" rel="stylesheet" />
     <script src="script.js"></script>
+    <script src="overlayEditor.js"></script>
+    <style>
+      .overlayElementContainer {
+        align-content: center;
+        margin: auto 0 auto 15px;
+        --progress: 40;
+        --transition-time: 0.1s;
+        --transition-style: linear;
+        width: fit-content;
+        height: fit-content;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+    </style>
     <title>MOS Settings</title>
   </head>
 
-  <body>
+  <body style="overflow: hidden;">
     <!-- POPUPS -->
     <div class="popup" id="commandPopup" style="display: none; flex-direction: column; align-items: center; justify-content: start">
       <div style="display: flex; flex-direction: row; width: 100%">
@@ -32,24 +46,29 @@
           overflow-x: clip;
         "
       >
-        <p style="color: rgb(216, 216, 216); margin-left: 15px; margin-right: 15px; text-overflow:clip; text-wrap: wrap; width: 90%;" id="integrationPopupPreview">
+        <p
+          style="color: rgb(216, 216, 216); margin-left: 15px; margin-right: 15px; text-overflow: clip; text-wrap: wrap; width: 90%"
+          id="integrationPopupPreview"
+        >
           Current song: https://www.youtube.com/watch?v=6n3pFFPSlW4
         </p>
         <br />
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
-        <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button> <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button
+        <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button>
+        <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button
         ><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
       </div>
-      <h5 translated style="margin-right: auto">Paste this command into a custom command in your bot dashboard</h5><br>
+      <h5 translated style="margin-right: auto">Paste this command into a custom command in your bot dashboard</h5>
+      <br />
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: end; align-items: center; margin-top: auto">
         <button class="button red" id="integrationPopupClose">Close</button>
       </div>
     </div>
-    
+
     <!-- CONTENT -->
     <div class="sidebar">
-      <div style="display: flex; align-content: center; align-items: center">
+      <div style="display: flex; align-content: center; align-items: center; user-select: none;">
         <img src="../../images/default/default.png" class="icon" style="margin-top: 5px" />
         <span class="text" style="text-align: end; font-size: 1.5vw">Music On Stream</span>
       </div>
@@ -81,7 +100,12 @@
         <img class="icon prevent-select" src="../../images/icons/about.svg" /><a class="sidebar-link prevent-select" translated data="About">About</a>
       </div>
       <div class="sidebar-element" id="documentation link" outsideLink="true">
-        <img class="icon prevent-select" src="../../images/icons/exitlink.svg" /><a class="sidebar-link prevent-select" translated data="https://mos.omegadev.xyz/">Docs</a>
+        <img class="icon prevent-select" src="../../images/icons/exitlink.svg" /><a
+          class="sidebar-link prevent-select"
+          translated
+          data="https://mos.omegadev.xyz/"
+          >Docs</a
+        >
       </div>
     </div>
     <div class="content">
@@ -91,9 +115,9 @@
         <div class="box">
           <h3 translated>Create an instance</h3>
           <label translated>Token</label><br />
-          <input class="input-locked" type="text" readonly id="publicToken" /><br /><br/>
+          <input class="input-locked" type="text" readonly id="publicToken" /><br /><br />
           <label translated>Instance link</label><br />
-          <input class="input-locked" type="text" readonly id="instanceLink" /><br /><br/>
+          <input class="input-locked" type="text" readonly id="instanceLink" /><br /><br />
           <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
           <button class="button blue" translated id="copyInstanceLink">Copy instance link</button>
         </div>
@@ -103,37 +127,20 @@
           <label translated>Client ID</label><br />
           <input class="input-locked" saveTrigger type="text" id="spotifyId" /><br />
           <br />
-          <label translated >Client secret</label><br />
+          <label translated>Client secret</label><br />
           <input class="input-locked" saveTrigger type="password" id="spotifyAppToken" /><br />
           <br />
-          <label translated >Redirect URL</label><br />
-          <input class="input-locked" saveTrigger type="text" id="spotifyRedirectURI"  value="chrome-extension://apdlghnfhbfhpledfgipkeagacgigfkb/interface/spotifyAuth/index.html"/><br />
+          <label translated>Redirect URL</label><br />
+          <input
+            class="input-locked"
+            saveTrigger
+            type="text"
+            id="spotifyRedirectURI"
+            value="chrome-extension://apdlghnfhbfhpledfgipkeagacgigfkb/interface/spotifyAuth/index.html"
+          /><br />
           <button class="button blue" id="spotifyLogin" translated>Log in</button
           ><button class="button red" id="spotifyLogout" translated>Log out</button><br />
           <label id="spotifyStatus">Status: Not logged in</label>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Detailled documentation</h3>
-          <label translated>find_more_docs</label><br />
-          <label translated>Send suggestions and report issues on the </label
-          ><a href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1"
-            >Chrome web store</a
-          ><label translated> or on </label><a href="https://github.com/Omega-dev0/Music-On-OBS">Github</a>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Quick guides</h3>
-          <h4 translated>Installing the overlay</h4>
-          <br />
-          <label translated>how to install</label>
-          <br />
-          <br />
-          <br />
-          <br />
-          <h4 translated>Connecting the spotify API</h4>
-          <br />
-          <label translated>how to install spotify 1</label>
-          <label id="spotifyRedirectURI"></label><br />
-          <label translated>how to install spotify 2</label>
         </div>
         <!--
           SPOTIFY SECRET SETTING
@@ -174,78 +181,29 @@
         </div>
         -->
       </div>
-      <div class="container" id="Overlay" style="display: none">
+      <div class="container big-container" id="Overlay" style="display: none">
         <h1 style="flex-basis: 100%" translated>Overlay</h1>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Background settings</h3>
-          <input type="color" id="overlayPrimaryColor" saveTrigger /><label translated class="large-label">Primary gradient color</label><br />
-          <input type="color" id="overlaySecondaryColor" saveTrigger /><label translated class="large-label">Secondary gradient color</label>
-          <br /><br />
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayUseCover" /><label
-              class="prevent-select"
-              translated
-              title="Whether or not the overlay will display the songs art"
-              >Display the song cover</label
-            >
+        <div style="width: 95%; height: 100%; display: flex; flex-direction: column; margin: auto">
+          <div style="width: 100%; height: 100%; display: flex; flex-direction: row">
+            <div style="width: 80%; height: 100%; display: flex; flex-direction: column">
+              <div
+                style="
+                  width: 100%;
+                  height: 25%;
+                  margin-bottom: 15px;
+                  display: flex;
+                  flex-direction: row;
+                  overflow-y: hidden;
+                  overflow-x: auto;
+                  flex-wrap: nowrap;
+                "
+                class="box2"
+                id="overlayElementsScroller"
+              ></div>
+              <div style="width: 100%; height: 75%; overflow: hidden;" class="box2" id="canvas"></div>
+            </div>
+            <div style="width: 20%; height: 100%; margin-left: 15px" class="box2" id="propertiesContainer"></div>
           </div>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayUserCoverAsContent" /><label
-              class="prevent-select"
-              translated
-              title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box"
-              >Use cover as content background</label
-            >
-          </div>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Text settings</h3>
-          <input type="color" id="overlayTitleColor" saveTrigger /><label translated class="large-label">Title color</label>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplayTitle" /><label class="prevent-select" translated>Display title</label>
-          </div>
-          <br />
-          <br />
-          <input type="color" id="overlaySubtitleColor" saveTrigger /><label translated class="large-label">Subtitle color</label>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label class="prevent-select" translated>Display subtitle</label>
-          </div>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Progress bar settings</h3>
-          <input type="color" id="overlayProgressBarColor" saveTrigger /><label translated class="large-label">Progress bar color</label><br />
-          <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger /><label translated class="large-label"
-            >Progress bar background color</label
-          ><br />
-          <br />
-          <br />
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplayProgressBar" /><label class="prevent-select" translated>Display progress bar</label>
-          </div>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Overlay style</h3>
-          <div style="align-content: center">
-            <select style="width: 90%; margin-left: 5%" id="styleSelection" saveTrigger>
-              <option value="default">Default</option>
-              <option value="transparent">Transparent</option>
-              <option value="classic">Classic</option>
-              <option value="legacy">Legacy</option>
-            </select>
-          </div>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%">Advanced settings</h3>
-          <br />
-          <br />
-          <label>Just add the name of the font ex: Audiowide or Tahoma</label><br />
-          <label>Supports web fonts and google fonts</label><br />
-          <br />
-          <label>Title text font</label><br />
-          <input class="input-locked" type="text" value="" saveTrigger id="titleTextFont" /><br />
-          <br />
-          <label>Subtitle text font</label><br />
-          <input class="input-locked" type="text" value="" saveTrigger id="subtitleTextFont" /><br />
         </div>
       </div>
       <div class="container" id="Integration" style="display: none">
@@ -275,41 +233,109 @@
       </div>
       <div class="container" id="About" style="display: none">
         <h1 style="flex-basis: 100%" translated>About</h1>
-        <div class="box">
+        <div class="box" id="platformsBox">
           <h3 translated>Supported platforms</h3>
-          <img class="icon" src="../../images/platformIcons/soundcloud.webp" style="height: 5vh; width: auto" />
-          <img class="icon" src="../../images/platformIcons/spotify.webp" style="height: 5vh; width: auto" />
-          <img class="icon" src="../../images/platformIcons/YouTube.svg" style="height: 5vh; width: auto" />
-          <img class="icon" src="../../images/platformIcons/Youtube_Music_icon.svg" style="height: 5vh; width: auto" />
-          <img class="icon" src="../../images/platformIcons/deezer.png" style="height: 5vh; width: auto" />
-          <img class="icon" src="../../images/platformIcons/Pretzel.webp" style="height: 5vh; width: auto" /><br />
-          <img class="icon" src="../../images/platformIcons/Epidemic_Sound.svg" style="height: 5vh; width: auto" />
         </div>
         <div class="box">
-          <h3 translated>Like_the_extension_Share_and_star_it</h3>
-          <br />
-          <a target="”_blank”" href="https://chrome.google.com/webstore/detail/music-on-stream/gmhgoccodihlkbhpfkonoglnbjdbmgpl?hl=en-GB&authuser=1"
-            ><img
-              class="icon"
-              src="https://upload.wikimedia.org/wikipedia/commons/c/c5/Google_Chrome_Web_Store_icon_2015.svg"
-              style="height: 10vh; width: auto"
-          /></a>
-          <a
-            target="”_blank”"
-            href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fmusic-on-stream%2Fgmhgoccodihlkbhpfkonoglnbjdbmgpl%3Fhl%3Den-GB%26authuser%3D1&hashtags=MusicOnStream"
-            ><img
-              class="icon"
-              src="https://cdn.cms-twdigitalassets.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.2560.png"
-              style="height: 10vh; width: auto"
-          /></a>
+          <h3 translated>Extension information</h3>
+          <label id="extensionVersion"></label><br />
         </div>
-        <div class="box">
-          <h3 translated>FAQ</h3>
-          <h4 translated>FAQQ1</h4>
-          <h5 translated>FAQA1</h5>
-          <h4 translated>FAQQ2</h4>
-          <h5 translated>FAQA2</h5>
+      </div>
+    </div>
+
+    <!-- OVERLAY ELEMENTS -->
+    <div style="display: none">
+      <div class="overlayElementContainer" id="OVERLAY_progressBarLine">
+        <div
+          style="
+            width: var(--element-width);
+            height: var(--element-height);
+            background-color: var(--element-primary-color);
+            border-radius: var(--element-roundness);
+            transform: rotate(var(--element-rotation));
+          "
+        >
+          <div
+            class="progress"
+            style="
+              width: calc(var(--progress) * 1%);
+              height: 100%;
+              background-color: var(--element-secondary-color);
+              border-radius: var(--element-roundness);
+              transition: width var(--transition-time) var(--transition-style);
+            "
+          ></div>
         </div>
+      </div>
+
+      <div class="overlayElementContainer" id="OVERLAY_progressBarCircle">
+        <div style="width: var(--element-width); height: var(--element-height); transform: rotate(var(--element-rotation))">
+          <svg
+            viewBox="0 0 250 250"
+            class="circular-progress"
+            preserveAspectRatio="none"
+            style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); height: 100%; width: 100%;"
+            draggable="false"
+            >
+            <circle
+              class="bg"
+              cx="125"
+              cy="125"
+              r="70"
+              fill="none"
+              stroke="var(--element-primary-color)"
+              stroke-width="var(--element-line-width)"
+            ></circle>
+            <circle
+              class="fg"
+              style="
+                transform: rotate(-90deg);
+                transform-origin: 125px 125px;
+                transition: stroke-dasharray var(--transition-time) var(--transition-style);
+              "
+              cx="125"
+              cy="125"
+              r="70"
+              fill="none"
+              stroke="var(--element-secondary-color)"
+              stroke-width="var(--element-line-width)"
+              stroke-dasharray="var(--dash) calc(var(--circumference) - var(--dash))"
+            ></circle>
+          </svg>
+        </div>
+      </div>
+
+      <!--- TEXTS -->
+      <div class="overlayElementContainer" id="OVERLAY_textbox" baseText="">
+        <label
+          style="
+            background-color: var(--element-secondary-color);
+            color: var(--element-primary-color);
+            font-family: var(--element-font);
+            font-size: var(--element-font-size);
+            height: var(--element-height);
+            width: var(--element-width);
+            transform: rotate(var(--element-rotation));
+          "
+        >
+          Text
+        </label>
+      </div>
+
+      <!--- IMG -->
+      <div class="overlayElementContainer" id="OVERLAY_image" isCustom="false">
+        <img
+          src="../../images/default/default.svg"
+          style="
+            width: var(--element-width);
+            height: var(--element-height);
+            border-radius: var(--element-roundness);
+            background-color: var(--element-secondary-color);
+            height: var(--element-height);
+            width: var(--element-width);
+            transform: rotate(var(--element-rotation));
+          "
+        />
       </div>
     </div>
   </body>

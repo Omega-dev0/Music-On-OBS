@@ -53,16 +53,22 @@ async function getAccesstokenFromRefreshToken() {
 }
 
 async function getCurrentPlayingTrack() {
-    const endpointUrl = "https://api.spotify.com/v1/me/player/currently-playing";
+    const endpointUrl = `https://api.spotify.com/v1/me/player/currently-playing`;
     const requestOptions = {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${spotifyAPIState.spotifyToken}`,
+            "Access-Control-Allow-Origin": "*",
         },
     };
 
     let response = await fetch(endpointUrl, requestOptions)
+    console.log("resp",response, response.status)
     if (response.status != 200) {
+        if(response.status == 204) {
+            console.log("No track is currently playing.")
+            return
+        }
         throw new Error("Failed to get spotify track!", response);
     }
 
@@ -96,10 +102,10 @@ class SpotifyScanner {
         this.updateIfAllowed();
         if (!this.allowed) { return }
         let data = await dataGetter();
-        logger(this.settings.debug, `[MOS][SCANNER - UPDATE]: (${this.platform})`, this)
+       // logger(this.settings.debug, `[MOS][SCANNER - UPDATE]: (${this.platform})`, this)
         if (JSON.stringify(this.data) == JSON.stringify(data)) { return }
 
-        logger(this.settings.debug, "[SCANNER] Updating scanner with platform: " + this.platform)
+        //logger(this.settings.debug, "[SCANNER] Updating scanner with platform: " + this.platform)
         await chrome.storage.local.set({
             "extension-scanner-state": data
         })
@@ -159,7 +165,17 @@ async function spotifyScannerInit(){
         await checkTokenValidity();
 
         let track = await getCurrentPlayingTrack();
-
+        if(track == undefined) {
+            return {
+                paused: true,
+                title: "Unknown",
+                subtitle: "Unknown",
+                currentTime: 0,
+                currentLength: 0,
+                url: "",
+                cover: "",
+            }
+        }
         let data = {
             paused: !track.is_playing,
             title: track.item.name,

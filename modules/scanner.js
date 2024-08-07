@@ -48,7 +48,7 @@ class Scanner {
         if (this.registered == false) {
             await this.updateScannerInfo();
         }
-        logger(this.settings.debug, `[MOS][SCANNER - UPDATE REQUEST]: (${this.platform}, ${this.tabId}): registered: ${this.registered}, allowed: ${this.allowed}`, this)
+        logger(this.settings.debug, `[MOS][SCANNER - UPDATE REQUEST]: (${this.platform}, ${this.tabId}): registered: ${this.registered}, allowed: ${this.allowed}`)
         await this.updateIfAllowed();
         if (!this.allowed) { return }
         let data = dataGetter();
@@ -70,7 +70,7 @@ class Scanner {
 
         if (JSON.stringify(this.data) == JSON.stringify(data)) { return }
 
-        logger(this.settings.debug, "[SCANNER - UPDATE] Updating scanner with platform: " + this.platform)
+        logger(this.settings.debug, "[SCANNER - UPDATE] Updating scanner with platform: " + this.platform, data, this.data, this)
 
         await chrome.storage.local.set({
             "extension-scanner-state": data

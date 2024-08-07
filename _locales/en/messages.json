@@ -325,6 +325,9 @@
   },
   "docs":{
     "message":"Docs"
+  },
+  "extension_version":{
+    "message":"Extension version"
   }
 
 }
