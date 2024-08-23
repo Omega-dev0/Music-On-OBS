@@ -20,11 +20,15 @@
         user-select: none;
         -webkit-user-drag: none;
       }
+
+      .elementSelected {
+        outline: 2px solid rgb(255, 255, 255);
+      }
     </style>
     <title>MOS Settings</title>
   </head>
 
-  <body style="overflow: hidden;">
+  <body style="overflow: hidden">
     <!-- POPUPS -->
     <div class="popup" id="commandPopup" style="display: none; flex-direction: column; align-items: center; justify-content: start">
       <div style="display: flex; flex-direction: row; width: 100%">
@@ -68,7 +72,7 @@
 
     <!-- CONTENT -->
     <div class="sidebar">
-      <div style="display: flex; align-content: center; align-items: center; user-select: none;">
+      <div style="display: flex; align-content: center; align-items: center; user-select: none">
         <img src="../../images/default/default.png" class="icon" style="margin-top: 5px" />
         <span class="text" style="text-align: end; font-size: 1.5vw">Music On Stream</span>
       </div>
@@ -200,9 +204,16 @@
                 class="box2"
                 id="overlayElementsScroller"
               ></div>
-              <div style="width: 100%; height: 75%; overflow: hidden;" class="box2" id="canvas"></div>
+              <div style="width: 100%; height: 75%; overflow: hidden" class="box2" id="canvas"></div>
             </div>
-            <div style="width: 20%; height: 100%; margin-left: 15px" class="box2" id="propertiesContainer"></div>
+            <div style="width: 20%; height: 100%; margin-left: 15px; display: flex; flex-direction: column; align-items: center" class="box2">
+              <h3 style="" translated>Properties</h3>
+              <h4 style="" id="properties_elementName" translated></h4>
+              <div
+                id="propertiesContainer"
+                style="width: 100%; align-items: center; justify-content: center; display: flex; flex-direction: column"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -274,9 +285,9 @@
             viewBox="0 0 250 250"
             class="circular-progress"
             preserveAspectRatio="none"
-            style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); height: 100%; width: 100%;"
+            style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); height: 100%; width: 100%"
             draggable="false"
-            >
+          >
             <circle
               class="bg"
               cx="125"
