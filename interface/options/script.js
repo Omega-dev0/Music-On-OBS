@@ -221,6 +221,10 @@ function bindEvents() {
     document.getElementById("spotifyLogout").addEventListener("click", () => {
         spotifyLogOut()
     })
+
+    document.getElementById("createNewInstance").addEventListener("click", createInstance)
+    document.getElementById("copyInstanceLink").addEventListener("click", copyInstanceLink)
+
 }
 function checkInstanceStatus() {
     if (!isInstanceValid()) {
@@ -230,7 +234,17 @@ function checkInstanceStatus() {
     } else {
         document.getElementById("integrationCommandCopy").removeAttribute("customDisable")
         document.getElementById("copyInstanceLink").removeAttribute("customDisable")
+
+        document.getElementById("instanceLink").value = getBaseURL("instance")
     }
+}
+
+//-------- INSTANCE MANAGEMENT----------
+function createInstance(){
+    chrome.runtime.sendMessage({ key: "instance-create", payload: {} });
+}
+function copyInstanceLink(){
+    copyTextToClipboard(document.getElementById("instanceLink").value)
 }
 
 //----------------UTILITIES-------------
@@ -412,7 +426,6 @@ function loadSettings() {
     for (let categorie in DataBinds.extensionSettings) {
         for (let key in DataBinds.extensionSettings[categorie]) {
             let doc = DataBinds.extensionSettings[categorie][key];
-            console.log(key, doc)
             if (doc.load == false) continue;
             if (doc.element == null) continue;
             if (extensionSettings[categorie][key] == undefined) {
@@ -466,7 +479,7 @@ Promise.all(promises).then(() => {
         checkInstanceStatus()
         checkSpotifyLoggedStatus()
         setAboutPage()
-        showContainer("Overlay")
+        showContainer("Instance")
     }
 
     if (loaded) {

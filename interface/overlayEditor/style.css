@@ -1,0 +1,95 @@
+body {
+  background-color: #001220;
+  display: flex;
+  overflow: scroll;
+  padding: 0px;
+  margin: 0px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#canvas {
+  background-color: #272d33;
+  background-image: radial-gradient(circle, #7e8a97 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: center;
+  width: 1200px;
+  height: 550px;
+  border-radius: 15px;
+}
+
+#canvasContainer {
+  width: 80vw;
+  height: 80vh;
+  background-color: #1f2327;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#elementsContainer {
+  width: 80vw;
+  height: 20vh;
+  background-color: rgba(17, 34, 187, 0.514);
+  display: flex;
+  flex-direction: row;
+}
+
+#container2 {
+  width: 80vw;
+  height: 100vh;
+  background-color: rgba(187, 113, 17, 0.514);
+  display: flex;
+  flex-direction: column;
+}
+
+.selected2::after {
+  content: "";
+  position: absolute;
+  border: 0.5px dashed #ffffff;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+.selected2::after {
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+.anchor {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 20%;
+  -ms-touch-action: none;
+  touch-action: none;
+  user-select: none;
+}
+
+.rotate-handle {
+  width: 10px;
+  height: 10px;
+  background-color: #ffffff;
+  border-radius: 20%;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+deckgo-drr {
+  --deckgo-drr-anchor-border-radius: 0px;
+  --deckgo-drr-anchor-background: #ffffff;
+  --deckgo-drr-anchor-height: 8px;
+  --deckgo-drr-anchor-width: 8px;
+  --deckgo-drr-border: 0.5px solid #ffffff;
+  --deckgo-drr-rotate-anchor-action-border: 0.5px solid #ffffff;
+  --deckgo-drr-rotate-anchor-height: 25px;
+  --deckgo-drr-rotate-anchor-action-width: 10px;
+  --deckgo-drr-rotate-anchor-action-height: 10px;
+  --deckgo-drr-rotate-anchor-presentation-border-right	: 0.5px solid #ffffff;
+  --deckgo-drr-rotate-anchor-presentation-height: 15px;
+  --deckgo-drr-rotate-anchor-action-background: #ffffff;
+}

@@ -228,6 +228,14 @@ body {
   .red {
     background-color: #a7233a;
   }
+
+  .realBlue {
+    background-color: #004594;
+  }
+
+  .realBlue:hover {
+    background-color: #0066b2;
+  }
   
   .checkbox-container {
     position: relative;
@@ -391,5 +399,5 @@ body {
   }
 
   .untranslated {
-      background-color: aqua;
+      
   }

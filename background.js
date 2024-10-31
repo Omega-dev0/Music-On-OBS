@@ -152,6 +152,17 @@ actions["scanner-failure-report"] = async (sender, message, sendResponse) => {
     emitServerEvent("scanner-failure-report", message.data)
     sendResponse();
 }
+actions["instance-create"] = async (sender, message, sendResponse) => {
+    emitServerEvent("instance-create",{}).then(async (response) => {
+        extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+        extensionSettings.instance.privateToken = response.privateToken;
+        extensionSettings.instance.publicToken = response.publicToken;
+        chrome.storage.local.set({
+            "extension-settings": extensionSettings,
+        })
+    })
+    sendResponse()
+}
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Urbanist" rel="stylesheet" />
     <script src="script.js"></script>
-    <script src="overlayEditor.js"></script>
     <style>
       .overlayElementContainer {
         align-content: center;
@@ -123,7 +122,6 @@
           <label translated>Instance link</label><br />
           <input class="input-locked" type="text" readonly id="instanceLink" /><br /><br />
           <button class="button blue" translated id="createNewInstance">Create new instance</button><br />
-          <button class="button blue" translated id="copyInstanceLink">Copy instance link</button>
         </div>
 
         <div class="box">
@@ -135,13 +133,14 @@
           <input class="input-locked" saveTrigger type="password" id="spotifyAppToken" /><br />
           <br />
           <label translated>Redirect URL</label><br />
+          <div style="width: 20vw; height: inherit">
           <input
             class="input-locked"
             saveTrigger
             type="text"
             id="spotifyRedirectURI"
-            value="chrome-extension://apdlghnfhbfhpledfgipkeagacgigfkb/interface/spotifyAuth/index.html"
-          /><br />
+            style="position: absolute"
+          /><button id="copyInstanceLink" style="position:absolute"></button></div><br />
           <button class="button blue" id="spotifyLogin" translated>Log in</button
           ><button class="button red" id="spotifyLogout" translated>Log out</button><br />
           <label id="spotifyStatus">Status: Not logged in</label>

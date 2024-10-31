@@ -46,10 +46,7 @@ async function connectToServer() {
  */
 function emitServerEvent(eventName, payload) {
     if(extensionConfig.fakeServerConnection){
-        if(hasWarned) return new Promise((resolve, reject) => {resolve()})
-        console.warn("[SOCKET] Fake server connection enabled")
-        hasWarned = true
-        return new Promise((resolve, reject) => {resolve()})
+        return new Promise((resolve, reject) => {resolve(fakePackets(eventName,payload))})
     }
     return new Promise((resolve, reject) => {
         if (!socket) {
@@ -59,4 +56,14 @@ function emitServerEvent(eventName, payload) {
             resolve(response);
         });
     });
+}
+
+
+function fakePackets(eventName,payload){
+    console.log(`[FAKE] ${eventName}`,payload)
+    if(eventName == "instance-create"){
+        return {publicToken:"publicTokenTest", privateToken:"privateTokenTest"}
+    }
+
+    return {}
 }
