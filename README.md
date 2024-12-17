@@ -3,7 +3,7 @@
 
 ![Size](https://img.shields.io/chrome-web-store/size/gmhgoccodihlkbhpfkonoglnbjdbmgpl) ![Version](https://img.shields.io/chrome-web-store/v/gmhgoccodihlkbhpfkonoglnbjdbmgpl)
 
-[Server status](https://stats.uptimerobot.com/WlfiDHH8BS): ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m798020830-49a986ca3bf5c25c105f1c0a)
+![Uptime Robot status](https://img.shields.io/uptimerobot/status/m798020830-49a986ca3bf5c25c105f1c0a)
 
 
 
@@ -11,6 +11,10 @@ This is a repo for the source code of the extension
 
 ## A source not working? A suggestion?
 Please contact me right away by creating an issue
+
+## Trouble connecting ?
+Check if the server is down [here](https://stats.uptimerobot.com/WlfiDHH8BS)
+If it's up and you cannot connect, contact me by creating an issue.
 
 ## Status of the extension
 I am currently pretty busy and dont have time to work on the extension.
