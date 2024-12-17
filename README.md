@@ -1,4 +1,12 @@
 # Music on stream
+![Users](https://img.shields.io/chrome-web-store/users/gmhgoccodihlkbhpfkonoglnbjdbmgpl) ![Rating](https://img.shields.io/chrome-web-store/rating/gmhgoccodihlkbhpfkonoglnbjdbmgpl)
+
+![Size](https://img.shields.io/chrome-web-store/size/gmhgoccodihlkbhpfkonoglnbjdbmgpl) ![Version](https://img.shields.io/chrome-web-store/v/gmhgoccodihlkbhpfkonoglnbjdbmgpl)
+
+[Server status](https://stats.uptimerobot.com/WlfiDHH8BS): ![Uptime Robot status](https://img.shields.io/uptimerobot/status/m798020830-49a986ca3bf5c25c105f1c0a)
+
+
+
 This is a repo for the source code of the extension
 
 ## A source not working? A suggestion?
