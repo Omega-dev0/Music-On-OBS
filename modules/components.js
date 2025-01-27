@@ -1,1 +1,0 @@
-import{p as e,b as t}from"./p-d5cea43e.js";(()=>{const t=import.meta.url,i={};return""!==t&&(i.resourcesUrl=new URL(".",t).href),e(i)})().then((e=>t([["p-e50e9e93",[[1,"deckgo-drr",{unit:[1],resize:[1028],drag:[1],rotation:[4],text:[516],width:[32],height:[32],minWidth:[32],minHeight:[32],top:[32],left:[32],rotate:[32],selected:[32],moving:[32],editing:[32]}]]]],e)));

@@ -247,6 +247,9 @@ function copyInstanceLink(){
     copyTextToClipboard(document.getElementById("instanceLink").value)
 }
 
+//------------ GENERATE OVERLAY JSON ---------
+
+
 //----------------UTILITIES-------------
 function fallbackCopyTextToClipboard(text) {
     var textArea = document.createElement("textarea");

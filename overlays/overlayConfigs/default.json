@@ -1,0 +1,21 @@
+{
+    "elements" : [
+        {
+            "type": "text",
+            "text": "$TITLE",
+            "textColor": "$TITLE_COLOR",
+            "textFontSize": "20px",
+            "textFontFamily": "Arial, Helvetica, sans-serif",
+            "textFontWeight": "bold",
+
+            "hidden": "$HIDE_TITLE",
+
+            "x": "0px",
+            "y": "0px",
+            "width": "100px",
+            "height": "15px",
+            "transform": ""
+        }
+    ],
+    "version": "0"
+}

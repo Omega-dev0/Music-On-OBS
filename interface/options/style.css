@@ -289,6 +289,18 @@ body {
     position: relative;
     overflow: hidden;
   }
+
+  input[type="number"] {
+    width: 2rem;
+    height: 1.05rem;
+    border-radius: 0.15rem;
+    border: none;
+    margin-left: 4px;
+    margin-right: 3px;
+    margin-top: 0.35rem;
+    position: relative;
+    overflow: hidden;
+  }
   
   input[type="color"]::before {
     content: "";

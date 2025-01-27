@@ -265,6 +265,11 @@ async function onInstalled() {
             lastSeenPopupVersion: chrome.runtime.getManifest().version,
         }
     });
+
+
+    
+
+
     onLaunch();
 }
 
