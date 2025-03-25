@@ -1,0 +1,296 @@
+{
+    "extensionName": {
+      "message": "Музло-оверлей"
+    },
+    "updateName": {
+      "message": "2.2 - Revamp"
+    },
+    "testLink": {
+      "message": "LOL"
+    },
+    "Instance": {
+      "message": "Экземпляр"
+    },
+    "Behaviour": {
+      "message": "Поведение"
+    },
+    "Overlay": {
+      "message": "Оверлей"
+    },
+    "Integration": {
+      "message": "Интеграция"
+    },
+    "Instance_settings": {
+      "message": "Настройки экземпляра"
+    },
+    "Create_an_instance": {
+      "message": "Создать экземпляр"
+    },
+    "Instance_token": {
+      "message": "Токен экземляра"
+    },
+    "Instance_link": {
+      "message": "Ссылка экземпляра"
+    },
+    "Create_new_instance": {
+      "message": "Создать новый экземляр"
+    },
+    "Copy_instance_link": {
+      "message": "Скопировать оверлей-ссылку"
+    },
+    "Load_an_instance": {
+      "message": "Загрузить экземпляр"
+    },
+    "Loading_a_token_will_destroy_the_previous_instance": {
+      "message": "⚠️ Загрузка токена уничтожит предыдущий экземпляр."
+    },
+    "Load_instance_from_token": {
+      "message": "Загрузка экземпляра из токена"
+    },
+    "Behaviour_settings": {
+      "message": "Параметры поведения"
+    },
+    "Display_overlay_when_paused": {
+      "message": "Отображение оверлея при приостановке"
+    },
+    "The_overlay_will_disappear_if_you_pause_the_music_instead_of_displaying_a_pause_message": {
+      "message": "Оверлей исчезнет, если вы поставите музыку на паузу, а не отобразит сообщение о паузе."
+    },
+    "Smart_tab_change": {
+      "message": "Интеллектуальное изменение вкладок"
+    },
+    "The_extension_will_try_to_always_be_listening_on_an_active_tab_instead_of_waiting_for_a_manual_change": {
+      "message": "Расширение будет стараться всегда прослушивать активную вкладку, а не ждать ручного изменения."
+    },
+    "Overlay_settings": {
+      "message": "Настройки оверлея"
+    },
+    "Integration_settings": {
+      "message": "Настройки интеграции"
+    },
+    "Bot_messages": {
+      "message": "Сообщения бота"
+    },
+    "Default_message": {
+      "message": "Стандартное сообщение"
+    },
+    "Paused_message": {
+      "message": "Сообщение паущы"
+    },
+    "Error_message": {
+      "message": "Сообщение ошибки"
+    },
+    "Copy_Nightbot_command": {
+      "message": "Скопировать настройки Nightbot"
+    },
+    "Copy_Stream_elements_command": {
+      "message": "Команда Копировать элементы потока"
+    },
+    "Start": {
+      "message": "Начать"
+    },
+    "Stop": {
+      "message": "Пауза"
+    },
+    "Active_listener":{
+      "message":"Активный листенер"
+    },
+    "Status": {
+      "message": "Статус"
+    },
+    "Active": {
+      "message": "Активно"
+    },
+    "Inactive": {
+      "message": "Не активно"
+    },
+    "Paused": {
+      "message": "На паузе"
+    },
+    "Copy_token": {
+      "message": "Скопировать токен"
+    },
+    "Dynamic_values": {
+      "message": "Динамические значения"
+    },
+    "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
+      "message": "Вы можете использовать динамические значения для вставки данных в ответ бота:"
+    },
+    "__SONG___The_current_song_name": {
+      "message": "[__SONG__]: Название текущей песни"
+    },
+    "__SUBTITLE___The_current_song_chapter_or_song_author": {
+      "message": "[__SUBTITLE__]: Текущая глава песни или автор песни"
+    },
+    "__LINK___The_URL_of_the_current_listening_tab": {
+      "message": "[__LINK__]: URL-адрес текущей вкладки прослушивания"
+    },
+    "__TIME___The_current_song_progression_might_not_be_always_available": {
+      "message": "[__TIME__]: Текущая прогрессия песни (может быть не всегда доступна)"
+    },
+    "__DURATION___The_current_song_duration_might_not_be_always_available": {
+      "message": "[__DURATION__]: Текущая продолжительность песни (может быть не всегда доступна)"
+    },
+    "API_authentification":{
+      "message":"Аутентификация API"
+    },
+    "Spotify_API":{
+      "message":"Spotify API"
+    },
+    "Logout":{
+      "message":"Выход"
+    },
+    "Login":{
+      "message":"Вход"
+    },
+    "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state":{
+      "message":"Сканер определит, что музыка поставлена на паузу, на основе временной метки и вызовет состояние паузы"
+    },
+    "Detect_pause":{
+      "message":"Обнаружение паузы"
+    },
+    "Listening_to":{
+      "message":"Слушать:"
+    },
+    "Background_settings":{
+      "message":"Настройки фона"
+    },
+    "Primary_gradient_color":{
+      "message":"Основной цвет градиента"
+    },
+    "Secondary_gradient_color":{
+      "message":"Вторичный цвет градиента"
+    },
+    "Display_the_song_cover":{
+      "message":"Показывать обложку песни"
+    },
+   "Use_cover_as_content_background":{
+      "message":"Используйте обложку в качестве фона для контента"
+    },
+    "Title_color":{
+      "message":"Цвет названия трека"
+    },
+    "Display_title":{
+      "message":"Показывать название трека"
+    },
+    "Display_subtitle":{
+      "message":"Показывать исполнителя трека"
+    },
+    "Subtitle_color":{
+      "message":"Цвет исполнителя трека"
+    },
+    "Progress_bar_color":{
+      "message":"Цвет прогресс-бара"
+    },
+    "Progress_bar_background_color":{
+      "message":"Цвет фона прогресс-бара"
+    },
+    "Display_progress_bar":{
+      "message":"Показывать прогресс-бар"
+    },
+    "Text_settings":{
+      "message":"Настройки текста"
+    },
+    "Progress_bar_settings":{
+      "message":"Настройки прогресс-бара"
+    },
+    "Overlay_style":{
+      "message":"Стиль оверлея"
+    },
+    "Whether_or_not_the_overlay_will_display_the_songs_art":{
+      "message":"Будет ли оверлей отображать обложку песни."
+    },
+    "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box":{
+      "message":"Должен ли оверлей пытаться использовать цвета/изображение обложки песни в качестве фона для блока содержимого."
+    },
+    "About":{
+      "message":"About"
+    },
+    "Supported_platforms":{
+      "message": "Поддерживаемые платформы"
+    },
+    "how_to_install":{
+      "message": "1) - Создай экземпляр <br>2) - Скопируй ссылку оверлея <br>3) - Отройке OBS или streamlabs и создайте источник в браузере. <br>4) - Вставьте ссылку на оверлей в источник <br>5) - Установите ширину 800px и высоту 400px. <br><br>Должна появиться накладка по умолчанию, которая будет обновляться во время прослушивания вкладок"
+    },
+    "Installing_the_overlay":{
+      "message":"Установка оверлея"
+    },
+    "FAQA1":{
+      "message":"Если вы столкнулись с проблемой, когда вкладка не обновляет оверлей, лучший способ решить ее - перезагрузить вкладку (возможно, несколько раз). Если это не помогло, проверьте правильность ссылки в источнике браузера и в крайнем случае снова включите расширение."
+    },
+    "FAQQ1":{
+      "message":"Я прослушиваю вкладку, но оверлей не обновляется, что делать?"
+    },
+    "FAQA2":{
+      "message":"По техническим причинам невозможно считывать цвета с обложек с таких платформ, как Youtube и youtube music. Также невозможно получить обложки с некоторых платформ, таких как deezer или epidemic sound."
+    },
+    "FAQQ2":{
+      "message":"На некоторых платформах нет цветного градиента, а вместо него в качестве фона используется обложка, почему так происходит?"
+    },
+    "FAQ":{
+      "message":"FAQ"
+    },
+    "Like_the_extension_Share_and_star_it":{
+      "message":"Понравилось расширение? Подпишитесь на канал!"
+    },
+    "DISPLAY_PAUSE_EXPLANATIONS":{
+      "message": "Оверлей исчезнет, если вы поставите музыку на паузу, а не отобразит сообщение о паузе."
+    },
+    "DETECT_PAUSE_EXPLANATIONS":{
+      "message":"Сканер определит, что музыка поставлена на паузу, на основе временной метки и вызовет состояние паузы"
+    },
+    "Send_suggestions_and_report_issues_on_the_":{
+      "message":"Направляйте предложения и сообщайте о проблемах: "
+    },
+    "_or_on_":{
+      "message":" или: "
+    },
+    "how_to_install_spotify_1":{
+      "message": "1) - Откройте <a href='https://developer.spotify.com/'>Spotify for developers</a> и войдите в свой аккаунт <br>2) - Откройте <a href='https://developer.spotify.com/dashboard'>Dashboard </a> и создайте приложение <br>3) - Назовите приложение (имя не имеет значения) и задайте URI перенаправления: <br>"
+    },
+    "how_to_install_spotify_2":{
+      "message": "4) - Выберите Web API и сохраните приложение <br>5) - Откройте настройки и скопируйте идентификатор клиента и секрет клиента в поля <br>6) - Нажмите кнопку входа, чтобы связать свой аккаунт<br><br>Во всплывающем окне расширения в списке сканеров должна появиться опция Spotify API"
+    },
+    "Connecting_the_spotify_API":{
+      "message": "Подключение к API Spotify"
+    },
+    "Save":{
+      "message": "Сохранить"
+    },
+    "Log_in":{
+      "message": "Войти"
+    },
+    "Log_out":{
+      "message": "Выйти"
+    },
+    "Client_secret":{
+      "message": "Client secret"
+    },
+    "Client_ID":{
+      "message": "Client ID"
+    },
+    "Spotify_API_setup":{
+      "message": "Настройки API Spotify"
+    },
+    "integration_explanations":{
+      "message":"Расширение может быть настроено на ответ на команду Nightbot, вам не нужно обновлять команду Nightbot каждый раз, когда вы вносите изменения.<br><br> Чтобы начать, создайте новую пользовательскую команду на панели управления Nightbot и вставьте строку пользовательской команды, приведенную ниже, в поле сообщения"
+    },
+    "Detailled_documentation":{
+      "message":"Подробная документация"
+    },
+    "find_more_docs":{
+      "message":"Подробнее о документации на <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+    },
+    "defaultIntegrationMessage":{
+      "message":"Текущая песня: [__LINK__]"
+    },
+    "errorIntegrationMessage":{
+      "message":"В данный момент музыка приостановлена"
+    },
+    "pausedIntegrationMessage":{
+      "message":"Невозможно получить название текущей песни!"
+    }
+  
+  
+  }
+  

@@ -161,7 +161,8 @@ function getPlatformFromURL(url) {
     "music.youtube.com": "youtube music",
     "epidemicsound.com": "epidemic sound",
     "www.deezer.com": "deezer",
-    "play.pretzel.rocks": "pretzel"
+    "play.pretzel.rocks": "pretzel",
+    "music.yandex.ru": "yandex"
   }
 
   return platforms[new URL(url).host]

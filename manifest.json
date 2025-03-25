@@ -1,81 +1,88 @@
 {
-  "manifest_version": 3,
-  "name": "__MSG_extensionName__",
-  "version": "2.2.1.2",
-  "version_name": "2.2 - Revamp",
-
-  "default_locale": "en",
-
-  "author": "Omega77073",
-  "short_name": "OBS Music",
-  "description": "Display your music on your stream",
-  "homepage_url": "https://omega-2.gitbook.io/music-on-stream-docs/",
-
-  "background": {
-    "service_worker": "background.js"
-  },
-
-  "permissions": ["storage", "tabs"],
-  "host_permissions": ["https://*.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://play.pretzel.rocks/*", "https://*.epidemicsound.com/*"],
-
-  "action": {
-    "default_popup": "/interface/popup/index.html",
-    "default_title": "__MSG_extensionName__",
-    "default_icon": {
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  
+    "manifest_version": 3,
+    "name": "__MSG_extensionName__",
+    "version": "2.2.1.2",
+    "version_name": "2.2 - Revamp",
+  
+    "default_locale": "ru",
+  
+    "author": "Omega77073. Modified by Herbal.",
+    "short_name": "OBS Music",
+    "description": "Отображай свою музыку на стримах",
+    "homepage_url": "https://t.me/look_im_model",
+  
+    "background": {
+      "service_worker": "background.js"
+    },
+  
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://*.youtube.com/*", "https://open.spotify.com/*", "https://*.soundcloud.com/*", "https://play.pretzel.rocks/*", "https://*.epidemicsound.com/*", "https://music.yandex.ru/*"],
+  
+    "action": {
+      "default_popup": "/interface/popup/index.html",
+      "default_title": "__MSG_extensionName__",
+      "default_icon": {
+        "16": "/images/default/default16.png",
+        "32": "/images/default/default32.png",
+        "48": "/images/default/default48.png",
+        "128": "/images/default/default128.png"
+      }
+    },
+  
+    "options_ui": {
+      "page": "/interface/options/index.html",
+      "open_in_tab": true
+    },
+    "web_accessible_resources": [
+      {
+        "resources": ["/interface/spotifyAuth/index.html"],
+        "matches": ["https://accounts.spotify.com/*"],
+        "extension_ids": []
+      }
+    ],
+  
+    "content_scripts": [
+      {
+        "matches": ["https://www.youtube.com/*"],
+        "js": ["/scanners/youtube.js"]
+      },
+      {
+        "matches": ["https://open.spotify.com/*"],
+        "js": ["/scanners/spotify.js"]
+      },
+      {
+        "matches": ["https://*.soundcloud.com/*"],
+        "js": ["/scanners/soundcloud.js"]
+      },
+      {
+        "matches": ["https://music.youtube.com/*"],
+        "js": ["/scanners/ytmusic.js"]
+      },
+      {
+        "matches": ["https://*.epidemicsound.com/*"],
+        "js": ["/scanners/epidemicsound.js"]
+      },
+      {
+        "matches": ["https://www.deezer.com/*"],
+        "js": ["/scanners/deezer.js"]
+      },
+      {
+        "matches": ["https://play.pretzel.rocks/*"],
+        "js": ["/scanners/pretzel.js"]
+      },
+      {
+        "matches": ["https://music.yandex.ru/*"],
+        "js": ["/scanners/yandex.js"]
+      }
+    ],
+  
+    "icons": {
       "16": "/images/default/default16.png",
       "32": "/images/default/default32.png",
       "48": "/images/default/default48.png",
       "128": "/images/default/default128.png"
     }
-  },
-
-  "options_ui": {
-    "page": "/interface/options/index.html",
-    "open_in_tab": true
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["/interface/spotifyAuth/index.html"],
-      "matches": ["https://accounts.spotify.com/*"],
-      "extension_ids": []
-    }
-  ],
-
-  "content_scripts": [
-    {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["/scanners/youtube.js"]
-    },
-    {
-      "matches": ["https://open.spotify.com/*"],
-      "js": ["/scanners/spotify.js"]
-    },
-    {
-      "matches": ["https://*.soundcloud.com/*"],
-      "js": ["/scanners/soundcloud.js"]
-    },
-    {
-      "matches": ["https://music.youtube.com/*"],
-      "js": ["/scanners/ytmusic.js"]
-    },
-    {
-      "matches": ["https://*.epidemicsound.com/*"],
-      "js": ["/scanners/epidemicsound.js"]
-    },
-    {
-      "matches": ["https://www.deezer.com/*"],
-      "js": ["/scanners/deezer.js"]
-    },
-    {
-      "matches": ["https://play.pretzel.rocks/*"],
-      "js": ["/scanners/pretzel.js"]
-    }
-  ],
-
-  "icons": {
-    "16": "/images/default/default16.png",
-    "32": "/images/default/default32.png",
-    "48": "/images/default/default48.png",
-    "128": "/images/default/default128.png"
   }
-}
+  
