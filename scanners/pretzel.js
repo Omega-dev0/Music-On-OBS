@@ -1,12 +1,10 @@
 
-const PLATFORM = "ytmusic"
+const PLATFORM = "pretzel"
 const SCANNER = new Scanner(PLATFORM);
 
 function getData() {
-    let coverElement = document.querySelector(".image.style-scope.ytmusic-player-bar")?.src
-
-    let elapsedString = document.querySelector(`.time-info`)?.innerHTML.split(" / ")[0]?.replace("\n    ", "")
-    let durationString = document.querySelector(`.time-info`)?.innerHTML.split(" / ")[1]?.replace("\n  ", "")
+    let elapsedString = document.querySelector('[data-testid="track-time-elapsed"]')?.innerHTML
+    let durationString = document.querySelector('[data-testid="track-time-total"]')?.innerHTML
 
     let duration = durationString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
     let elapsed = elapsedString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
@@ -14,13 +12,13 @@ function getData() {
     let progress = elapsed == undefined || duration == undefined ? undefined : Math.floor((elapsed / duration) * 10000)/100;
 
     return {
-        url: document.querySelectorAll(".ytmusic-player-bar >.yt-simple-endpoint.yt-formatted-string").item(1)?.href.replace(/list=[^&]*&/g, '') || document.location.href,
+        url: document.querySelector('[data-testid="track-info"] > a')?.href,
         subtitle: navigator.mediaSession.metadata?.artist,
         title: navigator.mediaSession.metadata?.title,
-        cover: coverElement == undefined ? undefined : (new URL(coverElement).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.replace("w60-h60", "w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.split("?sqp")[0]),
+        cover: navigator.mediaSession.metadata?.artwork[0]?.src,
         progress: progress,
         duration: duration,
-        paused: document.querySelector("#play-pause-button").title == "Play",
+        paused: document.querySelector("[data-testid=pause-button]") == null,
         isLive:false
     };
 }

@@ -96,6 +96,9 @@ h4 {
 .paused {
   color: burlywood;
 }
+.disconnected {
+  color: rgb(216, 156, 77);
+}
 
 button[customDisable] {
   cursor: auto;
@@ -104,7 +107,6 @@ button[customDisable] {
 button[customDisable]:hover {
   background-color: #6b686c;
 }
-
 
 select {
   width: 225px;
@@ -124,9 +126,7 @@ option {
   font-weight: 500;
 }
 
-
 .platform-icon {
   width: auto;
   height: 1rem;
 }
-

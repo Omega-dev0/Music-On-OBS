@@ -95,8 +95,8 @@
   "Stop": {
     "message": "Stop"
   },
-  "Active_listener":{
-    "message":"Active listener"
+  "Active_listener": {
+    "message": "Active listener"
   },
   "Status": {
     "message": "Status"
@@ -110,6 +110,9 @@
   "Paused": {
     "message": "Paused"
   },
+  "waiting_connecting": {
+    "message": "Waiting for server..."
+  },
   "Copy_token": {
     "message": "Copy token"
   },
@@ -119,215 +122,247 @@
   "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
     "message": "You can use dynamic values to insert data into the bot answer:"
   },
-  "__SONG___The_current_song_name": {
-    "message": "[__SONG__]: The current song name"
+  "SONG_The_current_song_name": {
+    "message": "[SONG]: The current song name"
   },
-  "__SUBTITLE___The_current_song_chapter_or_song_author": {
-    "message": "[__SUBTITLE__]: The current song chapter or song author"
+  "SUBTITLE_The_current_song_chapter_or_song_author": {
+    "message": "[SUBTITLE]: The current song chapter or song author"
   },
-  "__LINK___The_URL_of_the_current_listening_tab": {
-    "message": "[__LINK__]: The URL of the current listening tab"
+  "LINK_The_URL_of_the_current_listening_tab": {
+    "message": "[LINK]: The URL of the current listening tab"
   },
-  "__TIME___The_current_song_progression_might_not_be_always_available": {
-    "message": "[__TIME__]: The current song progression (might not be always available)"
+  "TIME_The_current_song_progression_might_not_be_always_available": {
+    "message": "[TIME]: The current song progression (might not be always available)"
   },
-  "__DURATION___The_current_song_duration_might_not_be_always_available": {
-    "message": "[__DURATION__]: The current song duration (might not be always available)"
+  "DURATION_The_current_song_duration_might_not_be_always_available": {
+    "message": "[DURATION]: The current song duration (might not be always available)"
   },
-  "API_authentification":{
-    "message":"API authentification"
+  "API_authentification": {
+    "message": "API authentification"
   },
-  "Spotify_API":{
-    "message":"Spotify API"
+  "Spotify_API": {
+    "message": "Spotify API"
   },
-  "Logout":{
-    "message":"Logout"
+  "Logout": {
+    "message": "Logout"
   },
-  "Login":{
-    "message":"Login"
+  "Login": {
+    "message": "Login"
   },
-  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state":{
-    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state": {
+    "message": "The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
   },
-  "Detect_pause":{
-    "message":"Detect pause"
+  "Detect_pause": {
+    "message": "Detect pause"
   },
-  "Listening_to":{
-    "message":"Listening to"
+  "Listening_to": {
+    "message": "Listening to"
   },
-  "Background_settings":{
-    "message":"Background settings"
+  "Background_settings": {
+    "message": "Background settings"
   },
-  "Primary_gradient_color":{
-    "message":"Primary gradient color"
+  "Primary_gradient_color": {
+    "message": "Primary gradient color"
   },
-  "Secondary_gradient_color":{
-    "message":"Secondary gradient color"
+  "Secondary_gradient_color": {
+    "message": "Secondary gradient color"
   },
-  "Display_the_song_cover":{
-    "message":"Display the song cover"
+  "Display_the_song_cover": {
+    "message": "Display the song cover"
   },
- "Use_cover_as_content_background":{
-    "message":"Use cover as content background"
+  "Use_cover_as_content_background": {
+    "message": "Use cover as content background"
   },
-  "Title_color":{
-    "message":"Title color"
+  "Title_color": {
+    "message": "Title color"
   },
-  "Display_title":{
-    "message":"Display title"
+  "Display_title": {
+    "message": "Display title"
   },
-  "Display_subtitle":{
-    "message":"Display subtitle"
+  "Display_subtitle": {
+    "message": "Display subtitle"
   },
-  "Subtitle_color":{
-    "message":"Subtitle color"
+  "Subtitle_color": {
+    "message": "Subtitle color"
   },
-  "Progress_bar_color":{
-    "message":"Progress bar color"
+  "Progress_bar_color": {
+    "message": "Progress bar color"
   },
-  "Progress_bar_background_color":{
-    "message":"Progress bar background color"
+  "Progress_bar_background_color": {
+    "message": "Progress bar background color"
   },
-  "Display_progress_bar":{
-    "message":"Display progress bar"
+  "Display_progress_bar": {
+    "message": "Display progress bar"
   },
-  "Text_settings":{
-    "message":"Text settings"
+  "Text_settings": {
+    "message": "Text settings"
   },
-  "Progress_bar_settings":{
-    "message":"Progress bar settings"
+  "Progress_bar_settings": {
+    "message": "Progress bar settings"
   },
-  "Overlay_style":{
-    "message":"Overlay style"
+  "Overlay_style": {
+    "message": "Overlay style"
   },
-  "Whether_or_not_the_overlay_will_display_the_songs_art":{
-    "message":"Whether or not the overlay will display the song's art"
+  "Whether_or_not_the_overlay_will_display_the_songs_art": {
+    "message": "Whether or not the overlay will display the song's art"
   },
-  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colors__image_as_the_background_for_the_content_box":{
-    "message":"Whether or not the overlay should try to use the song's art colors / image as the background for the content box"
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colorsimage_as_the_background_for_the_content_box": {
+    "message": "Whether or not the overlay should try to use the song's art colors / image as the background for the content box"
   },
-  "About":{
-    "message":"About"
+  "About": {
+    "message": "About"
   },
-  "Supported_platforms":{
+  "Supported_platforms": {
     "message": "Supported platforms"
   },
-  "how_to_install":{
+  "how_to_install": {
     "message": "1) - Create an instance <br>2) - Copy the overlay link <br>3) - Head to OBS or streamlabs and create a browser source <br>4) - Paste the overlay link into the source URL <br>5) - Set the width to 800px and height to 400px <br><br>The default overlay should appear, this overlay will update while listening to tabs"
   },
-  "Installing_the_overlay":{
-    "message":"Installing the overlay"
+  "Installing_the_overlay": {
+    "message": "Installing the overlay"
   },
-  "FAQA1":{
-    "message":"If you encounter any issue with a tab not updating the overlay, the best way to solve it is to reload the tab (maybe multiple times). If that does not work, check that the link in the browser source is correct and as a last ressort you can re-enablee the extension."
+  "FAQA1": {
+    "message": "If you encounter any issue with a tab not updating the overlay, the best way to solve it is to reload the tab (maybe multiple times). If that does not work, check that the link in the browser source is correct and as a last ressort you can re-enablee the extension."
   },
-  "FAQQ1":{
-    "message":"I am listening to a tab but the overlay is not updating, what can I do?"
+  "FAQQ1": {
+    "message": "I am listening to a tab but the overlay is not updating, what can I do?"
   },
-  "FAQA2":{
-    "message":"Due to technical reasons, it is impossible to read colours from cover arts from platforms such as Youtube and youtube music. It's also impossible to fetch covers from some platforms such as deezer or epidemic sound."
+  "FAQA2": {
+    "message": "Due to technical reasons, it is impossible to read colours from cover arts from platforms such as Youtube and youtube music. It's also impossible to fetch covers from some platforms such as deezer or epidemic sound."
   },
-  "FAQQ2":{
-    "message":"Some platforms do not have the colored gradient but instead the cover as content background, why is that?"
+  "FAQQ2": {
+    "message": "Some platforms do not have the colored gradient but instead the cover as content background, why is that?"
   },
-  "FAQ":{
-    "message":"FAQ"
+  "FAQ": {
+    "message": "FAQ"
   },
-  "Like_the_extension_Share_and_star_it":{
-    "message":"Like the extension? Share and star it!"
+  "Like_the_extension_Share_and_star_it": {
+    "message": "Like the extension? Share and star it!"
   },
-  "DISPLAY_PAUSE_EXPLANATIONS":{
+  "DISPLAY_PAUSE_EXPLANATIONS": {
     "message": "The overlay will be greyed out when the music is paused instead of disappearing"
   },
-  "DETECT_PAUSE_EXPLANATIONS":{
-    "message":"The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
+  "DETECT_PAUSE_EXPLANATIONS": {
+    "message": "The scanner will detect if the music is paused based on the timestamp and trigger a pause state"
   },
-  "Send_suggestions_and_report_issues_on_the_":{
-    "message":"Send suggestions and report issues on the "
+  "Send_suggestions_and_report_issues_on_the_": {
+    "message": "Send suggestions and report issues on the "
   },
-  "_or_on_":{
-    "message":" or on "
+  "_or_on_": {
+    "message": " or on "
   },
-  "how_to_install_spotify_1":{
+  "how_to_install_spotify_1": {
     "message": "1) - Head to <a href='https://developer.spotify.com/'>Spotify for developers</a> and login with your spotify account <br>2) - Head to the <a href='https://developer.spotify.com/dashboard'>Dashboard </a> and create an app <br>3) - Name the app (the name does not matter) and set the redirect URI to: <br>"
   },
-  "how_to_install_spotify_2":{
+  "how_to_install_spotify_2": {
     "message": "4) - Select Web API and save the app <br>5) - Open the settings and copy the client ID and the client secret into the fields<br>6) - Click the login button to link your account<br><br>You should see the Spotify API option in the scanners list in the extension's popup"
   },
-  "Connecting_the_spotify_API":{
+  "Connecting_the_spotify_API": {
     "message": "Connecting the spotify API"
   },
-  "Save":{
+  "Save": {
     "message": "Save"
   },
-  "Log_in":{
+  "Log_in": {
     "message": "Log-in"
   },
-  "Log_out":{
+  "Log_out": {
     "message": "Log-out"
   },
-  "Client_secret":{
+  "Client_secret": {
     "message": "Client secret"
   },
-  "Client_ID":{
+  "Client_ID": {
     "message": "Client ID"
   },
-  "Spotify_API_setup":{
+  "Spotify_API_setup": {
     "message": "Spotify API setup"
   },
-  "integration_explanations":{
-    "message":"The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
+  "integration_explanations": {
+    "message": "The extension can be configured to answer to a nightbot command, you do not need to update the nightbot command each time you make a change.<br><br> To get started, create a new custom command in your Nightbot dashboard and paste the custom command string provided below into the message field"
   },
-  "Detailled_documentation":{
-    "message":"Detailled documentation"
+  "Detailled_documentation": {
+    "message": "Detailled documentation"
   },
-  "find_more_docs":{
-    "message":"Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  "find_more_docs": {
+    "message": "Find more documentation on the <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
   },
-  "defaultIntegrationMessage":{
-    "message":"Current song: [__LINK__]"
+  "defaultIntegrationMessage": {
+    "message": "Current song: [LINK]"
   },
-  "errorIntegrationMessage":{
-    "message":"The music is currently paused"
+  "errorIntegrationMessage": {
+    "message": "The music is currently paused"
   },
-  "pausedIntegrationMessage":{
-    "message":"Unable to get current song name!"
+  "pausedIntegrationMessage": {
+    "message": "Unable to get current song name!"
   },
-  "Font":{
-    "message":"Font"
+  "Font": {
+    "message": "Font"
   },
-  "Only_display_on_song_change":{
-    "message":"Only display on song change"
+  "Only_display_on_song_change": {
+    "message": "Only display on song change"
   },
-  "DISPLAY_SONG_CHANGE_EXPLANATIONS":{
-    "message":"The overlay will appear when the song changes then disapear after a few seconds"
+  "DISPLAY_SONG_CHANGE_EXPLANATIONS": {
+    "message": "The overlay will appear when the song changes then disapear after a few seconds"
   },
-  "Quick_guides":{
-    "message":"Quick guides"
+  "Quick_guides": {
+    "message": "Quick guides"
   },
-  "spotifyCredentialsMissing":{
-    "message":"You must set the ID and Secret first ! Find them in your app at https://developer.spotify.com/dashboard"
+  "spotifyCredentialsMissing": {
+    "message": "You must set the ID and Secret first ! Find them in your app at https://developer.spotify.com/dashboard"
   },
-  "spotifyNotLogged":{
-    "message":"Status: Not logged in"
+  "spotifyNotLogged": {
+    "message": "Status: Not logged in"
   },
-  "spotifyLogged":{
-    "message":"Status: Logged in"
+  "spotifyLogged": {
+    "message": "Status: Logged in"
   },
-  "textCopiedToClipboard":{
-    "message":"Text copied to clipboard"
+  "textCopiedToClipboard": {
+    "message": "Text copied to clipboard"
   },
-  "spotifyAlreadyLogged":{
-    "message":"You are already logged in"
+  "spotifyAlreadyLogged": {
+    "message": "You are already logged in"
   },
-  "createAnInstanceFirst":{
-    "message":"Create an instance first!"
+  "createAnInstanceFirst": {
+    "message": "Create an instance first!"
   },
-  "docs":{
-    "message":"Docs"
+  "docs": {
+    "message": "Docs"
   },
-  "extension_version":{
-    "message":"Extension version"
+  "extension_version": {
+    "message": "Extension version"
+  },
+  "invalidOverlayStyle": {
+    "message": "Invalid overlay style in the clipboard"
+  },
+  "overlayStyleImported": {
+    "message": "Successfully import style"
+  },
+  "preview": {
+    "message": "Preview"
+  },
+  "change_the_overlay_style": {
+    "message": "Change the overlay style"
+  },
+  "Import_style_from_clipboard": {
+    "message": "Import style from clipboard"
+  },
+  "styles_library": {
+    "message": "Styles library"
+  },
+  "change_overlay_style": {
+    "message": "Change overlay style"
+  },
+  "token": {
+    "message": "Token"
+  },
+  "redirect_url": {
+    "message": "Redirect URL"
+  },
+  "copy_custom_command": {
+    "message": "Copy custom command"
+  },
+  "extension_information": {
+    "message": "Extension information"
   }
-
 }

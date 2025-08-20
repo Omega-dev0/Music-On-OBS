@@ -46,7 +46,7 @@ async function getAccesstokenFromRefreshToken() {
 
     let response = await fetch(endpointUrl, requestOptions)
     if (response.status != 200) {
-        throw new Error("Failed to obtain a new access token",response);
+        throw new Error("Failed to obtain a new access token", response);
     }
     let json = await response.json();
     return json.access_token;
@@ -63,9 +63,9 @@ async function getCurrentPlayingTrack() {
     };
 
     let response = await fetch(endpointUrl, requestOptions)
-    console.log("resp",response, response.status)
+    console.log("resp", response, response.status)
     if (response.status != 200) {
-        if(response.status == 204) {
+        if (response.status == 204) {
             console.log("No track is currently playing.")
             return
         }
@@ -90,19 +90,19 @@ class SpotifyScanner {
         this.additionalAllowedChecks = [];
         this.title = title;
 
-        this.updateScannerInfo() 
+        this.updateScannerInfo()
     }
 
     async update(dataGetter) {
         let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
         this.extensionState = extensionState
-        if(!this.registered) {
+        if (!this.registered) {
             await this.updateScannerInfo();
         }
         this.updateIfAllowed();
         if (!this.allowed) { return }
         let data = await dataGetter();
-       // logger(this.settings.debug, `[MOS][SCANNER - UPDATE]: (${this.platform})`, this)
+        // logger(this.settings.debug, `[MOS][SCANNER - UPDATE]: (${this.platform})`, this)
         if (JSON.stringify(this.data) == JSON.stringify(data)) { return }
 
         //logger(this.settings.debug, "[SCANNER] Updating scanner with platform: " + this.platform)
@@ -146,7 +146,7 @@ class SpotifyScanner {
 
     async updateScannerInfo() {
         if (!await isAuthentificated()) { return {} }
-        
+
         await updateScanner(this.tabId, this.title, this.platform)
         this.registered = true;
     }
@@ -157,7 +157,7 @@ function updateServer() {
 }
 
 //----------------- Scanner -----------------
-async function spotifyScannerInit(){
+async function spotifyScannerInit() {
     let SCANNER = new SpotifyScanner("spotifyAPI", "spotifyAPI", "Spotify API"); // platform, tabId, title
 
     async function SpotifygetData() {
@@ -165,25 +165,19 @@ async function spotifyScannerInit(){
         await checkTokenValidity();
 
         let track = await getCurrentPlayingTrack();
-        if(track == undefined) {
+        if (track == undefined) {
             return {
-                paused: true,
-                title: "Unknown",
-                subtitle: "Unknown",
-                currentTime: 0,
-                currentLength: 0,
-                url: "",
-                cover: "",
             }
         }
         let data = {
-            paused: !track.is_playing,
-            title: track.item.name,
-            subtitle: track.item.artists.map((x) => x.name).join(", "),
-            currentTime: Math.floor(track.progress_ms / 1000),
-            currentLength: Math.floor(track.item.duration_ms / 1000),
             url: track.item.external_urls.spotify,
+            subtitle: track.item.artists.map((x) => x.name).join(", "),
+            title: track.item.name,
             cover: track.item.album.images[0].url,
+            progress: Math.floor(track.progress_ms / track.item.duration_ms * 10000) / 100,
+            duration: Math.floor(track.item.duration_ms / 1000),
+            paused: !track.is_playing,
+            isLive: false
         }
         return data;
     }

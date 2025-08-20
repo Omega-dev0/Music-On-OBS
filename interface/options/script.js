@@ -45,11 +45,6 @@ function defineDataBinds() {
                     load: true,
                     element: document.getElementById("displayPause")
                 },
-                "detectPause": {
-                    save: true,
-                    load: true,
-                    element: document.getElementById("detectPause")
-                },
                 "displayOnlyOnSongChange": {
                     save: true,
                     load: true,
@@ -73,6 +68,64 @@ function defineDataBinds() {
                     element: document.getElementById("errorMessage")
                 },
             },
+            "overlay": {
+                primaryColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayPrimaryColor")
+                },
+                secondaryColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlaySecondaryColor")
+                },
+                displayCover:
+                {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayUseCover")
+                },
+                useCoverForGradientColors: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayUserCoverAsContent")
+                },
+                titleColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayTitleColor")
+                },
+                subtitleColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlaySubtitleColor")
+                },
+                displayTitle: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayDisplayTitle")
+                },
+                displaySubtitle: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayDisplaySubtitle")
+                },
+                progressBarColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayProgressBarColor")
+                },
+                displayProgress: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayDisplayProgressBar")
+                },
+                progressBarBackgroundColor: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayProgressBarBackgroundColor")
+                },
+            }
         }
     }
 }
@@ -144,6 +197,8 @@ async function spotifyLogOut() {
     }
 }
 
+let importedOverlay = null
+
 //-------------------BINDS--------------
 function bindEvents() {
     //Checkbox title clickable bind
@@ -185,21 +240,65 @@ function bindEvents() {
         }
         //create preview
         let message = document.getElementById("defaultMessage").value
-        message = message.replaceAll("[__SONG__]", "Billie Jean")
-        message = message.replaceAll("[__SUBTITLE__]", "Michael Jackson")
-        message = message.replaceAll("[__LINK__]", "https://www.youtube.com/watch?v=Zi_XLOBDo_Y")
-        message = message.replaceAll("[__TIME__]", "1:34")
-        message = message.replaceAll("[__DURATION__]", "2:14")
+        message = message.replaceAll("[SONG]", "Billie Jean")
+        message = message.replaceAll("[SUBTITLE]", "Michael Jackson")
+        message = message.replaceAll("[LINK]", "https://www.youtube.com/watch?v=Zi_XLOBDo_Y")
+        message = message.replaceAll("[TIME]", "1:34")
+        message = message.replaceAll("[DURATION]", "2:14")
         document.getElementById("integrationPopupPreview").innerHTML = message
         document.getElementById("commandPopup").style.display = "flex";
     });
 
-    //integration popup binds
+    document.getElementById("changeStyle").addEventListener("click", () => {
+        document.getElementById("overlayStylePopup").style.display = "flex";
+    });
+
+
 
     //close
     document.getElementById("integrationPopupClose").addEventListener("click", () => {
         document.getElementById("commandPopup").style.display = "none";
     });
+
+    //style popup binds
+    document.getElementById("overlayStylePopupSave").addEventListener("click",async () => {
+        document.getElementById("overlayStylePopup").style.display = "none";
+        document.getElementById("overlayStylePreview").src = ``;
+        document.getElementById("overlayStylePreview").style.display = "none";
+        console.log("Saving overlay style", importedOverlay)
+        if (importedOverlay != null) {
+            let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+            extensionSettings.overlay.overlayDataType = importedOverlay.overlayDataType;
+            extensionSettings.overlay.overlayData = importedOverlay.overlayData;
+            chrome.storage.local.set({ "extension-settings": extensionSettings });
+        }
+        importedOverlay = null;
+    });
+    document.getElementById("overlayStyleImport").addEventListener("click", async () => {
+        let content = await navigator.clipboard.readText()
+        try {
+            let json = JSON.parse(content)
+            if(json.overlayDataType == undefined || json.overlayData == undefined) {
+                throw new Error("Invalid overlay data format");
+            }
+
+            if(json.overlayPreview != undefined) {
+                document.getElementById("overlayStylePreview").src = `${extensionConfig.serverAdress}${json.overlayPreview}`;
+                document.getElementById("overlayStylePreview").style.display = "block";
+            }
+
+            importedOverlay = json;
+            alert(`${chrome.i18n.getMessage("overlayStyleImported")}: ${json.overlayName}`);
+
+        }catch(error) {
+            console.error("[OVERLAY STYLE IMPORT] - Invalid ovverlay data", error, content);
+            alert(chrome.i18n.getMessage("invalidOverlayStyle"));
+            return
+        }
+    });
+    document.getElementById("overlayStylesBrowserLink").href = `${extensionConfig.serverAdress}/overlays`
+
+
 
     //copy nighbot
     document.getElementById("integrationPopupNightbotCopy").addEventListener("click", () => {
@@ -235,15 +334,15 @@ function checkInstanceStatus() {
         document.getElementById("integrationCommandCopy").removeAttribute("customDisable")
         document.getElementById("copyInstanceLink").removeAttribute("customDisable")
 
-        document.getElementById("instanceLink").value = getBaseURL("instance")
+        document.getElementById("instanceLink").value = getBaseURL("overlay")
     }
 }
 
 //-------- INSTANCE MANAGEMENT----------
-function createInstance(){
+function createInstance() {
     chrome.runtime.sendMessage({ key: "instance-create", payload: {} });
 }
-function copyInstanceLink(){
+function copyInstanceLink() {
     copyTextToClipboard(document.getElementById("instanceLink").value)
 }
 
@@ -301,22 +400,22 @@ function setElementValue(doc, value) {
     }
 }
 function getBaseURL(route, additionnalArgs) {
-    let url = `${extensionConfig.serverAdress}/${route}?token=${extensionSettings.instance.publicToken}`
+    let url = `${extensionConfig.serverAdress}/${route}/${extensionSettings.instance.publicToken}`
 
     if (additionnalArgs == undefined) {
         return url
     }
     let args = additionnalArgs.join("&")
-    url += "&" + args
+    url += "?" + args
     return url
 }
 function isInstanceValid() {
     return extensionSettings.instance.privateToken == "" ? false : true
 }
-function setAboutPage(){
+function setAboutPage() {
     let text = document.getElementById("platformsBox").innerHTML
-    for(scanner of extensionConfig.scanners){
-        if(scanner.platform == "none") continue
+    for (scanner of extensionConfig.scanners) {
+        if (scanner.platform == "none") continue
         text += `<label>- ${scanner.name}</label><br>`
     }
     document.getElementById("platformsBox").innerHTML = text
@@ -400,7 +499,7 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (object["spotifyAPI-state"] != undefined) {
         spotifyAPIState = object["spotifyAPI-state"].newValue;
     }
-    console.log("[STORAGE] Updated", extensionState, extensionScannerState, extensionSettings)
+    //console.log("[STORAGE] Updated", extensionState, extensionScannerState, extensionSettings)
 });
 
 //---------------ON LAUNCH--------------
@@ -410,7 +509,7 @@ function saveSettings() {
 
     //extension settings
     for (let categorie in DataBinds.extensionSettings) {
-        console.log(">>>", categorie, DataBinds.extensionSettings[categorie])
+        //console.log(">>>", categorie, DataBinds.extensionSettings[categorie])
         for (let key in DataBinds.extensionSettings[categorie]) {
             //console.log(key, DataBinds.extensionSettings[categorie][key])
             let doc = DataBinds.extensionSettings[categorie][key];

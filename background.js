@@ -15,70 +15,103 @@ const manifestData = chrome.runtime.getManifest();
 
 const extensionReady = new EventTarget()
 //-----------SCANNERS HANDLING----------
-async function updateScannersList() {
+async function updateScannersList(removedTabId) {
+    extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     let scanners = extensionState.scanners;
     //removing outdated scanners
-    scanners = scanners.filter(async (scanner) => {
+
+    const filterFunction = async (scanner) => {
         if (extensionConfig.tabLessScanners.includes(scanner.tabId)) {
             return true
         }
+        let result = true
         try {
             let tab = await chrome.tabs.get(scanner.tabId);
-            return typeof tab != "undefined"
+
+            result = typeof tab != "undefined"
         } catch (e) {
-            return false
+            result = false
         }
-    });
-    console.log("filtered scanners", scanners)
+        return result;
+    }
+
+
+    let fscanners = []
+    for (let scanner of scanners) {
+        let stillExists = await filterFunction(scanner);
+        if (stillExists) {
+            fscanners.push(scanner);
+        }
+    }
+
     chrome.storage.local.set({
         "extension-state": {
             stopped: extensionState.stopped,
-            scanners: scanners,
+            scanners: fscanners,
             selectedScanner: extensionState.selectedScanner,
+            connected: extensionState.connected,
         },
     });
+    console.log(extensionState.selectedScanner, removedTabId)
+    if (extensionState.selectedScanner == removedTabId) {
+        chrome.storage.local.set({
+            "extension-state": {
+                stopped: true,
+                scanners: extensionState.scanners,
+                selectedScanner: "none",
+                connected: extensionState.connected,
+            },
+        });
+        disconnectFromServer()
+    }
 }
 
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
-    updateScannersList()
+    updateScannersList(tabId)
 })
 
 
 
 //-----------------UTILS----------------
 let snapshot = ""
-async function syncServer() {
+async function syncScannerState() {
 
-    let data = {
-        extensionState: extensionState || (await chrome.storage.local.get("extension-state"))["extension-state"],
-        extensionScannerState: extensionScannerState || (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"],
-        extensionSettings: extensionSettings || (await chrome.storage.local.get("extension-settings"))["extension-settings"],
-    }
-
-    //Data that does not need to our should not be uploaded to the server
-    data.extensionSettings.instance = {}
-    data.extensionSettings.spotifyAPI = {}
-    data.extensionState.scanners = []
-    data.extensionState.selectedScanner = undefined
+    let data = extensionScannerState || (await chrome.storage.local.get("extension-scanner-state"))["extension-scanner-state"]
 
     updateLogo()
 
-    if (JSON.stringify(data) == JSON.stringify(snapshot)) {
+    if (JSON.stringify(data) == snapshot) {
         return
     }
 
-    emitServerEvent("update", data).then((response) => {
+    emitServerEvent("updateScannerState", data).then((response) => {
         snapshot = JSON.stringify(data)
-        logger("[SYNC] Server synced")
+        logger("[SYNC] Server scanner state synced")
     }).catch((e) => {
-        console.error("Failed to sync server (not critical, only problematic if it repeats)", e)
+        console.error("Failed to sync server scanner state (not critical, only problematic if it repeats)", e)
+    })
+}
+
+let snapshot2 = ""
+async function syncSettingsState() {
+
+    let data = extensionSettings || (await chrome.storage.local.get("extension-settings"))["extension-settings"]
+    if (JSON.stringify(data) == snapshot2) {
+        return
+    }
+    data.extensionSettings = null
+    emitServerEvent("updateSettingsState", data).then((response) => {
+        snapshot2 = JSON.stringify(data)
+        logger("[SYNC] Server settings synced")
+    }).catch((e) => {
+        console.error("Failed to sync server settings ", e)
     })
 }
 
 let currentLogo = ""
 async function updateLogo() {
     if (extensionState.stopped == true) {
-        if(currentLogo == "default") { return }
+        if (currentLogo == "default") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/default/default16.png",
@@ -88,8 +121,8 @@ async function updateLogo() {
             },
         });
         currentLogo = "default"
-    } else if (extensionScannerState.paused == true) {
-        if(currentLogo == "paused") { return }
+    } else if (extensionScannerState.paused == true || extensionState.connected == false) {
+        if (currentLogo == "paused") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/paused/16x16.png",
@@ -100,7 +133,7 @@ async function updateLogo() {
         });
         currentLogo = "paused"
     } else {
-        if(currentLogo == "playing") { return }
+        if (currentLogo == "playing") { return }
         chrome.action.setIcon({
             path: {
                 16: "/images/playing/16x16.png",
@@ -116,7 +149,6 @@ async function updateLogo() {
 //---------------MESSAGING--------------
 
 async function updateScanner(senderTabId, title, platform) {
-    console.log("Updating scanner", senderTabId, title, platform)
     let extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     let scanners = extensionState.scanners;
 
@@ -128,39 +160,55 @@ async function updateScanner(senderTabId, title, platform) {
         tabId: senderTabId,
         platform: platform,
     });
-    console.log(scanners)
     await chrome.storage.local.set({
         "extension-state": {
             stopped: extensionState.stopped,
             scanners: scanners,
             selectedScanner: extensionState.selectedScanner,
+            connected: extensionState.connected,
         },
     });
 }
 
 const actions = {}
-actions["sync-server"] = async (sender, message, sendResponse) => {
-    syncServer()
+actions["sync-scanner-state"] = async (sender, message, sendResponse) => {
+    syncScannerState()
+    sendResponse(true)
+}
+actions["sync-settings-state"] = async (sender, message, sendResponse) => {
+    syncSettingsState()
     sendResponse(true)
 }
 actions["update-scanner"] = async (sender, message, sendResponse) => {
     await updateScanner(sender.tab.id, message.data.title, message.data.platform)
     sendResponse({ tabId: sender.tab.id, url: sender.tab.url, title: message.data.title, settings: extensionConfig });
 }
-actions["scanner-failure-report"] = async (sender, message, sendResponse) => {
-    message.data.version = manifestData.version;
-    emitServerEvent("scanner-failure-report", message.data)
-    sendResponse();
-}
 actions["instance-create"] = async (sender, message, sendResponse) => {
-    emitServerEvent("instance-create",{}).then(async (response) => {
-        extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-        extensionSettings.instance.privateToken = response.privateToken;
-        extensionSettings.instance.publicToken = response.publicToken;
-        chrome.storage.local.set({
-            "extension-settings": extensionSettings,
+    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    let res = await fetch(`${extensionConfig.serverAdress}/api/createNewInstance`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            settings: extensionSettings,
         })
-    })
+    });
+    data = await res.json();
+
+    if (data.error) {
+        console.error("Failed to create new instance", data.error)
+        sendResponse({ error: data.error });
+        return;
+    }
+
+    extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
+    extensionSettings.instance.publicToken = data.publicToken;
+    extensionSettings.instance.privateToken = data.privateToken;
+    await chrome.storage.local.set({
+        "extension-settings": extensionSettings
+    });
+
     sendResponse()
 }
 
@@ -185,20 +233,31 @@ chrome.storage.onChanged.addListener(async (object, areaName) => {
     }
     if (object["extension-state"] != undefined) {
         extensionState = object["extension-state"].newValue;
+
+        if (extensionState.stopped == true) {
+            disconnectFromServer()
+        } else {
+            connectToServer()
+        }
+
+
         console.log("Updated extension state", extensionState)
     }
     if (object["extension-scanner-state"] != undefined) {
         extensionScannerState = object["extension-scanner-state"].newValue;
+        syncScannerState()
     }
     if (object["extension-settings"] != undefined) {
         extensionSettings = object["extension-settings"].newValue;
-        console.log("Updated extension settings", extensionSettings)
+        syncSettingsState()
+        // console.log("Updated extension settings", extensionSettings)
     }
     if (object["spotifyAPI-state"] != undefined) {
         spotifyAPIState = object["spotifyAPI-state"].newValue;
     }
 
-    syncServer()
+
+
     //logger("[STORAGE] Updated", extensionState, extensionScannerState, extensionSettings)
 });
 

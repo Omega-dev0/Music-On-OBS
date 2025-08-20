@@ -70,6 +70,39 @@
       </div>
     </div>
 
+
+    <div class="popup" id="overlayStylePopup" style="display: none; flex-direction: column; align-items: center; justify-content: start; width: 50vw; height:50vh">
+      <div style="display: flex; flex-direction: row; width: 100%">
+        <h3 translated style="margin-right: auto">Change the overlay style</h3>
+      </div>
+      <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 0.5rem">
+        <h4 translated>Preview</h4>
+      </div>
+      <div
+        style="
+          display: block;
+          flex-direction: row;
+          width: 100%;
+          height: 45%;
+          justify-content: start;
+          align-items: center;
+          margin-top: 0px;
+          background-color: rgb(32, 32, 32);
+          overflow-x: clip;
+        "
+      >
+      <img style="width: 100%; height: 100%; object-fit: contain; display:none" id="overlayStylePreview">
+      </div>
+      <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
+        <button class="button blue" translated id="overlayStyleImport">Import style from clipboard</button><br />
+        <a class="button blue"  id="overlayStylesBrowserLink" style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding-right: 5px; text-decoration: none" target="_blank"><img class="icon prevent-select" style="margin-left: 0px;" src="../../images/icons/exitlink.svg" /><span translated>Styles library</span></a>
+      </div>
+      <br />
+      <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: end; align-items: center; margin-top: auto">
+        <button class="button blue" id="overlayStylePopupSave">Save</button>
+      </div>
+    </div>
+
     <!-- CONTENT -->
     <div class="sidebar">
       <div style="display: flex; align-content: center; align-items: center; user-select: none">
@@ -160,13 +193,6 @@
         <div class="divider"></div>
         <div style="flex-basis: 100%; margin-top: 1.5rem">
           <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="detectPause" /><label class="prevent-select" translated>Detect pause</label>
-          </div>
-          <label class="subtitle" translated>DETECT_PAUSE_EXPLANATIONS</label>
-        </div>
-        <div class="divider"></div>
-        <div style="flex-basis: 100%; margin-top: 1.5rem">
-          <div class="checkbox-container">
             <input type="checkbox" saveTrigger id="displaySongChange" /><label class="prevent-select" translated>Only display on song change</label>
           </div>
           <label class="subtitle" translated>DISPLAY_SONG_CHANGE_EXPLANATIONS</label>
@@ -228,31 +254,11 @@
             <input type="checkbox" saveTrigger id="overlayDisplayProgressBar" /><label class="prevent-select" translated>Display progress bar</label>
           </div>
         </div>
-        <div class="box">
+        <div class="box" style="align-content: center; justify-content: center; flex-direction: column">
           <h3 style="flex-basis: 100%" translated>Overlay style</h3>
-          <div style="align-content: center">
-            <select style="width: 90%; margin-left: 5%" id="styleSelection" saveTrigger>
-              <option value="default">Default</option>
-              <option value="transparent">Transparent</option>
-              <option value="classic">Classic</option>
-              <option value="legacy">Legacy</option>
-            </select>
-          </div>
+          <button class="button blue" id="changeStyle" translated>Change overlay style</button>
         </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>General</h3>
-          <div style="align-content: center;">
-            <input type="number" id="overlayTimeShownOnPause" saveTrigger min="0" step="1"><label translated
-            class="large-label">Time shown after track change (seconds)</label><br><br>
-            <label>Use 0 for default behavior</label>
-          <br>
-          </div>
-        </div>
-        <div class="box">
-          <h3 style="flex-basis: 100%" translated>Advanced</h3>
-          <button class="button blue" id="exportOverlayConfig" translated>Export overlay data</button>
-          <button class="button blue" id="importOverlayConfig" translated>Import overlay data</button>
-        </div>
+  
       </div>
       <div class="container" id="Integration" style="display: none">
         <h1 style="flex-basis: 100%" translated>Integration</h1>
@@ -260,7 +266,7 @@
         <div class="box">
           <h3 translated>Bot messages</h3>
           <label translated>Default message</label><br />
-          <input class="input-locked" type="text" value="Current song: [__SONG__]" saveTrigger id="defaultMessage" /><br />
+          <input class="input-locked" type="text" value="Current song: [SONG]" saveTrigger id="defaultMessage" /><br />
           <label translated>Paused message</label><br />
           <input class="input-locked" type="text" value="The music is currently paused" saveTrigger id="pausedMessage" /><br />
           <label translated>Error message</label><br />
@@ -271,12 +277,12 @@
         <div class="box">
           <h3 translated>Dynamic values</h3>
           <label translated>You can use dynamic values to insert data into the bot answer</label><br /><br />
-          <label translated>[__SONG__]: The current song name</label><br />
-          <label translated>[__SUBTITLE__]: The current song chapter or song author</label><br />
-          <label translated>[__LINK__]: The URL of the current listening tab</label><br />
+          <label translated>[SONG]: The current song name</label><br />
+          <label translated>[SUBTITLE]: The current song chapter or song author</label><br />
+          <label translated>[LINK]: The URL of the current listening tab</label><br />
           <br />
-          <label translated>[__TIME__]: The current song progression (might not be always available)</label><br />
-          <label translated>[__DURATION__]: The current song duration (might not be always available)</label><br />
+          <label translated>[TIME]: The current song progression (might not be always available)</label><br />
+          <label translated>[DURATION]: The current song duration (might not be always available)</label><br />
         </div>
       </div>
       <div class="container" id="About" style="display: none">
@@ -386,5 +392,6 @@
         />
       </div>
     </div>
+    <script src="plugin.js"></script>
   </body>
 </html>

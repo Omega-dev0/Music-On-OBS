@@ -8,25 +8,19 @@ async function onLaunch() {
             stopped: true,
             scanners: extensionState.scanners,
             selectedScanner: "none",
+            connected: false
         },
         "extension-scanner-state": {
             paused: false,
-            title: "Default title",
-            subtitle: "Defaut subtitle",
+            title: "",
+            subtitle: "",
             currentTime: "",
             currentLength: "",
             url: "",
             cover: "",
         }
     });
-    await connectToServer()
     spotifyScannerInit()
-    let extensionSettings = (await chrome.storage.local.get("extension-settings"))["extension-settings"];
-    logger("[SOCKET] registerClient", extensionSettings.instance.privateToken, extensionSettings.instance.publicToken)
-    emitServerEvent("registerClient", {
-        privateToken: extensionSettings.instance.privateToken,
-        publicToken: extensionSettings.instance.publicToken,
-    });
 }
 
 //--------------ON UPDATE / INSTALL -----------------
@@ -80,13 +74,6 @@ const DataSchema = {
                     key: "displayPause"
                 }
             },
-            detectPause: {
-                defaultValue: true,
-                legacySwitch: {
-                    category: "behaviour",
-                    key: "detectPause"
-                }
-            },
             displayOnlyOnSongChange: {
                 defaultValue: false,
                 legacySwitch: {
@@ -118,7 +105,99 @@ const DataSchema = {
                 }
             },
         },
-        overlay: {},
+        overlay: {
+            overlayDataType: {
+                defaultValue: "string",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "overlayDataType"
+                }
+            },
+            overlayData: {
+                defaultValue: "default",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "overlayData"
+                }
+            },
+            primaryColor: {
+                defaultValue: "#b94901",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "primaryColor"
+                }
+            },
+            secondaryColor: {
+                defaultValue: "#0013ff",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "secondaryColor"
+                }
+            },
+            titleColor: {
+                defaultValue: "#ffffff",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "titleColor"
+                }
+            },
+            subtitleColor: {
+                defaultValue: "#DEDEDE",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "subtitleColor"
+                }
+            },
+            displayTitle: {
+                defaultValue: true,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "displayTitle"
+                },
+            },
+            displaySubtitle: {
+                defaultValue: true,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "displaySubtitle"
+                },
+            },
+            displayProgress: {
+                defaultValue: true,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "displayProgress"
+                },
+            },
+            displayCover: {
+                defaultValue: true,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "displayCover"
+                },
+            },
+            useCoverForGradientColors: {
+                defaultValue: true,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "displayCoverOnContent"
+                }
+            },
+            progressBarColor: {
+                defaultValue: "#334484",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "progressBarColor"
+                }
+            },
+            progressBarBackgroundColor: {
+                defaultValue: "#121111",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "progressBarBackgroundColor"
+                }
+            },
+        }
     },
     "extension-state": {
         stopped: {
@@ -133,6 +212,10 @@ const DataSchema = {
             defaultValue: "none",
             forceReset: true,
         },
+        connected: {
+            defaultValue: false,
+            forceReset: true,
+        }
     },
     "extension-scanner-state": {
         paused: {
@@ -161,6 +244,10 @@ const DataSchema = {
         },
         cover: {
             defaultValue: "",
+            forceReset: true,
+        },
+        isLive: {
+            defaultValue: false,
             forceReset: true,
         },
     },
@@ -216,8 +303,8 @@ async function fillSettingsStorage() {
                             if (newSettings[catKey][key] == undefined) {
                                 newSettings[catKey][key] = keyData.defaultValue
                             }
-                        }else{
-                            newSettings[catKey][key] =  keyData.defaultValue
+                        } else {
+                            newSettings[catKey][key] = keyData.defaultValue
                         }
                     } else {
                         newSettings[catKey][key] = currentSettings[catKey][key]
@@ -240,8 +327,8 @@ async function fillSettingsStorage() {
                         if (newSettings[key] == undefined) {
                             newSettings[key] = keyData.defaultValue
                         }
-                    }else{
-                        newSettings[key] =  keyData.defaultValue
+                    } else {
+                        newSettings[key] = keyData.defaultValue
                     }
                 } else {
                     newSettings[key] = currentSettings[key]
@@ -250,7 +337,7 @@ async function fillSettingsStorage() {
         }
         newFullSetting[namespace] = newSettings
     }
-    console.log(newFullSetting["extension-state"],"newFullSetting",(await chrome.storage.local.get())["extension-state"])
+    console.log(newFullSetting["extension-state"], "newFullSetting", (await chrome.storage.local.get())["extension-state"])
     chrome.storage.local.set(newFullSetting)
 }
 /**
@@ -267,7 +354,7 @@ async function onInstalled() {
     });
 
 
-    
+
 
 
     onLaunch();

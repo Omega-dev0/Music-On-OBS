@@ -24,7 +24,8 @@
     "https://music.youtube.com/*",
     "https://*.epidemicsound.com/*",
     "https://www.deezer.com/*",
-    "https://play.pretzel.rocks/*"
+    "https://play.pretzel.rocks/*",
+    "https://nightbot.tv/song_requests"
   ],
 
   "action": {
@@ -59,7 +60,8 @@
         "https://music.youtube.com/*",
         "https://*.epidemicsound.com/*",
         "https://www.deezer.com/*",
-        "https://play.pretzel.rocks/*"
+        "https://play.pretzel.rocks/*",
+        "https://nightbot.tv/*"
       ],
       "extension_ids": []
     }
@@ -74,7 +76,8 @@
         "https://music.youtube.com/*",
         "https://*.epidemicsound.com/*",
         "https://www.deezer.com/*",
-        "https://play.pretzel.rocks/*"
+        "https://play.pretzel.rocks/*",
+        "https://nightbot.tv/song_requests"
       ],
       "js": ["/modules/scanner.js"]
     },
@@ -82,6 +85,34 @@
     {
       "matches": ["https://music.youtube.com/*"],
       "js": ["/scanners/ytmusic.js"]
+    },
+    {
+      "matches": ["https://*.epidemicsound.com/*"],
+      "js": ["/scanners/epidemic.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["/scanners/youtube.js"]
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["/scanners/spotify.js"]
+    },
+    {
+      "matches": ["https://*.soundcloud.com/*"],
+      "js": ["/scanners/soundcloud.js"]
+    },
+    {
+      "matches": ["https://play.pretzel.rocks/*"],
+      "js": ["/scanners/pretzel.js"]
+    },
+    {
+      "matches": ["https://www.deezer.com/*"],
+      "js": ["/scanners/deezer.js"]
+    },
+    {
+      "matches": ["https://nightbot.tv/song_requests"],
+      "js": ["/scanners/nightbot.js"]
     }
   ],
 

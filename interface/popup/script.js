@@ -19,6 +19,7 @@ function bindActions() {
                 stopped: extensionState.stopped,
                 scanners: extensionState.scanners,
                 selectedScanner: value,
+                connected: extensionState.connected,
             },
         });
 
@@ -45,6 +46,7 @@ function bindActions() {
                 stopped: false,
                 scanners: extensionState.scanners,
                 selectedScanner: extensionState.selectedScanner,
+                connected: extensionState.connected,
             },
         });
         if (document.getElementById("scannerSelect").value == "none") {
@@ -69,6 +71,7 @@ function bindActions() {
                 stopped: true,
                 scanners: extensionState.scanners,
                 selectedScanner: extensionState.selectedScanner,
+                connected: extensionState.connected,
             },
         });
 
@@ -95,28 +98,40 @@ function setSubtitleDisplay(text) {
     document.getElementById("subtitleDisplay").innerHTML = text
 }
 
-function setState(state) {
-    //paused, active, inactive
+function setState() {
+    //paused, active, inactive, disconnected
 
-    document.getElementById("statusDisplay").className = state;
-    if (state == "inactive") {
+
+    if (extensionState.stopped == true) {
         document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: ${chrome.i18n.getMessage("Inactive")}`;
         document.getElementById("stop").setAttribute("customDisable", "");
         document.getElementById("start").removeAttribute("customDisable")
+        document.getElementById("statusDisplay").className = "inactive";
+    } else if (extensionScannerState.paused == true) {
+        document.getElementById("start").setAttribute("customDisable", "");
+        document.getElementById("stop").removeAttribute("customDisable")
+        document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: ${chrome.i18n.getMessage("paused")} <br> ${chrome.i18n.getMessage("Listening_to")}: ${extensionState.selectedScanner}`;
+        document.getElementById("statusDisplay").className = "paused";
+    } else if (extensionState.connected == false) {
+        document.getElementById("start").setAttribute("customDisable", "");
+        document.getElementById("stop").removeAttribute("customDisable")
+        document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: ${chrome.i18n.getMessage("waiting_connecting")} <br> ${chrome.i18n.getMessage("Listening_to")}: ${extensionState.selectedScanner}`;
+        document.getElementById("statusDisplay").className = "disconnected";
     } else {
         document.getElementById("start").setAttribute("customDisable", "");
         document.getElementById("stop").removeAttribute("customDisable")
-        document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: ${chrome.i18n.getMessage(state)} <br> ${chrome.i18n.getMessage("Listening_to")}: ${extensionState.selectedScanner}`;
+        document.getElementById("statusDisplay").innerHTML = `${chrome.i18n.getMessage("Status")}: ${chrome.i18n.getMessage("active")} <br> ${chrome.i18n.getMessage("Listening_to")}: ${extensionState.selectedScanner}`;
+        document.getElementById("statusDisplay").className = "active";
     }
 }
 
 function updateAvailableScanners() {
-    console.log(extensionState,"extensionState")
+    console.log(extensionState, "extensionState")
     let scanners = extensionState.scanners;
     let select = document.getElementById("scannerSelect");
     let innerHTML = `<option value="none" style="background-color: #1f1d1d" selected="selected">None</option>`
     for (let scanner of scanners) {
-        
+
         let option = document.createElement("option");
         option.value = scanner.tabId;
         option.innerHTML = fitStringToWidth(scanner.title, 170);
@@ -145,6 +160,10 @@ function getState() {
 
     if (extensionScannerState.paused == true) {
         return "paused"
+    }
+
+    if (extensionScannerState.connected == false) {
+        return "Waiting for server connection..."
     }
 
     return "active"
@@ -259,8 +278,7 @@ function update() {
     setTitleDisplay(extensionScannerState.title);
     setSubtitleDisplay(extensionScannerState.subtitle);
 
-    let state = getState();
-    setState(state);
+    setState();
 
     updateAvailableScanners();
 }

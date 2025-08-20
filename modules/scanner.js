@@ -4,6 +4,7 @@
 
 class Scanner {
     constructor(platform, tabId) {
+        console.log(`MOS - ${platform} Scanner ready`);
         this.platform = platform;
         this.tabId = tabId;
         this.allowed = false
@@ -48,7 +49,7 @@ class Scanner {
         if (this.registered == false) {
             await this.updateScannerInfo();
         }
-        logger(this.settings.debug, `[MOS][SCANNER - UPDATE REQUEST]: (${this.platform}, ${this.tabId}): registered: ${this.registered}, allowed: ${this.allowed}`)
+        //logger(this.settings.debug, `[MOS][SCANNER - UPDATE REQUEST]: (${this.platform}, ${this.tabId}): registered: ${this.registered}, allowed: ${this.allowed}`)
         await this.updateIfAllowed();
         if (!this.allowed) { return }
         let data = dataGetter();
@@ -70,7 +71,7 @@ class Scanner {
 
         if (JSON.stringify(this.data) == JSON.stringify(data)) { return }
 
-        logger(this.settings.debug, "[SCANNER - UPDATE] Updating scanner with platform: " + this.platform, data, this.data, this)
+        //logger(this.settings.debug, "[SCANNER - UPDATE] Updating scanner with platform: " + this.platform, data, this.data, this)
 
         await chrome.storage.local.set({
             "extension-scanner-state": data
@@ -99,7 +100,7 @@ class Scanner {
 
         let errorDetection = this.hasErrors(this.data)
         if (errorDetection.hasErrors == true) {
-            chrome.runtime.sendMessage({ key: "scanner-failure-report", data: errorDetection });
+           // chrome.runtime.sendMessage({ key: "scanner-failure-report", data: errorDetection });
         }
 
         let selectedScanner = extensionState.selectedScanner;
