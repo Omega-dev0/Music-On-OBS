@@ -44,6 +44,15 @@ async function updateScannersList(removedTabId) {
         }
     }
 
+    // Check for spotify API availability
+    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "" && fscanners.find((scanner) => scanner.platform == "spotifyAPI") == undefined) {
+        fscanners.push({
+            platform: "spotifyAPI",
+            tabId: "spotifyAPI",
+            title: "Spotify API"
+        })
+    }
+
     chrome.storage.local.set({
         "extension-state": {
             stopped: extensionState.stopped,
@@ -211,6 +220,7 @@ actions["instance-create"] = async (sender, message, sendResponse) => {
 
     sendResponse()
 }
+
 
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {

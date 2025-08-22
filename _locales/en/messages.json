@@ -364,5 +364,14 @@
   },
   "extension_information": {
     "message": "Extension information"
+  },
+  "title_font": {
+    "message": "Title font"
+  },
+  "subtitle_font": {
+    "message": "Subtitle font"
+  },
+  "progress_font": {
+    "message": "Progress font"
   }
 }

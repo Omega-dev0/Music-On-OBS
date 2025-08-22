@@ -1,4 +1,4 @@
-
+//[MOS-NOSCAN]
 
 //------------- Spotify API Manager ----------
 async function isAuthentificated() {

@@ -90,6 +90,11 @@ function defineDataBinds() {
                     load: true,
                     element: document.getElementById("overlayUserCoverAsContent")
                 },
+                useCoverImage: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayUseImageAsContent")
+                },
                 titleColor: {
                     save: true,
                     load: true,
@@ -125,6 +130,21 @@ function defineDataBinds() {
                     load: true,
                     element: document.getElementById("overlayProgressBarBackgroundColor")
                 },
+                titleFont: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayTitleFont")
+                },
+                subtitleFont: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlaySubtitleFont")
+                },
+                progressFont: {
+                    save: true,
+                    load: true,
+                    element: document.getElementById("overlayProgressFont")
+                }
             }
         }
     }
@@ -160,6 +180,8 @@ function checkSpotifyCredentialsStatus() {
         //Unavailable
         document.getElementById("spotifyLogin").setAttribute("customDisable", true)
     }
+    let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+    document.getElementById("spotifyRedirectURI").value = redirect_url;
 }
 function startSpotifyLoginProcedure() {
     if (extensionSettings.spotifyAPI.spotifyId == "" || extensionSettings.spotifyAPI.spotifyAppToken == "") {
@@ -170,7 +192,7 @@ function startSpotifyLoginProcedure() {
         alert(chrome.i18n.getMessage("spotifyAlreadyLogged"));
         return
     }
-    let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+
     window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${extensionSettings.spotifyAPI.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
 }
 function checkSpotifyLoggedStatus() {
@@ -261,7 +283,7 @@ function bindEvents() {
     });
 
     //style popup binds
-    document.getElementById("overlayStylePopupSave").addEventListener("click",async () => {
+    document.getElementById("overlayStylePopupSave").addEventListener("click", async () => {
         document.getElementById("overlayStylePopup").style.display = "none";
         document.getElementById("overlayStylePreview").src = ``;
         document.getElementById("overlayStylePreview").style.display = "none";
@@ -278,11 +300,11 @@ function bindEvents() {
         let content = await navigator.clipboard.readText()
         try {
             let json = JSON.parse(content)
-            if(json.overlayDataType == undefined || json.overlayData == undefined) {
+            if (json.overlayDataType == undefined || json.overlayData == undefined) {
                 throw new Error("Invalid overlay data format");
             }
 
-            if(json.overlayPreview != undefined) {
+            if (json.overlayPreview != undefined) {
                 document.getElementById("overlayStylePreview").src = `${extensionConfig.serverAdress}${json.overlayPreview}`;
                 document.getElementById("overlayStylePreview").style.display = "block";
             }
@@ -290,7 +312,7 @@ function bindEvents() {
             importedOverlay = json;
             alert(`${chrome.i18n.getMessage("overlayStyleImported")}: ${json.overlayName}`);
 
-        }catch(error) {
+        } catch (error) {
             console.error("[OVERLAY STYLE IMPORT] - Invalid ovverlay data", error, content);
             alert(chrome.i18n.getMessage("invalidOverlayStyle"));
             return
@@ -591,6 +613,34 @@ Promise.all(promises).then(() => {
             init()
         })
     }
+
+    document.querySelectorAll('[tooltip]').forEach(el => {
+        let tooltipDiv;
+        el.addEventListener('mouseenter', e => {
+            tooltipDiv = document.createElement('div');
+            tooltipDiv.className = 'custom-tooltip';
+            tooltipDiv.innerText = el.getAttribute('tooltip');
+            document.body.appendChild(tooltipDiv);
+            const rect = el.getBoundingClientRect();
+            tooltipDiv.style.position = 'fixed';
+            tooltipDiv.style.left = rect.left + 'px';
+            tooltipDiv.style.top = (rect.bottom + 8) + 'px';
+            tooltipDiv.style.zIndex = 9999;
+            tooltipDiv.style.background = '#222';
+            tooltipDiv.style.color = '#fff';
+            tooltipDiv.style.padding = '4px 8px';
+            tooltipDiv.style.borderRadius = '4px';
+            tooltipDiv.style.fontSize = '12px';
+            tooltipDiv.style.pointerEvents = 'none';
+            tooltipDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        });
+        el.addEventListener('mouseleave', e => {
+            if (tooltipDiv) {
+                tooltipDiv.remove();
+                tooltipDiv = null;
+            }
+        });
+    });
 })
 
 document.addEventListener("DOMContentLoaded", () => {

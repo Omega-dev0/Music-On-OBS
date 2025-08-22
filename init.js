@@ -183,6 +183,13 @@ const DataSchema = {
                     key: "displayCoverOnContent"
                 }
             },
+            useCoverImage: {
+                defaultValue: false,
+                legacySwitch: {
+                    category: "overlay",
+                    key: "useCoverImage"
+                }
+            },
             progressBarColor: {
                 defaultValue: "#334484",
                 legacySwitch: {
@@ -197,6 +204,27 @@ const DataSchema = {
                     key: "progressBarBackgroundColor"
                 }
             },
+            titleFont: {
+                defaultValue: "Roboto",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "titleFont"
+                }
+            },
+            subtitleFont: {
+                defaultValue: "Roboto",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "subtitleFont"
+                }
+            },
+            progressFont: {
+                defaultValue: "Roboto",
+                legacySwitch: {
+                    category: "overlay",
+                    key: "progressFont"
+                }
+            }
         }
     },
     "extension-state": {

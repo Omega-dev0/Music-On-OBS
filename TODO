@@ -1,13 +1,16 @@
 Settings:
-- Spotif redirect page
-- Overlay customization
 
-- Stream element/Botrix integration
+- Spotify API
+  -Spotify API, no track handling
+- Overlay customization?
+
 - Custom fonts
-- NIghbot song request
+- Nightbot song request
 
 Server:
-- Only transmit changed values
 
-- redo scanner update flow
--redo scanner storage getters (it sucks)
+- redo scanner storage getters (it sucks)
+
+---
+
+- Using cover as background rather than gradient

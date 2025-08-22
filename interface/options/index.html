@@ -37,31 +37,13 @@
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 0.5rem">
         <h4 translated>Preview</h4>
       </div>
-      <div
-        style="
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          height: 15%;
-          justify-content: start;
-          align-items: center;
-          margin-top: 0px;
-          background-color: rgb(32, 32, 32);
-          overflow-x: clip;
-        "
-      >
-        <p
-          style="color: rgb(216, 216, 216); margin-left: 15px; margin-right: 15px; text-overflow: clip; text-wrap: wrap; width: 90%"
-          id="integrationPopupPreview"
-        >
-          Current song: https://www.youtube.com/watch?v=6n3pFFPSlW4
-        </p>
+      <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 0px; background-color: rgb(32, 32, 32); overflow-x: clip">
+        <p style="color: rgb(216, 216, 216); margin-left: 15px; margin-right: 15px; text-overflow: clip; text-wrap: wrap; width: 90%" id="integrationPopupPreview">Current song: https://www.youtube.com/watch?v=6n3pFFPSlW4</p>
         <br />
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
         <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button>
-        <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button
-        ><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
+        <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
       </div>
       <h5 translated style="margin-right: auto">Paste this command into a custom command in your bot dashboard</h5>
       <br />
@@ -70,32 +52,19 @@
       </div>
     </div>
 
-
-    <div class="popup" id="overlayStylePopup" style="display: none; flex-direction: column; align-items: center; justify-content: start; width: 50vw; height:50vh">
+    <div class="popup" id="overlayStylePopup" style="display: none; flex-direction: column; align-items: center; justify-content: start; width: 50vw; height: 50vh">
       <div style="display: flex; flex-direction: row; width: 100%">
         <h3 translated style="margin-right: auto">Change the overlay style</h3>
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 0.5rem">
         <h4 translated>Preview</h4>
       </div>
-      <div
-        style="
-          display: block;
-          flex-direction: row;
-          width: 100%;
-          height: 45%;
-          justify-content: start;
-          align-items: center;
-          margin-top: 0px;
-          background-color: rgb(32, 32, 32);
-          overflow-x: clip;
-        "
-      >
-      <img style="width: 100%; height: 100%; object-fit: contain; display:none" id="overlayStylePreview">
+      <div style="display: block; flex-direction: row; width: 100%; height: 45%; justify-content: start; align-items: center; margin-top: 0px; background-color: rgb(32, 32, 32); overflow-x: clip">
+        <img style="width: 100%; height: 100%; object-fit: contain; display: none" id="overlayStylePreview" />
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
         <button class="button blue" translated id="overlayStyleImport">Import style from clipboard</button><br />
-        <a class="button blue"  id="overlayStylesBrowserLink" style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding-right: 5px; text-decoration: none" target="_blank"><img class="icon prevent-select" style="margin-left: 0px;" src="../../images/icons/exitlink.svg" /><span translated>Styles library</span></a>
+        <a class="button blue" id="overlayStylesBrowserLink" style="display: flex; flex-direction: row; align-items: center; justify-content: center; padding-right: 5px; text-decoration: none" target="_blank"><img class="icon prevent-select" style="margin-left: 0px" src="../../images/icons/exitlink.svg" /><span translated>Styles library</span></a>
       </div>
       <br />
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: end; align-items: center; margin-top: auto">
@@ -110,40 +79,12 @@
         <span class="text" style="text-align: end; font-size: 1.5vw">Music On Stream</span>
       </div>
       <br />
-      <div class="sidebar-element sidebar-selected" id="instance-button">
-        <img class="icon prevent-select" src="../../images/icons/instance.svg" /><a class="sidebar-link prevent-select" translated data="Instance"
-          >Instance</a
-        >
-      </div>
-      <div class="sidebar-element" id="behaviour-button">
-        <img class="icon prevent-select" src="../../images/icons/behaviour.svg" /><a class="sidebar-link prevent-select" translated data="Behaviour"
-          >Behaviour</a
-        >
-      </div>
-      <div class="sidebar-element" id="overlay-button">
-        <img class="icon prevent-select" src="../../images/icons/overlay.svg" /><a class="sidebar-link prevent-select" translated data="Overlay"
-          >Overlay</a
-        >
-      </div>
-      <div class="sidebar-element" id="integration-button">
-        <img class="icon prevent-select" src="../../images/icons/integration.svg" /><a
-          class="sidebar-link prevent-select"
-          translated
-          data="Integration"
-          >Integration</a
-        >
-      </div>
-      <div class="sidebar-element" id="about-button">
-        <img class="icon prevent-select" src="../../images/icons/about.svg" /><a class="sidebar-link prevent-select" translated data="About">About</a>
-      </div>
-      <div class="sidebar-element" id="documentation link" outsideLink="true">
-        <img class="icon prevent-select" src="../../images/icons/exitlink.svg" /><a
-          class="sidebar-link prevent-select"
-          translated
-          data="https://mos.omegadev.xyz/"
-          >Docs</a
-        >
-      </div>
+      <div class="sidebar-element sidebar-selected" id="instance-button"><img class="icon prevent-select" src="../../images/icons/instance.svg" /><a class="sidebar-link prevent-select" translated data="Instance">Instance</a></div>
+      <div class="sidebar-element" id="behaviour-button"><img class="icon prevent-select" src="../../images/icons/behaviour.svg" /><a class="sidebar-link prevent-select" translated data="Behaviour">Behaviour</a></div>
+      <div class="sidebar-element" id="overlay-button"><img class="icon prevent-select" src="../../images/icons/overlay.svg" /><a class="sidebar-link prevent-select" translated data="Overlay">Overlay</a></div>
+      <div class="sidebar-element" id="integration-button"><img class="icon prevent-select" src="../../images/icons/integration.svg" /><a class="sidebar-link prevent-select" translated data="Integration">Integration</a></div>
+      <div class="sidebar-element" id="about-button"><img class="icon prevent-select" src="../../images/icons/about.svg" /><a class="sidebar-link prevent-select" translated data="About">About</a></div>
+      <div class="sidebar-element" id="documentation link" outsideLink="true"><img class="icon prevent-select" src="../../images/icons/exitlink.svg" /><a class="sidebar-link prevent-select" translated data="https://mos.omegadev.xyz/">Docs</a></div>
     </div>
     <div class="content">
       <div class="container" id="Instance" style="display: flex">
@@ -168,9 +109,8 @@
           <input class="input-locked" saveTrigger type="password" id="spotifyAppToken" /><br />
           <br />
           <label translated>Redirect URL</label><br />
-          <input class="input-locked" saveTrigger type="text" id="spotifyRedirectURI" style="position: absolute" /><br /><br />
-          <button class="button blue" id="spotifyLogin" translated>Log in</button
-          ><button class="button red" id="spotifyLogout" translated>Log out</button><br />
+          <input class="input-locked" saveTrigger type="text" id="spotifyRedirectURI" style="position: absolute" disabled /><br /><br />
+          <button class="button blue" id="spotifyLogin" translated>Log in</button><button class="button red" id="spotifyLogout" translated>Log out</button><br />
           <label id="spotifyStatus">Status: Not logged in</label>
         </div>
         <!--
@@ -185,16 +125,12 @@
         <h1 style="flex-basis: 100%" translated>Behaviour</h1>
         <br />
         <div style="flex-basis: 100%">
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="displayPause" /><label class="prevent-select" translated>Display overlay when paused</label>
-          </div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="displayPause" /><label class="prevent-select" translated>Display overlay when paused</label></div>
           <label class="subtitle" translated>DISPLAY_PAUSE_EXPLANATIONS</label>
         </div>
         <div class="divider"></div>
         <div style="flex-basis: 100%; margin-top: 1.5rem">
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="displaySongChange" /><label class="prevent-select" translated>Only display on song change</label>
-          </div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="displaySongChange" /><label class="prevent-select" translated>Only display on song change</label></div>
           <label class="subtitle" translated>DISPLAY_SONG_CHANGE_EXPLANATIONS</label>
         </div>
         <!--
@@ -210,55 +146,36 @@
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Background settings</h3>
           <input type="color" id="overlayPrimaryColor" saveTrigger /><label translated class="large-label">Primary gradient color</label><br />
-          <input type="color" id="overlaySecondaryColor" saveTrigger /><label translated class="large-label">Secondary gradient color</label>
-          <br /><br />
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayUseCover" /><label
-              class="prevent-select"
-              translated
-              title="Whether or not the overlay will display the songs art"
-              >Display the song cover</label
-            >
-          </div>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayUserCoverAsContent" /><label
-              class="prevent-select"
-              translated
-              title="Whether or not the overlay should try to use the songs art colors  image as the background for the content box"
-              >Use cover as content background</label
-            >
-          </div>
+          <input type="color" id="overlaySecondaryColor" saveTrigger /><label translated class="large-label">Secondary gradient color</label> <br /><br />
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUseCover" /><label class="prevent-select" translated tooltip="Whether or not the overlay will display the songs art">Display the song cover</label></div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUserCoverAsContent" /><label class="prevent-select" translated tooltip="Whether or not the overlay should try to use the songs art colors as the background for the content box">Use cover as content background</label></div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayUseImageAsContent" /><label class="prevent-select" translated tooltip="Whether or not the overlay should use the image as the background rather than the colors">Use cover image as content background</label></div>
         </div>
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Text settings</h3>
           <input type="color" id="overlayTitleColor" saveTrigger /><label translated class="large-label">Title color</label>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplayTitle" /><label class="prevent-select" translated>Display title</label>
-          </div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplayTitle" /><label class="prevent-select" translated>Display title</label></div>
+          <input class="input-locked" saveTrigger type="text" style="width: 10em; margin-left: 0.6vh; margin-right: 0.3em" id="overlayTitleFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Title font</label>
+          <br />
           <br />
           <br />
           <input type="color" id="overlaySubtitleColor" saveTrigger /><label translated class="large-label">Subtitle color</label>
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label class="prevent-select" translated>Display subtitle</label>
-          </div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label class="prevent-select" translated>Display subtitle</label></div>
+          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlaySubtitleFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Subtitle font</label>
         </div>
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Progress bar settings</h3>
           <input type="color" id="overlayProgressBarColor" saveTrigger /><label translated class="large-label">Progress bar color</label><br />
-          <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger /><label translated class="large-label"
-            >Progress bar background color</label
-          ><br />
+          <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger /><label translated class="large-label">Progress bar background color</label><br /><br />
+          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlayProgressFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Progress font</label>
           <br />
           <br />
-          <div class="checkbox-container">
-            <input type="checkbox" saveTrigger id="overlayDisplayProgressBar" /><label class="prevent-select" translated>Display progress bar</label>
-          </div>
+          <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplayProgressBar" /><label class="prevent-select" translated>Display progress bar</label></div>
         </div>
         <div class="box" style="align-content: center; justify-content: center; flex-direction: column">
           <h3 style="flex-basis: 100%" translated>Overlay style</h3>
           <button class="button blue" id="changeStyle" translated>Change overlay style</button>
         </div>
-  
       </div>
       <div class="container" id="Integration" style="display: none">
         <h1 style="flex-basis: 100%" translated>Integration</h1>
@@ -300,96 +217,28 @@
     <!-- OVERLAY ELEMENTS -->
     <div style="display: none">
       <div class="overlayElementContainer" id="OVERLAY_progressBarLine">
-        <div
-          style="
-            width: var(--element-width);
-            height: var(--element-height);
-            background-color: var(--element-primary-color);
-            border-radius: var(--element-roundness);
-            transform: rotate(var(--element-rotation));
-          "
-        >
-          <div
-            class="progress"
-            style="
-              width: calc(var(--progress) * 1%);
-              height: 100%;
-              background-color: var(--element-secondary-color);
-              border-radius: var(--element-roundness);
-              transition: width var(--transition-time) var(--transition-style);
-            "
-          ></div>
+        <div style="width: var(--element-width); height: var(--element-height); background-color: var(--element-primary-color); border-radius: var(--element-roundness); transform: rotate(var(--element-rotation))">
+          <div class="progress" style="width: calc(var(--progress) * 1%); height: 100%; background-color: var(--element-secondary-color); border-radius: var(--element-roundness); transition: width var(--transition-time) var(--transition-style)"></div>
         </div>
       </div>
 
       <div class="overlayElementContainer" id="OVERLAY_progressBarCircle">
         <div style="width: var(--element-width); height: var(--element-height); transform: rotate(var(--element-rotation))">
-          <svg
-            viewBox="0 0 250 250"
-            class="circular-progress"
-            preserveAspectRatio="none"
-            style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); height: 100%; width: 100%"
-            draggable="false"
-          >
-            <circle
-              class="bg"
-              cx="125"
-              cy="125"
-              r="70"
-              fill="none"
-              stroke="var(--element-primary-color)"
-              stroke-width="var(--element-line-width)"
-            ></circle>
-            <circle
-              class="fg"
-              style="
-                transform: rotate(-90deg);
-                transform-origin: 125px 125px;
-                transition: stroke-dasharray var(--transition-time) var(--transition-style);
-              "
-              cx="125"
-              cy="125"
-              r="70"
-              fill="none"
-              stroke="var(--element-secondary-color)"
-              stroke-width="var(--element-line-width)"
-              stroke-dasharray="var(--dash) calc(var(--circumference) - var(--dash))"
-            ></circle>
+          <svg viewBox="0 0 250 250" class="circular-progress" preserveAspectRatio="none" style="--circumference: calc(70 * pi * 2); --dash: calc((var(--progress) * var(--circumference)) / 100); height: 100%; width: 100%" draggable="false">
+            <circle class="bg" cx="125" cy="125" r="70" fill="none" stroke="var(--element-primary-color)" stroke-width="var(--element-line-width)"></circle>
+            <circle class="fg" style="transform: rotate(-90deg); transform-origin: 125px 125px; transition: stroke-dasharray var(--transition-time) var(--transition-style)" cx="125" cy="125" r="70" fill="none" stroke="var(--element-secondary-color)" stroke-width="var(--element-line-width)" stroke-dasharray="var(--dash) calc(var(--circumference) - var(--dash))"></circle>
           </svg>
         </div>
       </div>
 
       <!--- TEXTS -->
       <div class="overlayElementContainer" id="OVERLAY_textbox" baseText="">
-        <label
-          style="
-            background-color: var(--element-secondary-color);
-            color: var(--element-primary-color);
-            font-family: var(--element-font);
-            font-size: var(--element-font-size);
-            height: var(--element-height);
-            width: var(--element-width);
-            transform: rotate(var(--element-rotation));
-          "
-        >
-          Text
-        </label>
+        <label style="background-color: var(--element-secondary-color); color: var(--element-primary-color); font-family: var(--element-font); font-size: var(--element-font-size); height: var(--element-height); width: var(--element-width); transform: rotate(var(--element-rotation))"> Text </label>
       </div>
 
       <!--- IMG -->
       <div class="overlayElementContainer" id="OVERLAY_image" isCustom="false">
-        <img
-          src="../../images/default/default.svg"
-          style="
-            width: var(--element-width);
-            height: var(--element-height);
-            border-radius: var(--element-roundness);
-            background-color: var(--element-secondary-color);
-            height: var(--element-height);
-            width: var(--element-width);
-            transform: rotate(var(--element-rotation));
-          "
-        />
+        <img src="../../images/default/default.svg" style="width: var(--element-width); height: var(--element-height); border-radius: var(--element-roundness); background-color: var(--element-secondary-color); height: var(--element-height); width: var(--element-width); transform: rotate(var(--element-rotation))" />
       </div>
     </div>
     <script src="plugin.js"></script>

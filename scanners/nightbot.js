@@ -3,21 +3,60 @@ const PLATFORM = "nightbot";
 const SCANNER = new Scanner(PLATFORM);
 
 function getData() {
-    let remainingTimeString = document.querySelectorAll(".nightbot-CurrentSongRequestDescription-module__artistContainer-II8uF p")?.item(2)?.innerHTML
-    let remainingTime = remainingTimeString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
-    let progress = parseFloat(document.querySelector(".nightbot-SongControls-module__progress-aj9Qd").style.width.replace("%",""))
-    let duration = remainingTime == undefined ? undefined : Math.floor((100 - progress) * remainingTime / progress);
-    return {
-        url: document.querySelector(".nightbot-CurrentSongRequestDescription-module__title-WUSTQ")?.href,
-        subtitle: document.querySelectorAll(".nightbot-CurrentSongRequestDescription-module__artistContainer-II8uF p")?.item(0)?.innerHTML,
-        title: document.querySelector(".nightbot-CurrentSongRequestDescription-module__title-WUSTQ")?.innerHTML,
-        cover: document.querySelector(".sc-artwork > span")?.style?.backgroundImage?.replace(`url("`,``).replace(`")`,``) || `https://img.youtube.com/vi/${document.querySelector("iframe")?.src?.split("?")[0]?.split("/")?.pop()}/mqdefault.jpg`,
-        progress: progress,
-        duration: duration,
-        //paused: document.querySelector(".ytp-play-button")?.title!=undefined ? document.querySelector(".ytp-play-button").title == "Play": document.querySelector(".waveform.g-all-transitions-200.loaded.playing") == null,
-        paused: document.querySelector(".nightbot-badge-module__label-v5i2W").innerHTML=="Up next",
-        isLive:false
-    };
+
+
+
+    // detect if youtube or soundcloud
+    let data
+    let iframe = document.querySelector("iframe")
+    if (iframe.title != undefined) {
+        //YT
+
+        let videoId = iframe.src.match(/\/embed\/([^?]+)/)?.[1]
+        let remainingString = document.querySelectorAll("[class*='artistContainer'] > p")[2].innerHTML
+        let percentProgress = parseFloat(document.querySelector("[class*='progressBar'] > [class*='progress']").style.width)
+
+        let remaining = remainingString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
+
+        let duration = percentProgress < 100 ? (remaining / (100 - percentProgress)) * 100 : 0
+
+        data = {
+            title: iframe.title,
+            subtitle: document.querySelector("[class*='artistContainer'] > p").innerHTML,
+            cover: `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`,
+            url: `https://www.youtube.com/watch?v=${videoId}`,
+            paused: document.querySelector("[class*='badgeContainer'] > [class*='badge'] > span").innerHTML == "Up Next",
+            isLive: false,
+
+            duration: duration,
+            progress: percentProgress
+        }
+    } else {
+        //Soundcloud
+        let link = document.querySelector("a[class*='title']").href
+        let remainingString = document.querySelectorAll("[class*='artistContainer'] > p")[2].innerHTML
+        let percentProgress = parseFloat(document.querySelector("[class*='progressBar'] > [class*='progress']").style.width)
+
+        let remaining = remainingString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
+
+        let duration = percentProgress < 100 ? (remaining / (100 - percentProgress)) * 100 : 0
+
+
+
+
+        data = {
+            title: document.querySelector("a[class*='title']").innerHTML,
+            subtitle: document.querySelector("[class*='artistContainer'] > p").innerHTML,
+            cover: `https://music.omegadev.xyz/static/logo.png`,
+            url: link,
+            paused: document.querySelector("[class*='badgeContainer'] > [class*='badge'] > span").innerHTML == "Up Next",
+            isLive: false,
+            duration: duration,
+            progress: percentProgress
+        }
+    }
+
+    return data
 }
 
 
