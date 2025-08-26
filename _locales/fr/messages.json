@@ -291,10 +291,10 @@
     "message": "Chanson en cours : [LINK]"
   },
   "errorIntegrationMessage": {
-    "message": "La musique est actuellement en pause"
+    "message": "Impossible d'obtenir le nom de la chanson en cours !"
   },
   "pausedIntegrationMessage": {
-    "message": "Impossible d'obtenir le nom de la chanson en cours !"
+    "message": "La musique est actuellement en pause"
   },
   "Font": {
     "message": "Police"

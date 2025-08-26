@@ -68,7 +68,7 @@ const DataSchema = {
         },
         behaviour: {
             displayPause: {
-                defaultValue: true,
+                defaultValue: false,
                 legacySwitch: {
                     category: "behaviour",
                     key: "displayPause"

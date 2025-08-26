@@ -526,7 +526,7 @@ function translator() {
 
 //----------INTEGRATION COMMANDS--------
 function getNightbotCommand() {
-    let command = `$(eval const api = $(urlfetch ${getBaseURL("integration", ["format=json"])}); if(api.error || api.url == "undefined"){"Unable to get current song name!"}else{api.m}; )`
+    let command = `$(urlfetch ${getBaseURL("integration")})`
     return command
 }
 function getStreamlabsCommand() {

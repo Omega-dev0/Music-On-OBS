@@ -291,10 +291,10 @@
     "message": "Current song: [LINK]"
   },
   "errorIntegrationMessage": {
-    "message": "The music is currently paused"
+    "message": "Unable to get current song name!"
   },
   "pausedIntegrationMessage": {
-    "message": "Unable to get current song name!"
+    "message": "The music is currently paused"
   },
   "Font": {
     "message": "Font"
