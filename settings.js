@@ -5,7 +5,7 @@ extensionConfig.serverPort = ""
 
 extensionConfig.debugServerHost = "http://127.0.0.1"
 extensionConfig.debugServerPort = ":6015"
-extensionConfig.debug = true
+extensionConfig.debug = false
 extensionConfig.fakeServerConnection = false
 extensionConfig.serverAdress = extensionConfig.debug ? `${extensionConfig.debugServerHost}${extensionConfig.debugServerPort}` : `${extensionConfig.serverHost}${extensionConfig.serverPort}`
 
@@ -69,7 +69,8 @@ extensionConfig.scanners = [
         name: "Nightbot songs",
         host: "nightbot.tv",
         color: "#2e5c5c",
-        notice: "Thumbnail unavailable for soundcloud tracks"
+        notice: "Thumbnail unavailable for soundcloud tracks",
+        disabled: true
     }
 ]
 

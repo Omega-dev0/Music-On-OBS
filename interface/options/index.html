@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Urbanist" rel="stylesheet" />
+    <script src="/interface/options/pako.min.js"></script>
     <script src="script.js"></script>
     <script src="/overlays/overlayBuilder.js"></script>
     <style>
@@ -42,8 +43,8 @@
         <br />
       </div>
       <div style="display: flex; flex-direction: row; width: 100%; height: 15%; justify-content: start; align-items: center; margin-top: 1.8rem">
-        <button class="button blue" translated id="integrationPopupNightbotCopy">Nightbot</button>
-        <button class="button blue" translated id="integrationPopupBotrixCopy">BotRix</button><button class="button blue" translated id="integrationPopupSECopy">StreamElements</button>
+        <button class="button blue" id="integrationPopupNightbotCopy">Nightbot</button>
+        <button class="button blue" id="integrationPopupBotrixCopy">BotRix</button><button class="button blue" id="integrationPopupSECopy">StreamElements</button>
       </div>
       <h5 translated style="margin-right: auto">Paste this command into a custom command in your bot dashboard</h5>
       <br />
@@ -155,19 +156,19 @@
           <h3 style="flex-basis: 100%" translated>Text settings</h3>
           <input type="color" id="overlayTitleColor" saveTrigger /><label translated class="large-label">Title color</label>
           <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplayTitle" /><label class="prevent-select" translated>Display title</label></div>
-          <input class="input-locked" saveTrigger type="text" style="width: 10em; margin-left: 0.6vh; margin-right: 0.3em" id="overlayTitleFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Title font</label>
+          <input class="input-locked" saveTrigger type="text" style="width: 10em; margin-left: 0.6vh; margin-right: 0.3em" id="overlayTitleFont" /><label class="prevent-select large-label" translated tooltip="A link to a font">Title font</label>
           <br />
           <br />
           <br />
           <input type="color" id="overlaySubtitleColor" saveTrigger /><label translated class="large-label">Subtitle color</label>
           <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplaySubtitle" /><label class="prevent-select" translated>Display subtitle</label></div>
-          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlaySubtitleFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Subtitle font</label>
+          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlaySubtitleFont" /><label class="prevent-select large-label" translated tooltip="A link to a font">Subtitle font</label>
         </div>
         <div class="box">
           <h3 style="flex-basis: 100%" translated>Progress bar settings</h3>
           <input type="color" id="overlayProgressBarColor" saveTrigger /><label translated class="large-label">Progress bar color</label><br />
           <input type="color" id="overlayProgressBarBackgroundColor" saveTrigger /><label translated class="large-label">Progress bar background color</label><br /><br />
-          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlayProgressFont" /><label class="prevent-select large-label" translated tooltip="A google font family name">Progress font</label>
+          <input class="input-locked" saveTrigger type="text" style="width: 50%; margin-left: 0.6vh; margin-right: 0.3em" id="overlayProgressFont" /><label class="prevent-select large-label" translated tooltip="A link to a font">Progress font</label>
           <br />
           <br />
           <div class="checkbox-container"><input type="checkbox" saveTrigger id="overlayDisplayProgressBar" /><label class="prevent-select" translated>Display progress bar</label></div>

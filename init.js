@@ -198,28 +198,28 @@ const DataSchema = {
                 }
             },
             progressBarBackgroundColor: {
-                defaultValue: "#121111",
+                defaultValue: "#3f3f3fff",
                 legacySwitch: {
                     category: "overlay",
                     key: "progressBarBackgroundColor"
                 }
             },
             titleFont: {
-                defaultValue: "Roboto",
+                defaultValue: "https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap",
                 legacySwitch: {
                     category: "overlay",
                     key: "titleFont"
                 }
             },
             subtitleFont: {
-                defaultValue: "Roboto",
+                defaultValue: "https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap",
                 legacySwitch: {
                     category: "overlay",
                     key: "subtitleFont"
                 }
             },
             progressFont: {
-                defaultValue: "Roboto",
+                defaultValue: "https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap",
                 legacySwitch: {
                     category: "overlay",
                     key: "progressFont"

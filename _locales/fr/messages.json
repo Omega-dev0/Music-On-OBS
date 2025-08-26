@@ -1,0 +1,386 @@
+{
+  "extensionName": {
+    "message": "Music on Stream"
+  },
+  "updateName": {
+    "message": "2.2 - Revamp"
+  },
+  "testLink": {
+    "message": "LOL"
+  },
+  "Instance": {
+    "message": "Instance"
+  },
+  "Behaviour": {
+    "message": "Comportement"
+  },
+  "Overlay": {
+    "message": "Overlay"
+  },
+  "Integration": {
+    "message": "Intégration"
+  },
+  "Instance_settings": {
+    "message": "Paramètres de l'instance"
+  },
+  "Create_an_instance": {
+    "message": "Créer une instance"
+  },
+  "Instance_token": {
+    "message": "Jeton d'instance"
+  },
+  "Instance_link": {
+    "message": "Lien de l'instance"
+  },
+  "Create_new_instance": {
+    "message": "Créer une nouvelle instance"
+  },
+  "Copy_instance_link": {
+    "message": "Copier le lien de l'overlay de l'instance"
+  },
+  "Load_an_instance": {
+    "message": "Charger une instance"
+  },
+  "Loading_a_token_will_destroy_the_previous_instance": {
+    "message": "⚠️Charger un jeton détruira l'instance précédente"
+  },
+  "Load_instance_from_token": {
+    "message": "Charger une instance depuis un jeton"
+  },
+  "Behaviour_settings": {
+    "message": "Paramètres du comportement"
+  },
+  "Display_overlay_when_paused": {
+    "message": "Afficher l'overlay en pause"
+  },
+  "The_overlay_will_disappear_if_you_pause_the_music_instead_of_displaying_a_pause_message": {
+    "message": "L'overlay disparaîtra si vous mettez la musique en pause au lieu d'afficher un message de pause"
+  },
+  "Smart_tab_change": {
+    "message": "Changement d'onglet intelligent"
+  },
+  "The_extension_will_try_to_always_be_listening_on_an_active_tab_instead_of_waiting_for_a_manual_change": {
+    "message": "L'extension essaiera toujours d'écouter un onglet actif au lieu d'attendre un changement manuel"
+  },
+  "Overlay_settings": {
+    "message": "Paramètres de l'overlay"
+  },
+  "Integration_settings": {
+    "message": "Paramètres d'intégration"
+  },
+  "Bot_messages": {
+    "message": "Messages du bot"
+  },
+  "Default_message": {
+    "message": "Message par défaut"
+  },
+  "Paused_message": {
+    "message": "Message de pause"
+  },
+  "Error_message": {
+    "message": "Message d'erreur"
+  },
+  "Copy_Nightbot_command": {
+    "message": "Copier la commande Nightbot"
+  },
+  "Copy_BotRix_command": {
+    "message": "Copier la commande BotRix"
+  },
+  "Copy_Stream_elements_command": {
+    "message": "Copier la commande Stream elements"
+  },
+  "Start": {
+    "message": "Démarrer"
+  },
+  "Stop": {
+    "message": "Arrêter"
+  },
+  "Active_listener": {
+    "message": "Écouteur actif"
+  },
+  "Status": {
+    "message": "Statut"
+  },
+  "Active": {
+    "message": "Actif"
+  },
+  "Inactive": {
+    "message": "Inactif"
+  },
+  "Paused": {
+    "message": "En pause"
+  },
+  "waiting_connecting": {
+    "message": "En attente du serveur..."
+  },
+  "Copy_token": {
+    "message": "Copier le jeton"
+  },
+  "Dynamic_values": {
+    "message": "Valeurs dynamiques"
+  },
+  "You_can_use_dynamic_values_to_insert_data_into_the_bot_answer": {
+    "message": "Vous pouvez utiliser des valeurs dynamiques pour insérer des données dans la réponse du bot :"
+  },
+  "SONG_The_current_song_name": {
+    "message": "[SONG] : Le nom de la chanson en cours"
+  },
+  "SUBTITLE_The_current_song_chapter_or_song_author": {
+    "message": "[SUBTITLE] : Le chapitre ou l'auteur de la chanson en cours"
+  },
+  "LINK_The_URL_of_the_current_listening_tab": {
+    "message": "[LINK] : L'URL de l'onglet en cours d'écoute"
+  },
+  "TIME_The_current_song_progression_might_not_be_always_available": {
+    "message": "[TIME] : La progression de la chanson (peut ne pas toujours être disponible)"
+  },
+  "DURATION_The_current_song_duration_might_not_be_always_available": {
+    "message": "[DURATION] : La durée de la chanson (peut ne pas toujours être disponible)"
+  },
+  "API_authentification": {
+    "message": "Authentification API"
+  },
+  "Spotify_API": {
+    "message": "Spotify API"
+  },
+  "Logout": {
+    "message": "Déconnexion"
+  },
+  "Login": {
+    "message": "Connexion"
+  },
+  "The_scanner_will_detect_if_the_music_is_paused_based_on_the_timestamp_and_trigger_a_pause_state": {
+    "message": "Le scanner détectera si la musique est en pause selon le timestamp et activera l'état pause"
+  },
+  "Detect_pause": {
+    "message": "Détecter la pause"
+  },
+  "Listening_to": {
+    "message": "Écoute en cours"
+  },
+  "Background_settings": {
+    "message": "Paramètres de fond"
+  },
+  "Primary_gradient_color": {
+    "message": "Couleur de gradient principale"
+  },
+  "Secondary_gradient_color": {
+    "message": "Couleur de gradient secondaire"
+  },
+  "Display_the_song_cover": {
+    "message": "Afficher la pochette de la chanson"
+  },
+  "Use_cover_as_content_background": {
+    "message": "Utiliser la pochette comme fond du contenu"
+  },
+  "Title_color": {
+    "message": "Couleur du titre"
+  },
+  "Display_title": {
+    "message": "Afficher le titre"
+  },
+  "Display_subtitle": {
+    "message": "Afficher le sous-titre"
+  },
+  "Subtitle_color": {
+    "message": "Couleur du sous-titre"
+  },
+  "Progress_bar_color": {
+    "message": "Couleur de la barre de progression"
+  },
+  "Progress_bar_background_color": {
+    "message": "Couleur de fond de la barre de progression"
+  },
+  "Display_progress_bar": {
+    "message": "Afficher la barre de progression"
+  },
+  "Text_settings": {
+    "message": "Paramètres du texte"
+  },
+  "Progress_bar_settings": {
+    "message": "Paramètres de la barre de progression"
+  },
+  "Overlay_style": {
+    "message": "Style de l'overlay"
+  },
+  "Whether_or_not_the_overlay_will_display_the_songs_art": {
+    "message": "Détermine si l'overlay affichera la pochette de la chanson"
+  },
+  "Whether_or_not_the_overlay_should_try_to_use_the_songs_art_colorsimage_as_the_background_for_the_content_box": {
+    "message": "Détermine si l'overlay doit utiliser les couleurs / l'image de la pochette comme fond du contenu"
+  },
+  "About": {
+    "message": "À propos"
+  },
+  "Supported_platforms": {
+    "message": "Plateformes supportées"
+  },
+  "how_to_install": {
+    "message": "1) - Créez une instance <br>2) - Copiez le lien de l'overlay <br>3) - Allez sur OBS ou streamlabs et créez une source navigateur <br>4) - Collez le lien de l'overlay dans l'URL de la source <br>5) - Définissez la largeur à 800px et la hauteur à 400px <br><br>L'overlay par défaut devrait apparaître, il se mettra à jour pendant l'écoute des onglets"
+  },
+  "Installing_the_overlay": {
+    "message": "Installation de l'overlay"
+  },
+  "FAQA1": {
+    "message": "Si vous rencontrez un problème avec un onglet qui ne met pas à jour l'overlay, la meilleure solution est de recharger l'onglet (peut-être plusieurs fois). Si cela ne fonctionne pas, vérifiez que le lien dans la source navigateur est correct et, en dernier recours, vous pouvez réactiver l'extension."
+  },
+  "FAQQ1": {
+    "message": "J'écoute un onglet mais l'overlay ne se met pas à jour, que faire ?"
+  },
+  "FAQA2": {
+    "message": "Pour des raisons techniques, il est impossible de lire les couleurs des pochettes sur des plateformes comme Youtube et Youtube Music. Il est aussi impossible de récupérer les pochettes sur certaines plateformes comme Deezer ou Epidemic Sound."
+  },
+  "FAQQ2": {
+    "message": "Certaines plateformes n'ont pas le gradient coloré mais la pochette comme fond, pourquoi ?"
+  },
+  "FAQ": {
+    "message": "FAQ"
+  },
+  "Like_the_extension_Share_and_star_it": {
+    "message": "Vous aimez l'extension ? Partagez-la et mettez une étoile !"
+  },
+  "DISPLAY_PAUSE_EXPLANATIONS": {
+    "message": "L'overlay sera grisé lorsque la musique est en pause au lieu de disparaître"
+  },
+  "DETECT_PAUSE_EXPLANATIONS": {
+    "message": "Le scanner détectera si la musique est en pause selon le timestamp et activera l'état pause"
+  },
+  "Send_suggestions_and_report_issues_on_the_": {
+    "message": "Envoyez vos suggestions et signalez les problèmes sur le "
+  },
+  "_or_on_": {
+    "message": " ou sur "
+  },
+  "how_to_install_spotify_1": {
+    "message": "1) - Rendez-vous sur <a href='https://developer.spotify.com/'>Spotify for developers</a> et connectez-vous avec votre compte Spotify <br>2) - Allez sur le <a href='https://developer.spotify.com/dashboard'>Dashboard</a> et créez une application <br>3) - Nommez l'application (le nom n'a pas d'importance) et définissez l'URI de redirection sur : <br>"
+  },
+  "how_to_install_spotify_2": {
+    "message": "4) - Sélectionnez Web API et enregistrez l'application <br>5) - Ouvrez les paramètres et copiez l'ID client et le secret client dans les champs<br>6) - Cliquez sur le bouton de connexion pour lier votre compte<br><br>Vous devriez voir l'option Spotify API dans la liste des scanners dans le popup de l'extension"
+  },
+  "Connecting_the_spotify_API": {
+    "message": "Connexion à l'API Spotify"
+  },
+  "Save": {
+    "message": "Enregistrer"
+  },
+  "Log_in": {
+    "message": "Connexion"
+  },
+  "Log_out": {
+    "message": "Déconnexion"
+  },
+  "Client_secret": {
+    "message": "Secret client"
+  },
+  "Client_ID": {
+    "message": "ID client"
+  },
+  "Spotify_API_setup": {
+    "message": "Configuration de l'API Spotify"
+  },
+  "integration_explanations": {
+    "message": "L'extension peut être configurée pour répondre à une commande nightbot, vous n'avez pas besoin de mettre à jour la commande à chaque changement.<br><br> Pour commencer, créez une nouvelle commande personnalisée dans votre dashboard Nightbot et collez la chaîne de commande personnalisée ci-dessous dans le champ message"
+  },
+  "Detailled_documentation": {
+    "message": "Documentation détaillée"
+  },
+  "find_more_docs": {
+    "message": "Trouvez plus de documentation sur le <a target='_blank' href='https://omega-2.gitbook.io/music-on-stream-docs/'>Gitbook</a>"
+  },
+  "defaultIntegrationMessage": {
+    "message": "Chanson en cours : [LINK]"
+  },
+  "errorIntegrationMessage": {
+    "message": "La musique est actuellement en pause"
+  },
+  "pausedIntegrationMessage": {
+    "message": "Impossible d'obtenir le nom de la chanson en cours !"
+  },
+  "Font": {
+    "message": "Police"
+  },
+  "Only_display_on_song_change": {
+    "message": "Afficher uniquement lors du changement de chanson"
+  },
+  "DISPLAY_SONG_CHANGE_EXPLANATIONS": {
+    "message": "L'overlay apparaîtra lors du changement de chanson puis disparaîtra après quelques secondes"
+  },
+  "Quick_guides": {
+    "message": "Guides rapides"
+  },
+  "spotifyCredentialsMissing": {
+    "message": "Vous devez d'abord définir l'ID et le secret ! Trouvez-les dans votre application sur https://developer.spotify.com/dashboard"
+  },
+  "spotifyNotLogged": {
+    "message": "Statut : Non connecté"
+  },
+  "spotifyLogged": {
+    "message": "Statut : Connecté"
+  },
+  "textCopiedToClipboard": {
+    "message": "Texte copié dans le presse-papiers"
+  },
+  "spotifyAlreadyLogged": {
+    "message": "Vous êtes déjà connecté"
+  },
+  "createAnInstanceFirst": {
+    "message": "Créez d'abord une instance !"
+  },
+  "docs": {
+    "message": "Docs"
+  },
+  "extension_version": {
+    "message": "Version de l'extension"
+  },
+  "invalidOverlayStyle": {
+    "message": "Style d'overlay invalide dans le presse-papiers"
+  },
+  "overlayStyleImported": {
+    "message": "Style importé avec succès"
+  },
+  "preview": {
+    "message": "Aperçu"
+  },
+  "change_the_overlay_style": {
+    "message": "Changer le style de l'overlay"
+  },
+  "Import_style_from_clipboard": {
+    "message": "Importer le style depuis le presse-papiers"
+  },
+  "styles_library": {
+    "message": "Bibliothèque de styles"
+  },
+  "change_overlay_style": {
+    "message": "Changer le style de l'overlay"
+  },
+  "token": {
+    "message": "Jeton"
+  },
+  "redirect_url": {
+    "message": "URL de redirection"
+  },
+  "copy_custom_command": {
+    "message": "Copier la commande personnalisée"
+  },
+  "extension_information": {
+    "message": "Informations sur l'extension"
+  },
+  "title_font": {
+    "message": "Police du titre"
+  },
+  "subtitle_font": {
+    "message": "Police du sous-titre"
+  },
+  "progress_font": {
+    "message": "Police de la progression"
+  },
+  "use_cover_image_as_content_background": {
+    "message": "Utiliser l'image de la pochette comme fond du contenu"
+  },
+  "paste_this_command_into_a_custom_command_in_your_bot_dashboard": {
+    "message": "Collez cette commande dans une commande personnalisée dans le tableau de bord de votre bot"
+  },
+  "copy_the_integration_command": {
+    "message": "Copier la commande d'intégration"
+  }
+}

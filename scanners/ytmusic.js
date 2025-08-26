@@ -11,7 +11,7 @@ function getData() {
     let duration = durationString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
     let elapsed = elapsedString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
 
-    let progress = elapsed == undefined || duration == undefined ? undefined : Math.floor((elapsed / duration) * 10000)/100;
+    let progress = elapsed == undefined || duration == undefined ? undefined : Math.floor((elapsed / duration) * 10000) / 100;
 
     return {
         url: document.querySelectorAll(".ytmusic-player-bar >.yt-simple-endpoint.yt-formatted-string").item(1)?.href.replace(/list=[^&]*&/g, '') || document.location.href,
@@ -21,7 +21,7 @@ function getData() {
         progress: progress,
         duration: duration,
         paused: document.querySelector("#play-pause-button").title == "Play",
-        isLive:false
+        isLive: false
     };
 }
 

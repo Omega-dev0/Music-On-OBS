@@ -334,6 +334,10 @@ function bindEvents() {
     document.getElementById("integrationPopupBotrixCopy").addEventListener("click", () => {
         copyTextToClipboard(getBotRixCommand())
     })
+    /* document.getElementById("integrationPopupStreamerbotCopy").addEventListener("click", () => {
+        copyTextToClipboard(getStreamerBotCommand())
+        alert("")
+    }) */
 
     document.getElementById("spotifyLogin").addEventListener("click", () => {
         startSpotifyLoginProcedure()
@@ -437,12 +441,47 @@ function isInstanceValid() {
 function setAboutPage() {
     let text = document.getElementById("platformsBox").innerHTML
     for (scanner of extensionConfig.scanners) {
-        if (scanner.platform == "none") continue
-        text += `<label>- ${scanner.name}</label><br>`
+        console.log(scanner)
+        if (scanner.platform == "none" || scanner.disabled == true) continue
+        let tooltip = ""
+        if (scanner.notice != undefined) {
+            tooltip = `tooltip="${scanner.notice}" style="color: orange;"`
+        }
+        text += `<label ${tooltip}>- ${scanner.name}</label><br>`
     }
     document.getElementById("platformsBox").innerHTML = text
     let manifest = chrome.runtime.getManifest()
     document.getElementById("extensionVersion").innerHTML = `${chrome.i18n.getMessage("extension_version")}: ${manifest.version_name}`
+}
+
+function setupTooltips() {
+    document.querySelectorAll('[tooltip]').forEach(el => {
+        let tooltipDiv;
+        el.addEventListener('mouseenter', e => {
+            tooltipDiv = document.createElement('div');
+            tooltipDiv.className = 'custom-tooltip';
+            tooltipDiv.innerText = el.getAttribute('tooltip');
+            document.body.appendChild(tooltipDiv);
+            const rect = el.getBoundingClientRect();
+            tooltipDiv.style.position = 'fixed';
+            tooltipDiv.style.left = rect.left + 'px';
+            tooltipDiv.style.top = (rect.bottom + 8) + 'px';
+            tooltipDiv.style.zIndex = 9999;
+            tooltipDiv.style.background = '#222';
+            tooltipDiv.style.color = '#fff';
+            tooltipDiv.style.padding = '4px 8px';
+            tooltipDiv.style.borderRadius = '4px';
+            tooltipDiv.style.fontSize = '12px';
+            tooltipDiv.style.pointerEvents = 'none';
+            tooltipDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        });
+        el.addEventListener('mouseleave', e => {
+            if (tooltipDiv) {
+                tooltipDiv.remove();
+                tooltipDiv = null;
+            }
+        });
+    });
 }
 
 //--------------LOCALIZATION------------
@@ -499,6 +538,105 @@ function getBotRixCommand() {
     return command
 }
 
+
+
+async function getStreamerBotCommand() {
+    let object = {
+        "meta": {
+            "name": "MOS-Export",
+            "author": "Omega77073",
+            "version": "1.0.0",
+            "description": "A command to use streamer.bot and MOS integration",
+            "autoRunAction": null,
+            "minimumVersion": null
+        },
+        "data": {
+            "actions": [
+                {
+                    "id": "6978357c-d5d1-4e1b-991e-0fd173a38c22",
+                    "queue": "00000000-0000-0000-0000-000000000000",
+                    "enabled": true,
+                    "excludeFromHistory": false,
+                    "excludeFromPending": false,
+                    "name": "MOS-Fetch",
+                    "group": "",
+                    "alwaysRun": true,
+                    "randomAction": false,
+                    "concurrent": true,
+                    "triggers": [
+                        {
+                            "commandId": "93aef4f3-4115-4d61-b848-786deec4bf88",
+                            "id": "6b5480fa-14d1-436b-9527-39d6d0d2a1e7",
+                            "type": 401,
+                            "enabled": true,
+                            "exclusions": []
+                        }
+                    ],
+                    "subActions": [
+                        {
+                            "url": getBaseURL("integration"),
+                            "variableName": "mos-msg",
+                            "headers": {},
+                            "parseAsJson": false,
+                            "autoType": false,
+                            "id": "644bcf71-100d-47fa-892a-5157a14aad87",
+                            "weight": 0.0,
+                            "type": 1007,
+                            "parentId": null,
+                            "enabled": true,
+                            "index": 0
+                        },
+                        {
+                            "text": "%mos-msg%",
+                            "useBot": true,
+                            "fallback": true,
+                            "id": "06a943e3-ed1b-47a9-bef9-32bfdff89b92",
+                            "weight": 0.0,
+                            "type": 10,
+                            "parentId": null,
+                            "enabled": true,
+                            "index": 1
+                        }
+                    ],
+                    "collapsedGroups": []
+                }
+            ],
+            "queues": [],
+            "commands": [
+                {
+                    "permittedUsers": [],
+                    "permittedGroups": [],
+                    "id": "93aef4f3-4115-4d61-b848-786deec4bf88",
+                    "name": "MOS",
+                    "enabled": false,
+                    "include": false,
+                    "mode": 0,
+                    "command": "!music",
+                    "regexExplicitCapture": false,
+                    "location": 0,
+                    "ignoreBotAccount": false,
+                    "ignoreInternal": true,
+                    "sources": 1,
+                    "persistCounter": false,
+                    "persistUserCounter": false,
+                    "caseSensitive": false,
+                    "globalCooldown": 0,
+                    "userCooldown": 0,
+                    "group": null,
+                    "grantType": 0
+                }
+            ],
+            "websocketServers": [],
+            "websocketClients": [],
+            "timers": []
+        },
+        "version": 23,
+        "exportedFrom": "1.0.0",
+        "minimumVersion": "1.0.0-alpha.1"
+    }
+
+    return getBaseURL("integration");
+}
 //------------STORAGE UPDATES-----------
 chrome.storage.onChanged.addListener(async (object, areaName) => {
     if (areaName != "local") {
@@ -604,6 +742,7 @@ Promise.all(promises).then(() => {
         checkSpotifyLoggedStatus()
         setAboutPage()
         showContainer("Instance")
+        setupTooltips()
     }
 
     if (loaded) {
@@ -614,33 +753,7 @@ Promise.all(promises).then(() => {
         })
     }
 
-    document.querySelectorAll('[tooltip]').forEach(el => {
-        let tooltipDiv;
-        el.addEventListener('mouseenter', e => {
-            tooltipDiv = document.createElement('div');
-            tooltipDiv.className = 'custom-tooltip';
-            tooltipDiv.innerText = el.getAttribute('tooltip');
-            document.body.appendChild(tooltipDiv);
-            const rect = el.getBoundingClientRect();
-            tooltipDiv.style.position = 'fixed';
-            tooltipDiv.style.left = rect.left + 'px';
-            tooltipDiv.style.top = (rect.bottom + 8) + 'px';
-            tooltipDiv.style.zIndex = 9999;
-            tooltipDiv.style.background = '#222';
-            tooltipDiv.style.color = '#fff';
-            tooltipDiv.style.padding = '4px 8px';
-            tooltipDiv.style.borderRadius = '4px';
-            tooltipDiv.style.fontSize = '12px';
-            tooltipDiv.style.pointerEvents = 'none';
-            tooltipDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-        });
-        el.addEventListener('mouseleave', e => {
-            if (tooltipDiv) {
-                tooltipDiv.remove();
-                tooltipDiv = null;
-            }
-        });
-    });
+
 })
 
 document.addEventListener("DOMContentLoaded", () => {

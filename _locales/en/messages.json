@@ -373,5 +373,14 @@
   },
   "progress_font": {
     "message": "Progress font"
+  },
+  "use_cover_image_as_content_background": {
+    "message": "Use cover image as content background"
+  },
+  "paste_this_command_into_a_custom_command_in_your_bot_dashboard": {
+    "message": "Paste this command into a custom command in your bot dashboard"
+  },
+  "copy_the_integration_command": {
+    "message": "Copy the integration command"
   }
 }
