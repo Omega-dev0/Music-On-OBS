@@ -61,13 +61,13 @@ function buildChapterList() {
             }
         }
     }
-    chapterList =  Object.keys(descChapters).length > Object.keys(commentChapters).length ? descChapters : commentChapters;
+    chapterList = Object.keys(descChapters).length > Object.keys(commentChapters).length ? descChapters : commentChapters;
     return chapterList;
 }
 
 function getData() {
     let videoElement = document.getElementsByClassName("video-stream")[0];
-    let chapter = document.querySelector("#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-left-controls > div.ytp-chapter-container > button > div.ytp-chapter-title-content")?.innerHTML
+    let chapter = document.querySelector(".sponsorChapterText")?.innerHTML
     let chapterList = buildChapterList();
     if (chapter == undefined || chapter == "") {
         if (Object.keys(chapterList).length > 0) {

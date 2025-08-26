@@ -184,7 +184,7 @@ const DataSchema = {
                 }
             },
             useCoverImage: {
-                defaultValue: false,
+                defaultValue: true,
                 legacySwitch: {
                     category: "overlay",
                     key: "useCoverImage"
