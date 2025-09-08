@@ -63,14 +63,6 @@ extensionConfig.scanners = [
         name: "Deezer",
         host: "deezer.com",
         color: "#4e5252"
-    },
-    {
-        platform: "nightbot",
-        name: "Nightbot songs",
-        host: "nightbot.tv",
-        color: "#2e5c5c",
-        notice: "Thumbnail unavailable for soundcloud tracks",
-        disabled: true
     }
 ]
 

@@ -382,5 +382,17 @@
   },
   "copy_the_integration_command": {
     "message": "Copy the integration command"
+  },
+  "update_information": {
+    "message": "Update information"
+  },
+  "update_information_text": {
+    "message": "Version: v3<br> - Full rework under the hood for easier maintainability and better flexibility<br> - New overlay style with more customization options<br>"
+  },
+  "an_issue": {
+    "message": "An issue? "
+  },
+  "Contact_me_on": {
+    "message": "Contact me on"
   }
 }

@@ -193,6 +193,8 @@ function startSpotifyLoginProcedure() {
         return
     }
 
+    let redirect_url = `chrome-extension://${chrome.runtime.id}/interface/spotifyAuth/index.html`
+
     window.open(`https://accounts.spotify.com/authorize?response_type=code&redirect_uri=${redirect_url}&client_id=${extensionSettings.spotifyAPI.spotifyId}&state=MOS&scope=user-read-currently-playing&show_dialog=true`, "_blank")
 }
 function checkSpotifyLoggedStatus() {

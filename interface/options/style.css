@@ -408,7 +408,7 @@ option {
 .numberstyle-qty {
   position: relative;
   border-radius: 6px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   overflow: hidden;
   box-shadow: 0 3px 6px #747474;
 }
@@ -462,5 +462,3 @@ option {
   -webkit-appearance: none;
   margin: 0;
 }
-
-

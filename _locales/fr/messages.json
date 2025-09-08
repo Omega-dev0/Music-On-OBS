@@ -382,5 +382,17 @@
   },
   "copy_the_integration_command": {
     "message": "Copier la commande d'intégration"
+  },
+  "update_information": {
+    "message": "Informations sur la mise à jour"
+  },
+  "update_information_text": {
+    "message": "Version: v3<br> - Refonte complète en interne pour une maintenance plus facile et une meilleure flexibilité<br> - Nouveau style d'overlay avec plus d'options de personnalisation<br>"
+  },
+  "an_issue": {
+    "message": "Un problème ? "
+  },
+  "Contact_me_on": {
+    "message": "Contactez-moi sur"
   }
 }

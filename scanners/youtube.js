@@ -67,7 +67,7 @@ function buildChapterList() {
 
 function getData() {
     let videoElement = document.getElementsByClassName("video-stream")[0];
-    let chapter = document.querySelector(".sponsorChapterText")?.innerHTML
+    let chapter = document.querySelector(".sponsorChapterText")?.innerHTML || document.querySelector(".ytp-chapter-title-content").innerHTML
     let chapterList = buildChapterList();
     if (chapter == undefined || chapter == "") {
         if (Object.keys(chapterList).length > 0) {

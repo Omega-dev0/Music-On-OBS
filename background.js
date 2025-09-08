@@ -61,7 +61,7 @@ async function updateScannersList(removedTabId) {
             connected: extensionState.connected,
         },
     });
-    console.log(extensionState.selectedScanner, removedTabId)
+
     if (extensionState.selectedScanner == removedTabId) {
         chrome.storage.local.set({
             "extension-state": {
