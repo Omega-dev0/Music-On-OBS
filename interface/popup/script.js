@@ -282,5 +282,13 @@ function update() {
 
     updateAvailableScanners();
 }
+document.addEventListener("DOMContentLoaded", async () => {
+    loaded = true
+    await chrome.storage.local.get("openUpdatePage").then((result) => {
+        if (result.openUpdatePage) {
+            chrome.storage.local.set({ "openUpdatePage": false });
+            chrome.tabs.create({ url: "interface/update/index.html" });
+        }
+    });
+});
 
-document.addEventListener("DOMContentLoaded", () => { loaded = true });

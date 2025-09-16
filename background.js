@@ -301,3 +301,18 @@ Promise.all(promises).then(() => {
     extensionReady.dispatchEvent(new Event("ready"))
     READY = true
 })
+
+chrome.runtime.onInstalled.addListener(async (details) => {
+    const manifest = chrome.runtime.getManifest();
+    // Major update (first number changed)
+    if (
+        manifest.version.split('.')[0] !==
+        details.previousVersion?.split('.')[0]
+    ) {
+        chrome.storage.local.set({ "openUpdatePage": true });
+        chrome.action.setBadgeBackgroundColor(
+            { color: '#ff0000ff' },
+            () => { /* ... */ },
+        );
+    }
+})
