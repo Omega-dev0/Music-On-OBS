@@ -31,7 +31,7 @@ extensionConfig.scanners = [
     {
         platform: "epidemic",
         name: "Epidemic Sound",
-        host: "www.epidemicsound.com",
+        host: "epidemicsound.com",
         color: "#302c2c"
     },
     {

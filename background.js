@@ -15,7 +15,7 @@ const manifestData = chrome.runtime.getManifest();
 
 const extensionReady = new EventTarget()
 //-----------SCANNERS HANDLING----------
-async function updateScannersList(removedTabId) {
+/* async function updateScannersList(removedTabId) {
     extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
     let scanners = extensionState.scanners;
     //removing outdated scanners
@@ -73,6 +73,64 @@ async function updateScannersList(removedTabId) {
         });
         disconnectFromServer()
     }
+} */
+
+function getPlatformFromUrl(url) {
+    for (let scannerConfig of extensionConfig.scanners) {
+        if (scannerConfig.host != "" && url.includes(scannerConfig.host)) {
+            return scannerConfig.platform
+        }
+    }
+    return "none"
+}
+
+async function updateScannersList() {
+    extensionState = (await chrome.storage.local.get("extension-state"))["extension-state"];
+    let scanners = extensionState.scanners;
+
+    let newScanners = []
+
+    let manifest = chrome.runtime.getManifest();
+    let matchingTabs = await chrome.tabs.query({
+        url: manifest.content_scripts[0].matches,
+    });
+
+    for (let tab of matchingTabs) {
+        newScanners.push({
+            platform: getPlatformFromUrl(tab.url),
+            tabId: tab.id,
+            title: tab.title
+        })
+    }
+
+    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "" && fscanners.find((scanner) => scanner.platform == "spotifyAPI") == undefined) {
+        newScanners.push({
+            platform: "spotifyAPI",
+            tabId: "spotifyAPI",
+            title: "Spotify API"
+        })
+    }
+
+    if (extensionState.selectedScanner != "none" && newScanners.find((scanner) => scanner.tabId == extensionState.selectedScanner) == undefined) {
+        chrome.storage.local.set({
+            "extension-state": {
+                stopped: true,
+                scanners: extensionState.scanners,
+                selectedScanner: "none",
+                connected: extensionState.connected,
+            },
+        });
+        disconnectFromServer()
+    }
+
+    chrome.storage.local.set({
+        "extension-state": {
+            stopped: extensionState.stopped,
+            scanners: newScanners,
+            selectedScanner: extensionState.selectedScanner,
+            connected: extensionState.connected,
+        },
+    });
 }
 
 chrome.tabs.onRemoved.addListener(async (tabId, removeInfo) => {
@@ -169,14 +227,15 @@ async function updateScanner(senderTabId, title, platform) {
         tabId: senderTabId,
         platform: platform,
     });
-    await chrome.storage.local.set({
+    /* await chrome.storage.local.set({
         "extension-state": {
             stopped: extensionState.stopped,
             scanners: scanners,
             selectedScanner: extensionState.selectedScanner,
             connected: extensionState.connected,
         },
-    });
+    }); */
+    updateScannersList()
 }
 
 const actions = {}
@@ -308,6 +367,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     if (
         manifest.version.split('.')[0] !==
         details.previousVersion?.split('.')[0]
+        && details.previousVersion !== undefined
     ) {
         chrome.storage.local.set({ "openUpdatePage": true });
         chrome.action.setBadgeBackgroundColor(
