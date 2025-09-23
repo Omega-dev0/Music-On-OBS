@@ -103,7 +103,7 @@ async function updateScannersList() {
         })
     }
 
-    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "" && fscanners.find((scanner) => scanner.platform == "spotifyAPI") == undefined) {
+    if (extensionSettings.spotifyAPI.spotifyRefreshToken != "") {
         newScanners.push({
             platform: "spotifyAPI",
             tabId: "spotifyAPI",
