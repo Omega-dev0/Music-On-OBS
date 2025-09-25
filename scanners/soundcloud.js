@@ -9,7 +9,7 @@ function getData() {
     let duration = durationString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
     let elapsed = elapsedString?.split(":").map((x) => parseInt(x)).reduce((acc, x) => acc * 60 + x, 0)
 
-    let progress = elapsed == undefined || duration == undefined ? undefined : Math.floor((elapsed / duration) * 10000)/100;
+    let progress = elapsed == undefined || duration == undefined ? undefined : Math.floor((elapsed / duration) * 10000) / 100;
 
     return {
         url: document.querySelector(".playbackSoundBadge__titleLink")?.href,
@@ -18,8 +18,8 @@ function getData() {
         cover: navigator.mediaSession.metadata?.artwork[0].src,
         progress: progress,
         duration: duration,
-        paused: navigator.mediaSession.playbackState == "paused",
-        isLive:false
+        paused: navigator.mediaSession.playbackState != "playing",
+        isLive: false
     };
 }
 

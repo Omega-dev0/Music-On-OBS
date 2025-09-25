@@ -20,7 +20,7 @@ function getData() {
         cover: coverElement == undefined ? undefined : (new URL(coverElement).host == "lh3.googleusercontent.com" ? document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.replace("w60-h60", "w600-h600") : document.querySelector(".image.style-scope.ytmusic-player-bar")?.src.split("?sqp")[0]),
         progress: progress,
         duration: duration,
-        paused: document.querySelector("#play-pause-button").title == "Play",
+        paused: navigator.mediaSession.playbackState != "playing",
         isLive: false
     };
 }
